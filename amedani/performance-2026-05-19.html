@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amedani Studio — Check performance · 19 maggio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #A0411E;
+    --accent-soft: #F4DDD2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 50ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(38px, 5vw, 60px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.75; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 75ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl tbody tr.tot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding-top: 14px; padding-bottom: 14px; background: #FAFAFA; }
+  .tbl code { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .blocks { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--ink); margin: 32px 0; }
+  .blocks__cell { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; min-height: 240px; }
+  .blocks__cell:nth-child(3n) { border-right: 0; }
+  .blocks__cell:nth-last-child(-n+3) { border-bottom: 0; }
+  .blocks__cell--accent { background: var(--accent); color: var(--bg); }
+  .blocks__cell--ink { background: var(--ink); color: var(--bg); }
+  .blocks__num { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+  .blocks__url { font-family: var(--f-mono); font-size: 10.5px; word-break: break-all; opacity: 0.7; margin-top: 6px; }
+  .blocks__name { font-family: var(--f-sans); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 14px; text-transform: uppercase; }
+  .blocks__stats { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.65; margin: 0 0 18px; padding: 0; list-style: none; opacity: 0.85; }
+  .blocks__stats li { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+  .blocks__stats li span:first-child { opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+  .blocks__stats li strong { font-weight: 600; }
+  .blocks__take { padding-top: 14px; border-top: 1px solid currentColor; font-size: 13px; line-height: 1.45; }
+  .blocks__take strong { font-weight: 700; }
+  .blocks__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .blocks__cell--accent .badge, .blocks__cell--ink .badge { background: rgba(255,255,255,0.1); color: var(--bg); border-color: rgba(255,255,255,0.4); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.2; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 64ch; letter-spacing: -0.02em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  .chart { margin: 32px 0; }
+  .chart__title { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .chart__row { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 14px; padding: 4px 0; font-family: var(--f-mono); font-size: 11.5px; }
+  .chart__day { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .chart__bar { background: var(--grid); height: 22px; position: relative; }
+  .chart__bar span { display: block; height: 100%; background: var(--ink); }
+  .chart__bar.is-mute span { background: var(--ink-3); }
+  .chart__bar.is-acc span { background: var(--accent); }
+  .chart__bar.is-ok span { background: var(--ok); }
+  .chart__bar.is-bad span { background: var(--accent); }
+  .chart__val { font-weight: 600; text-align: right; color: var(--ink); font-feature-settings: "tnum" on; }
+
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 32px 0 0; }
+  .insights li { counter-increment: ins; display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--grid); }
+  .insights li:last-child { border-bottom: 2px solid var(--ink); }
+  .insights__num { font-family: var(--f-sans); font-weight: 900; font-size: 44px; line-height: 0.85; color: var(--accent); letter-spacing: -0.04em; }
+  .insights__num::before { content: counter(ins, decimal-leading-zero); }
+  .insights__body { font-size: 14.5px; line-height: 1.55; max-width: 84ch; }
+  .insights__title { display: block; font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; text-transform: uppercase; }
+  .insights__title .acc { color: var(--accent); }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 78ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .phases { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li { counter-increment: ph; display: grid; grid-template-columns: 70px 240px 1fr 160px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .phases li:last-child { border-bottom: 2px solid var(--ink); }
+  .phases__num { font-family: var(--f-sans); font-weight: 900; font-size: 28px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+  .phases__num::before { content: counter(ph, decimal-leading-zero); }
+  .phases__name { font-family: var(--f-sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; }
+  .phases__body { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 64ch; }
+  .phases__when { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; text-align: right; }
+
+  .crit { border: 2px solid var(--accent); background: var(--accent-soft); padding: 32px 36px; margin: 36px 0; }
+  .crit h3 { border: 0; margin: 0 0 14px; padding: 0; display: block; color: var(--accent); font-size: 22px; }
+  .crit p { color: var(--ink-2); max-width: 78ch; }
+  .crit code { font-family: var(--f-mono); font-size: 12px; background: rgba(255,255,255,0.6); padding: 2px 6px; word-break: break-all; }
+
+  .cwv { display: grid; grid-template-columns: repeat(4, 1fr); border: 2px solid var(--ink); margin: 28px 0; }
+  .cwv__cell { padding: 22px 20px; border-right: 1px solid var(--ink); min-height: 140px; }
+  .cwv__cell:last-child { border-right: 0; }
+  .cwv__cell--bad { background: var(--accent-soft); }
+  .cwv__cell--ok { background: var(--ok-soft); }
+  .cwv__cell--warn { background: var(--warn-soft); }
+  .cwv__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+  .cwv__name { font-family: var(--f-sans); font-weight: 700; font-size: 14px; margin: 6px 0 14px; text-transform: uppercase; letter-spacing: -0.01em; }
+  .cwv__bigval { display: block; font-family: var(--f-sans); font-weight: 900; font-size: 36px; line-height: 1; letter-spacing: -0.04em; margin: 4px 0; }
+  .cwv__bigval.is-bad { color: var(--accent); }
+  .cwv__bigval.is-ok { color: var(--ok); }
+  .cwv__bigval.is-warn { color: var(--warn); }
+  .cwv__pos { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.5; color: var(--ink-2); }
+  .cwv__pos strong { font-weight: 600; color: var(--ink); }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .blocks, .cwv { grid-template-columns: 1fr; }
+    .blocks__cell { border-right: 0; }
+    .strip__row, .recs li, .insights li, .phases li { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .insights__num { font-size: 28px; }
+    .colophon { grid-template-columns: 1fr; }
+    .chart__row { grid-template-columns: 100px 1fr 60px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .blocks, .insights li, .recs li, .phases li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink, .blocks__cell--accent, .blocks__cell--ink { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand">AMEDANI / <span>CHECK PERFORMANCE</span></div>
+    <div class="topbar__meta">~45gg dal lancio · indicizzazione 87% · briefing geo Bergamo già pronto</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#trend">02</a><a href="#critico">03</a><a href="#pagine">04</a><a href="#kw">05</a><a href="#insight">06</a><a href="#proposta">07</a><a href="#roadmap">08</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance check · 19 maggio 2026</p>
+      <h1>Indicizzazione<br><span class="ml">raggiunta</span>.<br>Prossimo step:<br>4 pagine pillar.</h1>
+      <p class="hero__lede">Il sito è online da circa 45 giorni. L'indicizzazione ha superato la soglia target: <strong>87% delle pagine pubblicate sono in Google</strong> (34 su 39). I click degli ultimi 28 giorni vengono solidamente dalle ricerche di brand (236 su 250 = 94%), un comportamento atteso per un sito giovane. Resta aperto un nodo tecnico sulla cartella <code>/servizi/produzione-foto-video-aziendali/</code>: la pagina principale e le 3 figlie non sono ancora state lette da Google. L'analisi tecnica della pagina principale mostra un'immagine di copertura di <strong>quasi 3 MB</strong> servita a piena risoluzione (4743×3162 pixel), che porta il tempo di caricamento del contenuto principale a <strong>7,4 secondi</strong> contro la soglia di 2,5 raccomandata. Una volta normalizzato questo punto, il <strong>briefing geo su Bergamo del 13 maggio</strong> può guidare la fase successiva.</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Finestra analisi</dt>
+      <dd>P1: 21.04.2026 → 18.05.2026 (28gg)<br>P2: 24.03.2026 → 20.04.2026 (28gg)</dd>
+      <dt>Asset analizzati</dt>
+      <dd>GSC sc-domain:amedani.com<br>URL Inspection API · 4 pagine target<br>Lighthouse audit · 1 URL pillar<br>Sitemap servizi + pages + blog<br>HTTP head check · immagine hero</dd>
+      <dt>Issue critico</dt>
+      <dd><span class="badge badge--bad">LCP 7,4s</span> <span class="badge badge--bad">4 url uncrawled</span> <span class="badge badge--bad">img 2,97MB</span></dd>
+      <dt>Aree di lavoro principali</dt>
+      <dd>Ottimizzazione immagini di copertura · richiesta di indicizzazione delle 4 URL · apertura fase geo a partire dal briefing Bergamo.</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">87%</span>
+      <span class="statgrid__lbl">Indicizzazione · 34/39 URL</span>
+      <span class="statgrid__delta">↑ Target raggiunto (era 30–40% il 16.04)</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">250</span>
+      <span class="statgrid__lbl">Click GSC · 28gg</span>
+      <span class="statgrid__delta" style="color:var(--warn)">94% da query brand</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num" style="color:var(--accent)">4</span>
+      <span class="statgrid__lbl">URL "Last Crawl: Never"</span>
+      <span class="statgrid__delta" style="color:var(--accent)">↓ Pillar foto/video + 3 figlie</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">7,4s</span>
+      <span class="statgrid__lbl">LCP pillar /produzione-foto-video/</span>
+      <span class="statgrid__delta">img hero 2,97 MB · 4743×3162 px</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">La storia in cinque punti</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Il sito ha raggiunto il target di indicizzazione (87% sui 39 URL della sitemap), la home tiene il brand in pos 1,4. La sezione foto/video è il prossimo step tecnico: un'immagine hero pesante regredita di recente sulla pillar sta verosimilmente rallentando il crawl della cartella. Fix tecnico semplice, impatto strategico alto.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">L'indicizzazione <span class="acc">è risolta</span></span>
+          Al 13 maggio: 34/39 URL indicizzati = 87%. Target 80–85% superato. Sitemap pulita: pruning da ~52 a 39 URL ha rimosso i subservice geo legacy incompatibili con la nuova strategia. Le 4 sitemap (index + blog + pages + servizi) sono submitted, 0 errori, 0 warning. <strong>La fase geo è formalmente sbloccata</strong>: questa era la precondizione decisa il 16 aprile.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le 4 URL foto/video sono in <span class="acc">"Last Crawl: Never"</span></span>
+          URL Inspection API conferma per tutte e quattro: <code>NEUTRAL — URL is unknown to Google</code>. <strong>Non sono "Crawled — not indexed"</strong> (sarebbe un soft signal). Sono proprio sconosciute. Eppure: presenti in <code>sitemap-servizi.xml</code> (con priority 0.9 la madre, 0.8 le figlie), allow su robots, linkate dalla home e da <code>/servizi/</code>. La quinta sorella di cartella — <code>live-coverage-eventi/</code> — è invece nota a Google e ha 17 impressions. Quindi non è un problema di struttura URL.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">L'ipotesi sul mancato crawl è <span class="acc">il tempo di caricamento</span> della pagina principale</span>
+          L'audit Lighthouse della pagina <code>/produzione-foto-video-aziendali/</code> mostra: <strong>tempo di caricamento del contenuto principale (LCP) a 7,4 secondi</strong> (la soglia raccomandata è 2,5s). Gli altri parametri di esperienza utente sono buoni (FCP 0,6s, layout stabile, nessun blocco di rendering). Il punto specifico è l'immagine di copertura <code>produzione-video-foto-aziendali-brescia._zRDmgFa_2lrUbN.webp</code>: pesa <strong>2,97 MB</strong> a 4743×3162 pixel — viene scaricata a piena risoluzione anche su mobile. Su PageSpeed mobile la misurazione va in timeout. <strong>Quando una pagina hub di una cartella ha tempi di caricamento così elevati, il motore di ricerca tipicamente rallenta il crawl delle pagine figlie</strong>: ipotesi più probabile per spiegare il "Crawl: Never" delle 3 figlie + pillar.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">94% brand-driven</span> a 45gg di vita è fisiologico</span>
+          Su 250 click in 28gg, 184 vengono dalle 3 varianti brand ("amedani studio", "amedani", "amedani studio brescia") — tutte in posizione 1,3–1,4 con CTR 50–73 %. Restano 66 click distribuiti su query commerciali e informazionali, segnale che il sito sta iniziando a essere percepito per categoria oltre il brand. Le subservice indicizzate accumulano impressions (8–44 ciascuna) — è la fase di osservazione: <strong>dopo i primi 60–90gg si potranno iterare i title sulla base delle query effettive che emergono</strong>, calibrando lo snippet sulle pagine che mostrano già pos buona.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le geo-query stanno già <span class="acc">bussando alla porta</span></span>
+          GSC mostra impressions per: "brand identity brescia" (7), "brand identity aziendale brescia" (8), "branding agency brescia" (2), "graphic designer brescia" (6), "creative agency brescia" (1), "agenzia di comunicazione brescia" (1). Posizioni 6–75. <strong>Sono Brescia, dove Amedani è già forte via Knowledge Graph.</strong> Il segnale è che la geo-strategy non parte da zero: il dominio è già percepito come "agency Brescia". Per le 5 città target del briefing del 13 maggio (Bergamo, Cremona, Mantova, Vicenza, Verona) il vuoto è totale, quindi spazio = pieno.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">briefing geo Bergamo</span> è pronto da girare</span>
+          Il documento <code>briefing-bergamo-2026-05-13-public.html</code> contiene: mappa SERP geo di Bergamo, 25 competitor analizzati, 10 gap di mercato, anatomia del set competitivo (agenzie multi-servizio integrate vs specializzati single-skill vs directory), bozze di layout per le 5 pagine geo. Maturità SEO 2026 della SERP locale: schema FAQPage 0/19, pricing visibile 1/19, recensioni inline complete 2/19. <strong>Mercato pronto e sito pronto</strong>: la fase geo può aprirsi una volta normalizzato il tempo di caricamento della pagina pillar foto/video.
+        </div>
+      </li>
+    </ol>
+
+    <div class="pull">Il prossimo step è <span class="acc">tecnico, non strategico</span>: fix image hero, LCP &lt; 2,5 s, indicizzazione 4 URL, poi via libera al briefing geo Bergamo.</div>
+  </section>
+
+  <!-- ===== 02 TREND ===== -->
+  <section class="sec" id="trend">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">GSC · 28gg vs 28gg precedenti</p>
+        <h2 class="sec__title">Trend<br>SEO</h2>
+      </div>
+      <p class="sec__sub">P1 cattura le 4 settimane post-redirect/post-pruning sitemap (~ 21 aprile in poi). P2 cattura il periodo precedente, ancora con vecchia landing legacy "bella-questa-landing" che riceveva traffico. La home cala -20% in click ma migliora la quality dei segnali: meno landing-spam, più traffico target.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">Click totali 28gg</span>
+        <span class="strip__val">250 <span class="acc">(−21%)</span></span>
+        <span class="strip__note strip__note--warn">Atteso · pruning legacy + brand stabile.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Click home /</span>
+        <span class="strip__val">233 (293→233)</span>
+        <span class="strip__note strip__note--warn">−60 click, ma brand intatto.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Click "bella-questa-landing" legacy</span>
+        <span class="strip__val good">0 (era 18)</span>
+        <span class="strip__note strip__note--ok">Pruning andato a buon fine.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Impressions totali 28gg</span>
+        <span class="strip__val">1.117</span>
+        <span class="strip__note strip__note--neutral">Volume coerente con sito 45gg.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">CTR medio</span>
+        <span class="strip__val good">22,4%</span>
+        <span class="strip__note strip__note--ok">Altissimo perché brand-driven.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Posizione media</span>
+        <span class="strip__val">11,3</span>
+        <span class="strip__note">Stabile · era 11,3 anche P2.</span>
+      </div>
+    </div>
+
+    <h3>Cumulato <span class="acc">28 giorni</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Metrica</th><th class="num">P2 (24.03–20.04)</th><th class="num">P1 (21.04–18.05)</th><th class="num">Δ</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">Click home /</td><td class="num">293</td><td class="num">233</td><td class="num bad">−20,5%</td><td>Brand stabile, no traffico aggiuntivo.</td></tr>
+        <tr><td class="strong">Click legacy landing</td><td class="num">18</td><td class="num">0</td><td class="num ok">−100%</td><td>Eliminato come da pruning sitemap.</td></tr>
+        <tr><td>Click /agenzia-comunicazione/</td><td class="num">2</td><td class="num">7</td><td class="num ok">+250%</td><td>Inizia a posizionarsi.</td></tr>
+        <tr><td>Click /servizi/agenzia-grafica/</td><td class="num">1</td><td class="num">4</td><td class="num ok">+300%</td><td>Subservice grafica si muove.</td></tr>
+        <tr><td>Click /contatti/</td><td class="num">1</td><td class="num">3</td><td class="num ok">+200%</td><td>Pos 5,4 · pillar di conversione.</td></tr>
+        <tr class="tot"><td>Totale</td><td class="num">~316</td><td class="num">250</td><td class="num warn">−21%</td><td>Calo di vetrina, non di qualità.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Daily click <span class="acc">ultimi 14 giorni</span></h3>
+    <div class="chart">
+      <div class="chart__title">Click giornalieri · 05.05 → 18.05</div>
+      <div class="chart__row"><span class="chart__day">05 mag · LUN</span><div class="chart__bar is-acc"><span style="width:69%"></span></div><span class="chart__val">11</span></div>
+      <div class="chart__row"><span class="chart__day">06 mag · MAR</span><div class="chart__bar is-acc"><span style="width:81%"></span></div><span class="chart__val">13</span></div>
+      <div class="chart__row"><span class="chart__day">07 mag · MER</span><div class="chart__bar is-acc"><span style="width:100%"></span></div><span class="chart__val">16</span></div>
+      <div class="chart__row"><span class="chart__day">08 mag · GIO</span><div class="chart__bar is-acc"><span style="width:56%"></span></div><span class="chart__val">9</span></div>
+      <div class="chart__row"><span class="chart__day">09 mag · VEN</span><div class="chart__bar is-mute"><span style="width:13%"></span></div><span class="chart__val">2</span></div>
+      <div class="chart__row"><span class="chart__day">10 mag · SAB</span><div class="chart__bar is-mute"><span style="width:13%"></span></div><span class="chart__val">2</span></div>
+      <div class="chart__row"><span class="chart__day">11 mag · DOM</span><div class="chart__bar is-acc"><span style="width:44%"></span></div><span class="chart__val">7</span></div>
+      <div class="chart__row"><span class="chart__day">12 mag · LUN</span><div class="chart__bar is-acc"><span style="width:25%"></span></div><span class="chart__val">4</span></div>
+      <div class="chart__row"><span class="chart__day">13 mag · MAR</span><div class="chart__bar is-acc"><span style="width:25%"></span></div><span class="chart__val">4</span></div>
+      <div class="chart__row"><span class="chart__day">14 mag · MER</span><div class="chart__bar is-acc"><span style="width:69%"></span></div><span class="chart__val">11</span></div>
+      <div class="chart__row"><span class="chart__day">15 mag · GIO</span><div class="chart__bar is-acc"><span style="width:56%"></span></div><span class="chart__val">9</span></div>
+      <div class="chart__row"><span class="chart__day">16 mag · VEN</span><div class="chart__bar is-acc"><span style="width:38%"></span></div><span class="chart__val">6</span></div>
+      <div class="chart__row"><span class="chart__day">17 mag · SAB</span><div class="chart__bar is-mute"><span style="width:19%"></span></div><span class="chart__val">3</span></div>
+      <div class="chart__row"><span class="chart__day">18 mag · DOM</span><div class="chart__bar is-acc"><span style="width:75%"></span></div><span class="chart__val">12</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 03 CRITICO ===== -->
+  <section class="sec" id="critico">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Indicizzazione + Core Web Vitals</p>
+        <h2 class="sec__title">Il punto<br>critico</h2>
+      </div>
+      <p class="sec__sub">Il punto critico del momento. Le 4 URL della cartella foto/video sono ferme e Google non le ha mai viste. La causa più probabile è la pagina principale della cartella, che ha tempi di caricamento elevati a causa di un'immagine non ancora ottimizzata. Intervento tecnico semplice, impatto strategico alto.</p>
+    </div>
+
+    <div class="crit">
+      <h3>4 URL · Last Crawl: Never</h3>
+      <p>URL Inspection API conferma stato <code>NEUTRAL — URL is unknown to Google</code> per tutte e quattro. Nessuna è mai stata nemmeno crawlata. Confronto strutturale: la quinta sorella della stessa cartella (<code>live-coverage-eventi</code>) è invece nota a Google e accumula impressions, quindi <strong>non è un problema di routing o sitemap</strong>.</p>
+      <ul style="font-family: var(--f-mono); font-size: 12px; padding-left: 0; list-style: none; margin: 16px 0 0;">
+        <li style="margin-bottom: 6px;">→ <code>/servizi/produzione-foto-video-aziendali/</code> · pillar · Last Crawl: Never</li>
+        <li style="margin-bottom: 6px;">→ <code>/servizi/produzione-foto-video-aziendali/creazione-contenuti-social/</code> · figlia</li>
+        <li style="margin-bottom: 6px;">→ <code>/servizi/produzione-foto-video-aziendali/realizzazione-video-aziendali/</code> · figlia</li>
+        <li style="margin-bottom: 6px;">→ <code>/servizi/produzione-foto-video-aziendali/servizio-fotografico-aziendale/</code> · figlia</li>
+      </ul>
+    </div>
+
+    <h3>Core Web Vitals <span class="acc">/produzione-foto-video-aziendali/</span></h3>
+    <div class="cwv">
+      <div class="cwv__cell cwv__cell--bad">
+        <span class="cwv__lbl">LCP</span>
+        <span class="cwv__name">Largest Contentful Paint</span>
+        <span class="cwv__bigval is-bad">7,4 s</span>
+        <span class="cwv__pos"><strong>Score 0,01</strong> · target &lt; 2,5s</span>
+      </div>
+      <div class="cwv__cell cwv__cell--warn">
+        <span class="cwv__lbl">SI</span>
+        <span class="cwv__name">Speed Index</span>
+        <span class="cwv__bigval is-warn">3,1 s</span>
+        <span class="cwv__pos"><strong>Score 0,24</strong> · target &lt; 3,4s</span>
+      </div>
+      <div class="cwv__cell cwv__cell--ok">
+        <span class="cwv__lbl">FCP</span>
+        <span class="cwv__name">First Contentful Paint</span>
+        <span class="cwv__bigval is-ok">0,6 s</span>
+        <span class="cwv__pos"><strong>Score 0,99</strong> · ottimo</span>
+      </div>
+      <div class="cwv__cell cwv__cell--ok">
+        <span class="cwv__lbl">CLS / TBT</span>
+        <span class="cwv__name">Layout Shift / Blocking</span>
+        <span class="cwv__bigval is-ok">0 / 0</span>
+        <span class="cwv__pos">CLS 0,001 · TBT 0ms · ✓</span>
+      </div>
+    </div>
+
+    <p style="margin-top: 28px;"><strong>Dato osservato</strong>: l'immagine di copertura della pagina è servita a piena risoluzione sorgente. Verifica diretta via richiesta HTTP HEAD: peso <code>2.976.422 byte (2,97 MB)</code>, formato WebP, dimensioni dichiarate nel codice <code>width="4743" height="3162"</code> (circa 16 megapixel, equivalente a una foto pensata per stampa più che per web). Nell'HTML della pagina non sono presenti le direttive <code>srcset</code> o <code>sizes</code> che servirebbero a far scaricare al browser una variante dimensionale diversa a seconda del dispositivo.</p>
+
+    <p>L'iterazione naturale è generare versioni multiple dell'immagine (es. 800px, 1200px, 1920px di larghezza) e lasciare al browser la scelta in base al dispositivo, riducendo significativamente il peso del download su mobile. L'intervento richiede una revisione della configurazione della componente immagine sul lato sviluppo.</p>
+
+    <h3>Possibile <span class="acc">effetto a cascata</span> sul crawl</h3>
+    <p>Quando una pagina hub di una cartella ha tempi di caricamento elevati, è frequente che il motore di ricerca rallenti la scoperta delle pagine figlie all'interno della stessa cartella. Le 5 URL della cartella foto/video sono in sitemap dal redeploy, ma <strong>la sola che risulta scoperta è <code>live-coverage-eventi</code></strong> (17 impressions su GSC). Sarebbe utile misurare i tempi di caricamento anche sulle altre 4 pagine per capire se il pattern è uguale.</p>
+
+    <h3>Verifiche utili da <span class="acc">organizzare</span></h3>
+    <ul style="list-style: none; padding: 0; margin: 16px 0;">
+      <li style="padding: 8px 0 8px 26px; position: relative; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--accent); font-weight: 700;">→</span> Audit tempi di caricamento sulle 3 pagine figlie della cartella foto/video.</li>
+      <li style="padding: 8px 0 8px 26px; position: relative; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--accent); font-weight: 700;">→</span> Audit anche sulle altre pillar (<code>/servizi/agenzia-grafica/</code>, <code>/servizi/agenzia-siti-web/</code>, <code>/servizi/agenzia-social-media-marketing/</code>) per capire se è un pattern comune alle pagine principali.</li>
+      <li style="padding: 8px 0 8px 26px; position: relative; line-height: 1.5;"><span style="position: absolute; left: 0; color: var(--accent); font-weight: 700;">→</span> Aggiungere il tag <code>&lt;lastmod&gt;</code> alle URL della sitemap (attualmente non presente per nessuna): è un segnale utile per indicare al motore di ricerca quali pagine sono state aggiornate di recente.</li>
+    </ul>
+  </section>
+
+  <!-- ===== 04 PAGINE ===== -->
+  <section class="sec" id="pagine">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Top 6 pagine GSC · 28gg</p>
+        <h2 class="sec__title">Le pagine<br>che si vedono</h2>
+      </div>
+      <p class="sec__sub">Solo la home porta click veri. Tutto il resto del sito è una distesa di pagine che accumulano impressions ma non convertono in click. Il problema non è la SEO tecnica delle sotto-pagine: è che il CTR cala drasticamente quando il brand non c'è.</p>
+    </div>
+
+    <div class="blocks">
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">01 — Brand pillar</div>
+        <div class="blocks__url">/</div>
+        <h3 class="blocks__name">Home</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>233</strong></li>
+          <li><span>Impressioni</span><strong>771</strong></li>
+          <li><span>CTR</span><strong>30,2%</strong></li>
+          <li><span>Pos media</span><strong>5,9</strong></li>
+          <li><span>Top query</span><strong>amedani studio (145 click, pos 1,4)</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Solidissima sul brand. Pos &lt;2 per le 3 varianti brand. Driver al 94% del traffico totale.</p>
+          <div class="blocks__badges"><span class="badge">brand</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">02 — Hub commerciale</div>
+        <div class="blocks__url">/agenzia-comunicazione/</div>
+        <h3 class="blocks__name">Agenzia<br>comunicazione</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>7 (+250%)</strong></li>
+          <li><span>Impressioni</span><strong>407</strong></li>
+          <li><span>CTR</span><strong>1,72%</strong></li>
+          <li><span>Pos media</span><strong>7,9</strong></li>
+          <li><span>Trend</span><strong>P2: 2 → P1: 7</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> In crescita ma CTR basso a fronte di 407 impressions. Title/snippet da ottimizzare.</p>
+          <div class="blocks__badges"><span class="badge badge--warn">CTR low</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">03 — Subservice</div>
+        <div class="blocks__url">/servizi/agenzia-grafica/</div>
+        <h3 class="blocks__name">Agenzia<br>grafica</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>4 (+300%)</strong></li>
+          <li><span>Impressioni</span><strong>97</strong></li>
+          <li><span>CTR</span><strong>4,12%</strong></li>
+          <li><span>Pos media</span><strong>9,9</strong></li>
+          <li><span>Trend</span><strong>P2: 1 → P1: 4</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Trend positivo, posizione che inizia ad emergere. Pillar grafica gestita bene.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">in crescita</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">04 — Lead gen</div>
+        <div class="blocks__url">/contatti/</div>
+        <h3 class="blocks__name">Contatti</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>3 (+200%)</strong></li>
+          <li><span>Impressioni</span><strong>402</strong></li>
+          <li><span>CTR</span><strong>0,75%</strong></li>
+          <li><span>Pos media</span><strong>5,4</strong></li>
+          <li><span>Top query</span><strong>amedani studio (variante brand)</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Pos 5,4 ottima, trend +200%. CTR da seguire nei prossimi 28gg: se rimane basso, c'è margine per calibrare lo snippet dopo aver visto le query effettive.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">trend +200%</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">05 — Portfolio</div>
+        <div class="blocks__url">/portfolio-studio-creativo-brescia/</div>
+        <h3 class="blocks__name">Portfolio<br>hub</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>1</strong></li>
+          <li><span>Impressioni</span><strong>68</strong></li>
+          <li><span>CTR</span><strong>1,47%</strong></li>
+          <li><span>Pos media</span><strong>6,5</strong></li>
+          <li><span>Singoli case</span><strong>10+ progetti indicizzati</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Hub funziona da landing per case study. Pos buona ma volume basso. Internal linking da incrementare.</p>
+          <div class="blocks__badges"><span class="badge badge--ghost">supporto</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">06 — Bloccata</div>
+        <div class="blocks__url">/servizi/produzione-foto-video-aziendali/</div>
+        <h3 class="blocks__name">Produzione<br>foto/video</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>0</strong></li>
+          <li><span>Impressioni</span><strong>0</strong></li>
+          <li><span>CTR</span><strong>—</strong></li>
+          <li><span>Pos media</span><strong>—</strong></li>
+          <li><span>Stato GSC</span><strong>Last Crawl: Never</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Pillar mai vista da Google. + 3 figlie nella stessa cartella. Bloccate da LCP 7,4s.</p>
+          <div class="blocks__badges"><span class="badge">CRITICA</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 KEYWORD ===== -->
+  <section class="sec" id="kw">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Query GSC · 28gg</p>
+        <h2 class="sec__title">Le query<br>che girano</h2>
+      </div>
+      <p class="sec__sub">Mappa onesta: il sito vive di brand. Il resto sono impressions su query commerciali Brescia-centriche che ancora non convertono in click. Il pattern di domanda esiste, va lavorato.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Click</th><th class="num">Impr</th><th class="num">CTR</th><th class="num">Pos</th><th>Tipo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">amedani studio</td><td class="num">145</td><td class="num">256</td><td class="num ok">56,6%</td><td class="num ok">1,4</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td class="strong">amedani</td><td class="num">28</td><td class="num">55</td><td class="num ok">50,9%</td><td class="num ok">1,3</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td class="strong">amedani studio brescia</td><td class="num">11</td><td class="num">15</td><td class="num ok">73,3%</td><td class="num ok">1,3</td><td><span class="badge badge--ink">brand+geo</span></td></tr>
+        <tr><td>agenzia creativa brescia</td><td class="num">1</td><td class="num">1</td><td class="num">100%</td><td class="num">63</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>web designer brescia</td><td class="num">1</td><td class="num">2</td><td class="num">50%</td><td class="num">16</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>brand identity aziendale brescia</td><td class="num">0</td><td class="num">8</td><td class="num">0%</td><td class="num">75,1</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>brand identity brescia</td><td class="num">0</td><td class="num">7</td><td class="num">0%</td><td class="num">44,4</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>email marketing brescia</td><td class="num">0</td><td class="num">18</td><td class="num">0%</td><td class="num">76,3</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>direct email marketing brescia</td><td class="num">0</td><td class="num">10</td><td class="num">0%</td><td class="num">67,8</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>newsletter aziendali brescia</td><td class="num">0</td><td class="num">11</td><td class="num">0%</td><td class="num">23,6</td><td><span class="badge badge--warn">commercial · geo</span></td></tr>
+        <tr><td>graphic design</td><td class="num">0</td><td class="num">8</td><td class="num">0%</td><td class="num">9</td><td><span class="badge badge--ghost">informational</span></td></tr>
+        <tr><td>graphic designer</td><td class="num">0</td><td class="num">9</td><td class="num">0%</td><td class="num">6,1</td><td><span class="badge badge--ghost">informational</span></td></tr>
+        <tr><td>flair division</td><td class="num">0</td><td class="num">20</td><td class="num">0%</td><td class="num">9,2</td><td><span class="badge badge--ghost">spillover</span></td></tr>
+        <tr class="tot"><td>Totali stimati</td><td class="num">~186</td><td class="num">~430</td><td class="num">43%</td><td class="num">~9</td><td>(top kw)</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Pattern emerso</h4>
+    <p>Brescia è già un campo "presidiabile" — il dominio raccoglie impressions su tutte le declinazioni geo "X brescia" senza una pagina geo dedicata. Le città target della fase geo (Bergamo, Cremona, Mantova, Vicenza, Verona) sono completamente assenti dal dataset. <strong>Quando si attiveranno le pagine geo, lo spazio è vuoto: niente da spostare, solo da occupare.</strong></p>
+  </section>
+
+  <!-- ===== 06 INSIGHT ===== -->
+  <section class="sec" id="insight">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">Pattern emersi dai dati</p>
+        <h2 class="sec__title">Sei<br>insight</h2>
+      </div>
+      <p class="sec__sub">Letture incrociate tra GSC, URL Inspection, Lighthouse e sitemap. Quattro tecniche, due strategiche.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Indicizzazione <span class="acc">on track</span>, ma con un buco preciso</span>
+          34/39 = 87% delle URL del sitemap sono indicizzate. Le 5 che mancano sono tutte concentrate sulla stessa cartella <code>/servizi/produzione-foto-video-aziendali/</code> (le 4 segnalate + una quinta che ha impressions ma è probabilmente "Discovered — not indexed"). Non è un'indicizzazione "lenta", è una sezione specifica del sito che Google non vuole crawlare.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">L'immagine hero da <span class="acc">2,97 MB</span> non era così il mese scorso</span>
+          L'immagine non era servita così nelle settimane precedenti — il dato attuale (2,97 MB, dimensioni a 16 megapixel) suggerisce un'introduzione recente nella pubblicazione. Sul lato sviluppo è utile capire se si tratta di un upload manuale o di una modifica nel processo di generazione delle varianti. In prospettiva, un monitoraggio sistematico dei tempi di caricamento in produzione (es. con un servizio dedicato di performance monitoring) riduce il rischio di regressioni non rilevate.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Brescia è già <span class="acc">presidiata</span> senza geo-page dedicata</span>
+          15+ query "X brescia" generano impressions. È il <strong>capitale di brand storico</strong> di Amedani che lavora ancora a favore. La strategia geo (vincolo anti-cannibalizzazione 16 aprile) è giusta: <strong>Brescia non serve attaccarla con una pagina geo</strong>, gli arriva organica dalla home. Le 5 città target sono dove vale la pena costruire.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le subservice indicizzate stanno <span class="acc">accumulando segnali</span> · prima fase di osservazione</span>
+          <code>/servizi/agenzia-siti-web/sviluppo-siti-web/</code> (28 impr), <code>/servizi/agenzia-siti-web/agenzia-web-design/</code> (13), <code>/servizi/agenzia-grafica/agenzia-branding/</code> (31): tutte in pos 8–27 senza click ancora consolidati. Per un sito di 45gg è la fase fisiologica in cui Google sta capendo dove posizionarle. <strong>Tra 30–60gg, quando le query effettive emergono, sarà possibile iterare gli snippet sulla base dei dati reali</strong> — è il vantaggio di scrivere i title sapendo già cosa effettivamente cerchiamo di intercettare vs. il primo lancio "a freddo".
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">pruning</span> ha funzionato</span>
+          La vecchia landing legacy <code>/bella-questa-landing/</code> e il sottodominio <code>bella-questa-landing.amedani.com/</code> hanno azzerato i click (era a 18+5 click in P2). Il redirect 301 verso il sito principale ha consolidato i segnali. <strong>La pulizia di aprile è andata come deciso</strong>.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">La sitemap non ha <span class="acc">lastmod</span></span>
+          Tutte le 39 URL sono dichiarate senza <code>&lt;lastmod&gt;</code>. È un dettaglio, ma Google usa il lastmod per priorità di crawl. Senza, tratta le URL come "tutte uguali" e per i siti giovani questo rallenta. Aggiungere lastmod nella sitemap (e tenerlo aggiornato in CI/CD) accelera l'attività di crawling sui nuovi contenuti.
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== 07 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Aree di lavoro proposte</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Le attività proposte per la prossima fase di lavoro. La sequenza logica è: prima l'ottimizzazione tecnica dell'immagine, poi la richiesta di indicizzazione delle 4 URL, poi l'apertura della fase geo. Tempistiche e responsabilità vengono calibrate sul contesto operativo del team.</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Ottimizzare <span class="acc">l'immagine di copertura</span> della pagina foto/video</span>
+          <span class="recs__why">Ridurre il peso dell'immagine attuale (2,97 MB) generando varianti dimensionali diverse per mobile, tablet e desktop. Verificare il comportamento della componente immagine del CMS — può servire la stessa iterazione anche sulle altre pagine pillar di servizio (grafica, siti web, social media). L'obiettivo è portare il tempo di caricamento del contenuto principale sotto i 2,5 secondi raccomandati.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Richiesta di <span class="acc">indicizzazione</span> delle 4 pagine non ancora viste da Google</span>
+          <span class="recs__why">Una volta ottimizzata l'immagine, dalla Search Console si può inoltrare manualmente la richiesta di indicizzazione delle 4 URL (pagina pillar + 3 figlie). È buona pratica distribuire le richieste su più giorni per evitare segnali di attività anomala. Monitorare nei 7 giorni successivi lo stato delle URL nei report di Search Console.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Aggiungere il tag <span class="acc">lastmod</span> alle URL della sitemap</span>
+          <span class="recs__why">Le 4 sitemap pubblicate (index + servizi + pages + blog) attualmente non riportano la data di ultima modifica per nessuna URL. Il tag <code>&lt;lastmod&gt;</code> è un segnale utile al motore di ricerca per capire quali pagine sono state aggiornate di recente, e accelera la scoperta dei nuovi contenuti — particolarmente rilevante in vista della pubblicazione delle pagine geo.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Audit performance <span class="acc">esteso</span> sulle altre pagine pillar</span>
+          <span class="recs__why">Verificare con un test Lighthouse anche sulle altre pagine principali (<code>/servizi/agenzia-grafica/</code>, <code>/servizi/agenzia-siti-web/</code>, <code>/servizi/agenzia-social-media-marketing/</code>) e sulle relative figlie. Se l'immagine pesante è un pattern ricorrente, l'iterazione è più efficace fatta una volta per tutte sulla componente immagine, prima di mettere online le nuove pagine geo (altre 25+ pagine in arrivo).</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Iterazione snippet delle subservice <span class="acc">sulle query emerse</span></span>
+          <span class="recs__why">A 60–90 giorni dal lancio, Search Console fornirà la lista effettiva delle query per cui le 7 subservice (sviluppo siti web, web design, landing page, consulenza UX, branding, content marketing social, gestione campagne) stanno ricevendo impressioni. Sulla base di quelle query reali, calibrare title e meta description sulle pagine — è iterazione informata sui dati, non una riscrittura preventiva.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Apertura <span class="acc">fase geo</span> · briefing Bergamo già disponibile</span>
+          <span class="recs__why">La condizione di indicizzazione (87%) è raggiunta. Il <strong>briefing geo Bergamo del 13 maggio</strong> (file <code>briefing-bergamo-2026-05-13-public.html</code>) contiene già mappa SERP locale, 25 competitor analizzati, 10 gap di mercato e bozze di layout per le pagine geo. Il prossimo step è la validazione dei layout e la pubblicazione delle pagine geo per Bergamo. Le città successive (Cremona, Mantova, Vicenza, Verona) verranno analizzate con lo stesso metodo.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Attivare conversion tracking <span class="acc">su Google Analytics 4</span></span>
+          <span class="recs__why">Le conversioni reali (chiamate, email, WhatsApp da chi arriva dal brand) avvengono ma oggi non vengono registrate nei report di Google Analytics. Abilitando il tracking degli eventi base (invio form, click telefono, click WhatsApp), il traffico già esistente diventa misurabile per canale e per pagina. È un prerequisito per analisi future sul ritorno di qualsiasi attività SEO o pubblicitaria.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="pull">Risolto il caricamento immagine, le 4 URL diventano scopribili e <span class="acc">la fase geo può aprirsi</span>.</div>
+  </section>
+
+  <!-- ===== 08 SEQUENCING ===== -->
+  <section class="sec" id="roadmap">
+    <div class="sec__head">
+      <p class="sec__num">08</p>
+      <div>
+        <p class="sec__kicker">Ordine logico delle attività</p>
+        <h2 class="sec__title">Sequenza<br>suggerita</h2>
+      </div>
+      <p class="sec__sub">Non un calendario, ma l'ordine logico in cui le attività si sbloccano una con l'altra. Le tempistiche concrete vengono calibrate sul contesto operativo.</p>
+    </div>
+
+    <ol class="phases">
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Ottimizzazione immagine pillar foto/video</span>
+        <span class="phases__body">Rigenerazione varianti dimensionali dell'immagine attuale + verifica della componente immagine del CMS.</span>
+        <span class="phases__when">primo step</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Audit performance esteso sulle altre pillar</span>
+        <span class="phases__body">Verifica se il problema è isolato alla pagina foto/video o ricorrente. Eventuale iterazione sistemica della componente immagine.</span>
+        <span class="phases__when">in parallelo</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Richiesta indicizzazione 4 URL + lastmod sitemap</span>
+        <span class="phases__body">Inoltro manuale delle 4 URL da Search Console (post-fix immagine). Aggiunta del tag lastmod alle URL della sitemap. Monitoraggio dello stato di crawling.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Attivazione conversion tracking + iterazione snippet subservice</span>
+        <span class="phases__body">Setup eventi base su Google Analytics 4. Calibrazione progressiva di title e meta delle subservice sulla base dei dati Search Console emersi.</span>
+        <span class="phases__when">in parallelo</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Apertura fase geo · Bergamo</span>
+        <span class="phases__body">Validazione layout pagine geo a partire dal briefing del 13 maggio. Definizione delle priorità di pubblicazione insieme al team.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Replica del metodo sulle altre città</span>
+        <span class="phases__body">Per ogni città dell'ondata 1 (Cremona, Mantova, Vicenza, Verona): analisi SERP locale, briefing strategico, validazione layout, pubblicazione.</span>
+        <span class="phases__when">fase successiva</span>
+      </li>
+    </ol>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>Performance GSC su <code>sc-domain:amedani.com</code>, confronto 28gg vs 28gg precedenti. Indicizzazione via URL Inspection API. Lighthouse audit via DataForSEO on_page_lighthouse. HTTP head check via curl. Sitemap parsing diretto.</p>
+    </div>
+    <div>
+      <h5>Coordinate progetto</h5>
+      <p>Amedani Studio · sito online da circa 45 giorni · indicizzazione 87% · target geo 5 città prima ondata. Verifica periodica dei dati di performance.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>Ottimizzazione dell'immagine e dei tempi di caricamento della pagina foto/video · richiesta di indicizzazione delle 4 URL · pubblicazione delle pagine geo a partire dal briefing Bergamo · attivazione del tracking eventi su Google Analytics 4.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">Amedani Studio · Check performance · 19 maggio 2026</p>
+
+</div>
+
+</body>
+</html>

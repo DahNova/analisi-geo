@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amedani Studio — Strategia geo Bergamo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600;1,9..144,700&family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --paper: #F1ECE2;
+    --paper-deep: #E8DFCC;
+    --paper-soft: #EBE5D6;
+    --ink: #161513;
+    --ink-soft: #4A4540;
+    --ink-mute: #7A716A;
+    --accent: #C8392A;
+    --accent-soft: #F4D6CE;
+    --gold: #8B6F2C;
+    --gold-soft: #EAD8A6;
+    --green: #436E4F;
+    --green-soft: #CFDBC8;
+    --border: #C9BFAE;
+    --border-soft: #DCD3C0;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'Geist', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  /* === LAYOUT === */
+  .layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 100vh;
+  }
+  .toc {
+    border-right: 1px solid var(--border);
+    padding: 36px 28px 36px 32px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--paper);
+  }
+  .toc__brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 20px;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    font-variation-settings: "opsz" 9, "SOFT" 0;
+    margin-bottom: 6px;
+  }
+  .toc__brand em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: "opsz" 60, "SOFT" 100;
+  }
+  .toc__meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    margin-bottom: 42px;
+    line-height: 1.7;
+  }
+  .toc__list { list-style: none; padding: 0; margin: 0; }
+  .toc__list li { margin-bottom: 16px; }
+  .toc__list a {
+    display: block;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 13.5px;
+    line-height: 1.3;
+    padding-left: 32px;
+    position: relative;
+    font-weight: 400;
+    transition: color 0.15s, transform 0.15s;
+  }
+  .toc__list a:hover { color: var(--accent); transform: translateX(2px); }
+  .toc__num {
+    position: absolute;
+    left: 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-mute);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    top: 1px;
+  }
+  .toc__footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-soft);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    line-height: 1.7;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+  }
+  .toc__footer span { display: block; }
+
+  /* === MAIN === */
+  main { overflow: hidden; max-width: 100%; }
+
+  /* === COVER === */
+  .cover {
+    padding: 72px 72px 60px;
+    border-bottom: 1px solid var(--ink);
+    position: relative;
+    background:
+      radial-gradient(ellipse 70% 50% at 95% 5%, rgba(200,57,42,0.07) 0%, transparent 65%),
+      var(--paper);
+  }
+  .cover__masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 60px;
+  }
+  .cover__masthead strong { color: var(--ink); font-weight: 500; }
+
+  .cover__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 8vw, 116px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+    margin: 0 0 32px;
+    font-variation-settings: "opsz" 144, "SOFT" 0;
+    max-width: 13ch;
+  }
+  .cover__title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+  .cover__lead {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(20px, 2.1vw, 27px);
+    line-height: 1.35;
+    max-width: 38ch;
+    color: var(--ink-soft);
+    margin: 0 0 56px;
+    font-variation-settings: "opsz" 60, "SOFT" 80;
+  }
+  .cover__stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--border);
+    margin-top: 56px;
+  }
+  .stat { padding: 22px 0 22px 0; border-right: 1px solid var(--border-soft); padding-right: 16px; }
+  .stat:last-child { border-right: 0; }
+  .stat__num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .stat__num em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+  }
+  .stat__label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    line-height: 1.4;
+  }
+
+  /* === SECTION === */
+  section { padding: 80px 72px 72px; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: 0; }
+  .sec__head {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 32px;
+    align-items: baseline;
+    margin-bottom: 48px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .sec__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 0.85;
+    letter-spacing: -0.045em;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+    font-style: italic;
+    margin: 0;
+  }
+  .sec__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 3.5vw, 46px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0 0 14px;
+    font-variation-settings: "opsz" 144, "SOFT" 20;
+  }
+  .sec__title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 500;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+  }
+  .sec__kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 14px;
+  }
+  .sec__sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin: 0;
+    font-variation-settings: "opsz" 60, "SOFT" 40;
+  }
+
+  /* === BODY === */
+  p { margin: 0 0 14px; max-width: 72ch; }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 25px;
+    line-height: 1.15;
+    letter-spacing: -0.018em;
+    margin: 44px 0 18px;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  h3 em { font-style: italic; color: var(--accent); font-weight: 500; }
+  h4 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 28px 0 12px;
+  }
+
+  /* Stat strip */
+  .strip {
+    margin: 28px 0;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--border);
+  }
+  .strip__row {
+    display: grid;
+    grid-template-columns: 220px 1fr 140px;
+    align-items: baseline;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border-soft);
+    gap: 24px;
+  }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .strip__val {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 23px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144, "SOFT" 0;
+  }
+  .strip__val em { color: var(--accent); font-style: italic; font-weight: 400; }
+  .strip__note { font-size: 12.5px; color: var(--ink-soft); font-style: italic; font-family: var(--font-display); font-variation-settings: "opsz" 36; }
+
+  /* Tables */
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 10px 14px 10px 0;
+    border-bottom: 2px solid var(--ink);
+    font-weight: 500;
+  }
+  .tbl tbody td {
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid var(--border-soft);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+  .tbl tbody tr:hover { background: rgba(200,57,42,0.04); }
+  .tbl .num { font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft); text-align: right; }
+  .tbl .strong { font-weight: 600; }
+  .tbl .center { text-align: center; }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    padding: 3px 9px;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    border: 1px solid currentColor;
+    line-height: 1.4;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .badge--gap { color: var(--accent); background: var(--accent-soft); }
+  .badge--usp { color: var(--green); background: var(--green-soft); }
+  .badge--info { color: var(--gold); background: var(--gold-soft); }
+  .badge--neutral { color: var(--ink-soft); background: transparent; border-color: var(--border); }
+  .badge--ink { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+
+  /* Service grid */
+  .svc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 32px 0;
+    border: 1px solid var(--ink);
+    background: var(--paper-soft);
+  }
+  .svc__cell { padding: 28px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); position: relative; }
+  .svc__cell:nth-child(2n) { border-right: 0; }
+  .svc__cell:nth-last-child(-n+2):not(.svc__cell--solo) { border-bottom: 0; }
+  .svc__cell--solo { grid-column: 1 / -1; border-right: 0; }
+  .svc__num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .svc__kw {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+  .svc__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 14px;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  .svc__name em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .svc__lede {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+    font-variation-settings: "opsz" 60, "SOFT" 30;
+  }
+  .svc__top {
+    margin: 0 0 16px;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.6;
+  }
+  .svc__top li {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 8px;
+    color: var(--ink-soft);
+    padding: 2px 0;
+  }
+  .svc__top li span:first-child { color: var(--ink-mute); }
+  .svc__top li strong { color: var(--ink); font-weight: 500; }
+  .svc__take {
+    border-top: 1px dashed var(--border);
+    padding-top: 14px;
+    margin-top: 14px;
+  }
+  .svc__take p {
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin: 0 0 8px;
+  }
+  .svc__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* Wireframe */
+  .wf {
+    border: 1px solid var(--ink);
+    margin: 28px 0;
+    background: var(--paper);
+  }
+  .wf__head {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .wf__head em { font-style: italic; color: var(--accent-soft); font-family: var(--font-display); font-size: 14px; text-transform: none; letter-spacing: 0; font-variation-settings: "opsz" 36, "SOFT" 100; }
+  .wf__head strong { font-weight: 500; }
+  .wf__row {
+    padding: 14px 22px;
+    border-bottom: 1px dashed var(--border);
+    display: grid;
+    grid-template-columns: 40px 1fr 110px;
+    gap: 16px;
+    align-items: flex-start;
+    font-size: 13.5px;
+  }
+  .wf__row:last-child { border-bottom: 0; }
+  .wf__row:nth-child(odd) { background: var(--paper-soft); }
+  .wf__step {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    padding-top: 1px;
+  }
+  .wf__desc { line-height: 1.45; }
+  .wf__desc strong { font-weight: 600; display: block; margin-bottom: 2px; font-family: var(--font-display); font-size: 14.5px; font-variation-settings: "opsz" 36; }
+  .wf__desc em { font-style: italic; color: var(--ink-soft); font-family: var(--font-display); font-variation-settings: "opsz" 36, "SOFT" 30; }
+  .wf__tag { text-align: right; }
+  .wf__meta {
+    padding: 14px 22px;
+    background: var(--paper-deep);
+    border-top: 1px solid var(--ink);
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+  .wf__meta dt {
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    padding-top: 1px;
+  }
+  .wf__meta dd { margin: 0 0 6px; color: var(--ink); }
+  .wf__meta dd:last-child { margin-bottom: 0; }
+  .wf__meta dd em { font-family: var(--font-display); font-style: italic; color: var(--accent); font-variation-settings: "opsz" 36; }
+
+  /* Pull quote */
+  .pull {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.3;
+    margin: 36px 0;
+    padding: 28px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    color: var(--ink);
+    max-width: 40ch;
+    font-variation-settings: "opsz" 80, "SOFT" 60;
+  }
+  .pull em { font-style: normal; color: var(--accent); }
+
+  /* Recommendations */
+  .recs { list-style: none; padding: 0; margin: 24px 0; }
+  .recs li {
+    padding: 18px 0 18px 60px;
+    border-bottom: 1px solid var(--border-soft);
+    position: relative;
+    line-height: 1.5;
+    max-width: 76ch;
+  }
+  .recs li:last-child { border-bottom: 0; }
+  .recs li::before {
+    content: counter(recs, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 18px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .recs { counter-reset: recs; }
+  .recs li { counter-increment: recs; }
+  .recs__title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+    font-variation-settings: "opsz" 60, "SOFT" 20;
+  }
+  .recs__title em { font-style: italic; color: var(--accent); }
+  .recs__why {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 14px;
+    font-variation-settings: "opsz" 60, "SOFT" 30;
+    line-height: 1.4;
+  }
+
+  /* Insight list */
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 24px 0; }
+  .insights li {
+    counter-increment: ins;
+    padding: 24px 0 24px 80px;
+    border-bottom: 1px solid var(--border-soft);
+    position: relative;
+    line-height: 1.5;
+    max-width: 80ch;
+  }
+  .insights li:last-child { border-bottom: 0; }
+  .insights li::before {
+    content: counter(ins, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 22px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 38px;
+    color: var(--accent);
+    line-height: 1;
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+  }
+  .insights__title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    font-variation-settings: "opsz" 60, "SOFT" 30;
+  }
+  .insights__title em { font-style: italic; color: var(--accent); }
+  .insights__body { font-size: 14px; color: var(--ink-soft); }
+
+  /* Phases */
+  .phases { list-style: none; padding: 0; margin: 28px 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li {
+    counter-increment: ph;
+    display: grid;
+    grid-template-columns: 80px 200px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-soft);
+    align-items: baseline;
+  }
+  .phases__num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--accent);
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+  }
+  .phases__name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    font-variation-settings: "opsz" 60, "SOFT" 20;
+  }
+  .phases__body { font-size: 14px; line-height: 1.5; color: var(--ink-soft); max-width: 60ch; }
+
+  /* Two col */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin: 24px 0; }
+
+  /* Code */
+  code, .code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--paper-deep);
+    padding: 1px 6px;
+    border: 1px solid var(--border-soft);
+    color: var(--ink);
+    border-radius: 2px;
+  }
+
+  /* Lists */
+  ul.bullet { list-style: none; padding: 0; margin: 16px 0; }
+  ul.bullet li {
+    padding-left: 26px;
+    position: relative;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    max-width: 74ch;
+  }
+  ul.bullet li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+  ul.bullet li strong { font-weight: 600; }
+
+  /* Footer */
+  footer {
+    padding: 56px 72px 80px;
+    border-top: 2px solid var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .colophon {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 28px;
+    margin-bottom: 18px;
+  }
+  .colophon h5 {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 0 0 12px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-variation-settings: "opsz" 60, "SOFT" 50;
+  }
+  .colophon p { font-family: var(--font-body); font-size: 13px; color: var(--ink-soft); line-height: 1.55; letter-spacing: 0; max-width: 50ch; }
+
+  /* Resp */
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; height: auto; padding: 24px; border-right: 0; border-bottom: 1px solid var(--border); }
+    .cover { padding: 48px 28px 36px; }
+    section { padding: 56px 28px; }
+    .sec__head { grid-template-columns: 1fr; gap: 8px; }
+    .sec__num { font-size: 60px; }
+    .cover__stats { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 16px; }
+    .svc { grid-template-columns: 1fr; }
+    .svc__cell { border-right: 0; border-bottom: 1px solid var(--border); }
+    .svc__cell--solo { grid-column: auto; }
+    .strip__row { grid-template-columns: 1fr; gap: 4px; padding: 12px 0; }
+    .wf__row { grid-template-columns: 32px 1fr; }
+    .wf__tag { grid-column: 2; text-align: left; }
+    .colophon { grid-template-columns: 1fr; }
+    .phases li { grid-template-columns: 1fr; gap: 4px; }
+    footer { padding: 36px 28px; }
+  }
+
+  @media print {
+    .toc { display: none; }
+    .layout { grid-template-columns: 1fr; }
+    .cover { padding: 32px 24px; border: 0; }
+    section { padding: 24px; page-break-inside: avoid; break-inside: avoid-page; border-bottom: 1px solid #999; }
+    footer { padding: 24px; }
+    body { background: white; color: black; font-size: 10.5pt; }
+    .sec__num { color: black; }
+    .badge { background: transparent !important; color: black !important; border: 1px solid black; }
+    .pull { break-inside: avoid; }
+    .wf, .svc, .agenda { break-inside: avoid; page-break-inside: avoid; }
+    a { color: black; text-decoration: none; }
+    .strip { break-inside: avoid; }
+    .insights li { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside class="toc">
+    <div class="toc__brand">Amedani <em>Studio</em></div>
+    <div class="toc__meta">Strategia geo<br>Bergamo / 2026</div>
+    <ol class="toc__list">
+      <li><a href="#premesse"><span class="toc__num">00</span>Premesse di scope</a></li>
+      <li><a href="#stato"><span class="toc__num">01</span>Stato del sito</a></li>
+      <li><a href="#set"><span class="toc__num">02</span>Il set competitivo</a></li>
+      <li><a href="#schede"><span class="toc__num">03</span>5 servizi a Bergamo</a></li>
+      <li><a href="#insight"><span class="toc__num">04</span>10 insight cross-servizio</a></li>
+      <li><a href="#layout"><span class="toc__num">05</span>Bozze layout pagine geo</a></li>
+      <li><a href="#proposta"><span class="toc__num">06</span>La proposta</a></li>
+      <li><a href="#fasi"><span class="toc__num">07</span>Fasi di lavoro</a></li>
+    </ol>
+    <div class="toc__footer">
+      <span>Analisi 13.05.2026</span>
+      <span>Pilota: 5 servizi · 25 competitor</span>
+    </div>
+  </aside>
+
+  <main>
+
+    <!-- ===== COVER ===== -->
+    <header class="cover">
+      <div class="cover__masthead">
+        <span><strong>Analisi strategica</strong> &nbsp;·&nbsp; Fase geo</span>
+        <span>Maggio 2026</span>
+      </div>
+      <h1 class="cover__title">Bergamo<br>è il <em>primo passo</em></h1>
+      <p class="cover__lead">Mappa della SERP locale, gap di mercato sui 5 servizi prioritari e bozze di layout per le nuove pagine geo.</p>
+      <div class="cover__stats">
+        <div class="stat">
+          <span class="stat__num">87<em>%</em></span>
+          <span class="stat__label">Indicizzazione<br>sito principale</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">5</span>
+          <span class="stat__label">Servizi<br>prioritari</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">25</span>
+          <span class="stat__label">Competitor<br>analizzati</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">10</span>
+          <span class="stat__label">Gap di<br>mercato</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== 00 PREMESSE ===== -->
+    <section id="premesse" style="padding-top: 56px; padding-bottom: 48px; background: var(--paper-deep);">
+      <div class="sec__head" style="margin-bottom: 24px; padding-bottom: 18px;">
+        <p class="sec__num" style="font-size: 60px; color: var(--ink-soft);">00</p>
+        <div>
+          <p class="sec__kicker">Note di scope · perché questo briefing è strutturato così</p>
+          <h2 class="sec__title" style="font-size: clamp(24px, 2.8vw, 34px);">Premesse di <em>scope</em></h2>
+        </div>
+      </div>
+      <div class="cover__stats" style="margin: 0 0 28px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="stat"><span class="stat__num">102</span><span class="stat__label">Progetti<br>consegnati</span></div>
+        <div class="stat"><span class="stat__num">29</span><span class="stat__label">Partner<br>consolidati</span></div>
+        <div class="stat"><span class="stat__num">8</span><span class="stat__label">Settori<br>coperti</span></div>
+        <div class="stat"><span class="stat__num">22</span><span class="stat__label">Persone<br>nel team</span></div>
+      </div>
+      <p style="font-family: var(--font-display); font-style: italic; font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; font-variation-settings: 'opsz' 60, 'SOFT' 30;">Asset di credibilità già presenti sul sito principale — vanno usati nelle pagine geo come prova sociale di apertura.</p>
+
+      <ul class="bullet" style="max-width: 78ch;">
+        <li><strong>Tassonomia 5 servizi vs 4 del sito.</strong> Il sito principale organizza l'offerta in <em>4 macro-categorie</em> (Branding · Content Creation · Siti web · Social Media Marketing). Le pagine geo di questo briefing lavorano su una segmentazione più granulare (5 servizi prioritari), pensata per intercettare query SERP locali più specifiche. Footer e nav delle pagine geo restano allineati alle 4 categorie esistenti — il sub-servizio "shooting foto/video per social" vive sotto Content Creation, "branding e logo" sotto Branding, ecc.</li>
+        <li><strong>Audience "Partner / Outsourcing white-label" — esclusa per scelta.</strong> Amedani ha un secondo customer journey (`/outsourcing-agenzia-comunicazione/`) rivolto ad altre agenzie. Per questa fase geo è stata fatta la scelta consapevole di focalizzarsi sui clienti diretti. Il canale partner sarà eventualmente presidiato in una fase successiva con landing geo dedicate.</li>
+        <li><strong>Sub-servizi non inclusi nella fase geo pilota.</strong> Live coverage eventi · sviluppo landing page · email marketing · grafica offline / packaging: tutti esistono sul sito ma non entrano nella prima ondata geo. Potranno essere aggiunti in seconda fase se le 5 landing pilota performano.</li>
+        <li><strong>Pattern già implementati sul sito principale.</strong> Le testimonianze inline complete (foto + nome + ruolo + quote) sono già presenti su `/come-lavoriamo-con-i-clienti/`. Per le pagine geo si tratta di <em>replicare lo stesso pattern</em>, non di colmare un gap interno.</li>
+      </ul>
+    </section>
+
+    <!-- ===== 01 STATO ===== -->
+    <section id="stato">
+      <div class="sec__head">
+        <p class="sec__num">01</p>
+        <div>
+          <p class="sec__kicker">Salute del sito · base per la fase geo</p>
+          <h2 class="sec__title">Il sito è <em>pronto</em></h2>
+          <p class="sec__sub">Dopo il relaunch di aprile, il sito principale ha raggiunto l'87 % di indicizzazione. La struttura URL è coerente con l'ondata geo che parte ora.</p>
+        </div>
+      </div>
+
+      <div class="strip">
+        <div class="strip__row">
+          <span class="strip__label">URL totali nei sitemap</span>
+          <span class="strip__val">39</span>
+          <span class="strip__note">servizi + pagine + blog</span>
+        </div>
+        <div class="strip__row">
+          <span class="strip__label">URL indicizzate</span>
+          <span class="strip__val"><em>34 / 39</em></span>
+          <span class="strip__note">target raggiunto</span>
+        </div>
+        <div class="strip__row">
+          <span class="strip__label">CTR medio (28 gg)</span>
+          <span class="strip__val">25,7 %</span>
+          <span class="strip__note">molto alto</span>
+        </div>
+        <div class="strip__row">
+          <span class="strip__label">Posizione media</span>
+          <span class="strip__val">10,5</span>
+          <span class="strip__note">margine di crescita</span>
+        </div>
+        <div class="strip__row">
+          <span class="strip__label">Impression / click (28 gg)</span>
+          <span class="strip__val">1.022 / 263</span>
+          <span class="strip__note">trend stabile</span>
+        </div>
+      </div>
+
+      <h3>Composizione dei <em>sitemap</em></h3>
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Sitemap</th>
+            <th>Contenuto</th>
+            <th class="num">URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>sitemap-servizi.xml</code></td>
+            <td>4 macro-servizi (siti web, social media marketing, foto/video, branding) + 16 sotto-servizi</td>
+            <td class="num strong">20</td>
+          </tr>
+          <tr>
+            <td><code>sitemap-pages.xml</code></td>
+            <td>7 pagine istituzionali (home, agenzia, metodo, settori, portfolio, outsourcing, contatti) + 9 case study</td>
+            <td class="num strong">16</td>
+          </tr>
+          <tr>
+            <td><code>sitemap-blog.xml</code></td>
+            <td>Hub blog + 2 articoli</td>
+            <td class="num strong">3</td>
+          </tr>
+          <tr style="background: var(--paper-deep);">
+            <td colspan="2" class="strong">Totale URL nel sitemap</td>
+            <td class="num strong">39</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top: 24px;">La fase geo può partire ora. Le nuove pagine città-per-servizio si appoggeranno alla struttura `<code>/servizi/...</code>` esistente, ereditandone l'autorità e arricchendola di varianti geo-localizzate.</p>
+    </section>
+
+    <!-- ===== 02 SET COMPETITIVO ===== -->
+    <section id="set">
+      <div class="sec__head">
+        <p class="sec__num">02</p>
+        <div>
+          <p class="sec__kicker">Mappa SERP geo-localizzata · Bergamo</p>
+          <h2 class="sec__title">Il set <em>competitivo</em> a colpo d'occhio</h2>
+          <p class="sec__sub">Per ognuno dei 5 servizi prioritari, abbiamo estratto la SERP geo-localizzata di Bergamo e analizzato i top 5 risultati. Una vista a colpo d'occhio della qualità del mercato locale.</p>
+        </div>
+      </div>
+
+      <h3>Anatomia del <em>set competitivo</em></h3>
+      <p>I 25 risultati nei top 5 dei 5 servizi corrispondono a <strong>19 brand unici</strong> (alcuni si ripetono in più SERP). Il mercato si organizza in tre tipologie nettamente distinte: ognuna risponde a un intento di ricerca diverso e ha logiche competitive diverse.</p>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Tipologia</th>
+            <th class="num">Su 19 brand</th>
+            <th>Esempi</th>
+            <th>Logica competitiva</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="strong">Multi-servizio integrati</td>
+            <td class="num strong">~10</td>
+            <td>Valeo · Teknet · Linoolmostudio · Dexa · Extra-web · SayAgency · Mete · Studio Meme · Noknok · Moma</td>
+            <td>Competono per autorità di brand + ampiezza catalogo + interlinking massivo. Dominano siti web · gestione social · branding.</td>
+          </tr>
+          <tr>
+            <td class="strong">Specializzati single-skill</td>
+            <td class="num strong">~7</td>
+            <td>5 fotografi (Buttinoni · Fotodare · Cortinovis · Zanga · Rotasperti) + WMDstudio (siti) + Makeitweb (social)</td>
+            <td>Competono per profondità di mestiere + portfolio personale. Dominano la SERP foto/video con persona-brand.</td>
+          </tr>
+          <tr>
+            <td class="strong">Directory / marketplace</td>
+            <td class="num strong">2</td>
+            <td>Sortlist (gestione social + branding) · Addlance (contenuti)</td>
+            <td>Competono per traffic-aggregation. Mostrano fasce di prezzo, recensioni e numero progetti — gap totale tra i diretti.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Servizio</th>
+            <th>Tipo competitor dominanti</th>
+            <th class="center">Landing<br>geo dedicata</th>
+            <th class="center">Pricing<br>visibile</th>
+            <th>Gap più sfruttabile</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="strong">Sviluppo siti web</td>
+            <td>Agenzie multi-servizio (Valeo, Teknet, Linoolmostudio, WMD, Extra-web)</td>
+            <td class="center"><span class="badge badge--neutral">1 / 5</span></td>
+            <td class="center"><span class="badge badge--gap">0 / 5</span></td>
+            <td>Landing geo + pricing + metodo visibile</td>
+          </tr>
+          <tr>
+            <td class="strong">Foto / video per social</td>
+            <td><em>Fotografi singoli mono-skill</em> (Fotodare, Zanga, Rotasperti…)</td>
+            <td class="center"><span class="badge badge--gap">0 / 3</span></td>
+            <td class="center"><span class="badge badge--gap">0 / 3</span></td>
+            <td><strong>Zero agenzie integrate</strong></td>
+          </tr>
+          <tr>
+            <td class="strong">Contenuti per social</td>
+            <td>Agenzie multi-servizio (Extra-web, Dexa, Makeitweb, Moma) + directory</td>
+            <td class="center"><span class="badge badge--info">4 / 5</span></td>
+            <td class="center"><span class="badge badge--neutral">1 / 5</span></td>
+            <td>Google fonde con "gestione social"</td>
+          </tr>
+          <tr>
+            <td class="strong">Gestione social media</td>
+            <td>Mix agenzie (Dexa, Moma, Noknok, SayAgency) + Sortlist directory</td>
+            <td class="center"><span class="badge badge--info">3 / 5</span></td>
+            <td class="center"><span class="badge badge--gap">0 / 4</span></td>
+            <td>Specializzazione settoriale + metodo brandizzato</td>
+          </tr>
+          <tr>
+            <td class="strong">Branding e logo</td>
+            <td>Agenzie creative (Mete, Noknok, Studio Meme, Dexa) + Sortlist</td>
+            <td class="center"><span class="badge badge--gap">0 / 5</span></td>
+            <td class="center"><span class="badge badge--gap">0 / 4</span></td>
+            <td><strong>Landing geo branding-specifica = terreno libero</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Maturità SEO <em>2026</em> della SERP geo Bergamo</h3>
+      <p>Sui 19 brand unici, una panoramica dei pattern moderni adottati. Ogni gap a 0 o 1 è terreno strutturalmente libero — non perché il pattern sia esotico, ma perché la SERP locale non si è ancora aggiornata agli standard 2026.</p>
+
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Pattern SEO 2026</th>
+            <th class="center">Adottato</th>
+            <th>Chi lo fa</th>
+            <th>Implicazione per Amedani</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="strong">Schema FAQPage attivo</td>
+            <td class="center"><span class="badge badge--gap">0 / 19</span></td>
+            <td>Nessuno (alcuni hanno solo Organization/Review basic)</td>
+            <td>Signal semantico per AI/LLM + struttura answer-first per featured snippet e People Also Ask. <em>Nota: rich result SERP deprecato da Google il 7/5/2026 — lo schema resta valido come signal di comprensione semantica.</em></td>
+          </tr>
+          <tr>
+            <td class="strong">Pricing visibile sulla landing</td>
+            <td class="center"><span class="badge badge--gap">1 / 19</span></td>
+            <td>Makeitweb (da 700 €/mese sui contenuti social)</td>
+            <td>Esporre fasce = leva di differenziazione forte</td>
+          </tr>
+          <tr>
+            <td class="strong">Recensioni inline complete (foto + ruolo + città)</td>
+            <td class="center"><span class="badge badge--gap">2 / 19</span></td>
+            <td>WMDstudio (widget Trustindex 20 recensioni) · Makeitweb (9 testimonial)</td>
+            <td>Replicare il pattern del sito Amedani sulle pagine geo</td>
+          </tr>
+          <tr>
+            <td class="strong">AI / GEO search come servizio dichiarato</td>
+            <td class="center"><span class="badge badge--gap">1 / 19</span></td>
+            <td>Linoolmostudio (sezione dedicata a ChatGPT/Gemini/Perplexity)</td>
+            <td>Angle differenziante a costo zero se il sito è ben fatto</td>
+          </tr>
+          <tr>
+            <td class="strong">Metriche di risultato nel portfolio (+X% conv, +Y follower, ROAS)</td>
+            <td class="center"><span class="badge badge--gap">0 / 19</span></td>
+            <td>Nessuno mostra dati misurabili sui casi</td>
+            <td>Posizionamento "case study con prove" è terreno libero</td>
+          </tr>
+          <tr>
+            <td class="strong">Processo creativo / metodo visibile a step illustrati</td>
+            <td class="center"><span class="badge badge--gap">0 / 19</span></td>
+            <td>Solo eWebSolution accenna 6 step in formato testo</td>
+            <td>Pattern "ASCOLTO → STRATEGIA → PRODUZIONE → PERFORMANCE" è raro</td>
+          </tr>
+          <tr>
+            <td class="strong">Team con foto e ruoli sulla landing</td>
+            <td class="center"><span class="badge badge--gap">0 / 19</span></td>
+            <td>Nessuno sulle landing analizzate</td>
+            <td>Amedani lo ha già su <code>/agenzia-comunicazione/</code> — replicare</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pull">"Tra i competitor diretti, solo <em>Makeitweb</em> espone prezzi (700 €/mese sui contenuti social). Solo <em>uno</em> ha una landing geo dedicata sul branding. Nessuno usa schema FAQPage."</div>
+
+      <h3>Perché questo è il momento <em>giusto</em></h3>
+      <p>La SERP geo di Bergamo è matura quel tanto che basta per essere un mercato di valore (chi cerca compra), ma è ancora <strong>strutturalmente impreparata</strong> agli standard SEO 2026: nessuno usa schema markup ricco, quasi nessuno espone prezzi, pochissimi mostrano metriche o testimonianze inline. Entrare ora con una landing geo dedicata, pricing trasparente e schema completo è una mossa a basso costo e alto ritorno.</p>
+    </section>
+
+    <!-- ===== 03 SCHEDE SERVIZIO ===== -->
+    <section id="schede">
+      <div class="sec__head">
+        <p class="sec__num">03</p>
+        <div>
+          <p class="sec__kicker">5 servizi · 25 schede · Bergamo</p>
+          <h2 class="sec__title">Chi <em>presidia</em> ogni SERP</h2>
+          <p class="sec__sub">Una scheda di sintesi per ognuno dei 5 servizi: top 5 competitor sulla SERP geo, posizionamento dominante, take-away strategico.</p>
+        </div>
+      </div>
+
+      <div class="svc">
+        <div class="svc__cell">
+          <p class="svc__num">Servizio 01 / 05</p>
+          <p class="svc__kw">"agenzia siti web bergamo"</p>
+          <h3 class="svc__name">Sviluppo <em>siti web</em></h3>
+          <p class="svc__lede">SERP matura lato SEO ma povera di landing geo dedicate. Posizionamento via homepage + sede dichiarata.</p>
+          <ul class="svc__top">
+            <li><span>01</span><span><strong>Valeo.it</strong> — corporate, ISO 56001, gruppo Abacus</span></li>
+            <li><span>02</span><span><strong>Teknet.it</strong> — enterprise-industriale, 21 anni, Brembo/Foppapedretti</span></li>
+            <li><span>03</span><span><strong>Linoolmostudio</strong> — angle <em>GEO/AI</em> già attivo, split aziende/turismo</span></li>
+            <li><span>04</span><span><strong>WMDstudio</strong> — persona-led, 20 recensioni inline, scarcity "4 progetti/mese"</span></li>
+            <li><span>05</span><span><strong>Extra-web</strong> — sede Parma con landing geo cross-regionale</span></li>
+          </ul>
+          <div class="svc__take">
+            <p><strong>Take-away.</strong> Una landing geo dedicata ben strutturata batte le homepage che si posizionano per autorità. Extra-web dimostra che funziona anche senza sede fisica a Bergamo.</p>
+            <div class="svc__badges">
+              <span class="badge badge--gap">Pricing 0/5</span>
+              <span class="badge badge--gap">Team con foto 0/5</span>
+              <span class="badge badge--info">AI search +1/5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc__cell">
+          <p class="svc__num">Servizio 02 / 05</p>
+          <p class="svc__kw">"fotografo aziendale bergamo"</p>
+          <h3 class="svc__name">Foto e video <em>per social</em></h3>
+          <p class="svc__lede">SERP popolata da fotografi singoli mono-skill. Nessuna agenzia integrata. Terreno strutturalmente libero.</p>
+          <ul class="svc__top">
+            <li><span>01</span><span><strong>Buttinoni</strong> — corporate/eventi</span></li>
+            <li><span>02</span><span><strong>Fotodare</strong> — fotografia industriale e corporate</span></li>
+            <li><span>03</span><span><strong>Cortinovis</strong> — servizi fotografo</span></li>
+            <li><span>04</span><span><strong>Matteo Zanga</strong> — fotografia industriale Bergamo/Brescia/Milano</span></li>
+            <li><span>05</span><span><strong>Devid Rotasperti</strong> — matrimoni + ritratti + aziendale</span></li>
+          </ul>
+          <div class="svc__take">
+            <p><strong>Take-away.</strong> Nessuno parla di formati nativi social (9:16, carousel, reel). Nessuno integra foto+video+strategia editoriale. Amedani può entrare come <em>unica agenzia integrata</em>.</p>
+            <div class="svc__badges">
+              <span class="badge badge--usp">USP strutturale</span>
+              <span class="badge badge--gap">Social-native 0/5</span>
+              <span class="badge badge--gap">Pricing 0/5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc__cell">
+          <p class="svc__num">Servizio 03 / 05</p>
+          <p class="svc__kw">"creazione contenuti social bergamo"</p>
+          <h3 class="svc__name">Contenuti <em>per social</em></h3>
+          <p class="svc__lede">SERP più matura: 4 su 5 sono già landing geo dedicate. Google fonde questa query con "gestione social".</p>
+          <ul class="svc__top">
+            <li><span>01</span><span><strong>Extra-web</strong> — landing /agenzia-social-media-marketing-bergamo/</span></li>
+            <li><span>02</span><span><strong>Dexa</strong> — landing geo, mega-menu, sede Brescia</span></li>
+            <li><span>03</span><span><strong>Makeitweb</strong> — landing dual-city BS+BG, <em>unico a esporre 700 €/mese</em></span></li>
+            <li><span>04</span><span><strong>Addlance</strong> — marketplace freelance</span></li>
+            <li><span>05</span><span><strong>Moma</strong> — sede Bergamo reale ma copy debole</span></li>
+          </ul>
+          <div class="svc__take">
+            <p><strong>Take-away.</strong> <em>Fondere</em> contenuti e gestione in una landing unica (separarle = cannibalizzazione). Makeitweb è il rivale più pericoloso, da battere su design e curatela editoriale.</p>
+            <div class="svc__badges">
+              <span class="badge badge--gap">Schema rich 0/5</span>
+              <span class="badge badge--info">Pricing 1/5</span>
+              <span class="badge badge--info">Testimonial inline 1/5</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc__cell">
+          <p class="svc__num">Servizio 04 / 05</p>
+          <p class="svc__kw">"agenzia social media bergamo"</p>
+          <h3 class="svc__name">Gestione <em>social media</em></h3>
+          <p class="svc__lede">Overlap totale con "contenuti social". Sortlist directory presidia con fasce 500–28.000 € per progetto/partnership.</p>
+          <ul class="svc__top">
+            <li><span>01</span><span><strong>Dexa</strong> — brute-force SEO, 21 anchor di interlinking BG</span></li>
+            <li><span>02</span><span><strong>Moma</strong> — unica con sede BG reale ma debole</span></li>
+            <li><span>03</span><span><strong>Noknok</strong> — homepage brand-led dal 2005</span></li>
+            <li><span>04</span><span><strong>Sortlist</strong> — directory, 91 agenzie listate (pool nazionale, quasi nessuna con sede BG)</span></li>
+            <li><span>05</span><span><strong>SayAgency</strong> — premium, team 70+, case Miele/B&amp;B Italia</span></li>
+          </ul>
+          <div class="svc__take">
+            <p><strong>Take-away.</strong> Imitare il pattern URL seriale di SAY per scalare le città. Sortlist mostra che il mercato accetta fasce prezzi esplicite (range osservato 500–28.000 € per partnership).</p>
+            <div class="svc__badges">
+              <span class="badge badge--info">Landing geo 3/5</span>
+              <span class="badge badge--gap">Recensioni inline 0/5</span>
+              <span class="badge badge--usp">Sortlist signal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="svc__cell svc__cell--solo">
+          <p class="svc__num">Servizio 05 / 05</p>
+          <p class="svc__kw">"agenzia branding bergamo"</p>
+          <h3 class="svc__name">Branding e <em>logo design</em></h3>
+          <p class="svc__lede">Set debole sul focus topicale branding. Nessun competitor ha una landing geo branding-specifica. Mercato vinto da chi ha portfolio enterprise.</p>
+          <div class="two-col" style="gap: 32px; margin: 12px 0;">
+            <ul class="svc__top" style="margin: 0;">
+              <li><span>01</span><span><strong>Mete Creative</strong> — portfolio enterprise (Michelin, Gruppo AB), retail/packaging premium</span></li>
+              <li><span>02</span><span><strong>Noknok</strong> — homepage studio bergamasco, tono "fucina"</span></li>
+              <li><span>03</span><span><strong>Sortlist</strong> — directory di 91 agenzie (pool nazionale), fasce osservate 500–30.000 €</span></li>
+              <li><span>04</span><span><strong>Studio Meme</strong> — homepage bergamasca, tono "human"</span></li>
+              <li><span>05</span><span><strong>Dexa</strong> — landing "comunicazione Bergamo" non branding-specifica</span></li>
+            </ul>
+            <div>
+              <div class="svc__take" style="border-top: 0; padding-top: 0;">
+                <p><strong>Take-away.</strong> Servizio più visivo del lotto. La pagina geo deve essere 60–70% visual: portfolio in apertura, processo creativo a step illustrati, niente muri di testo SEO.</p>
+                <div class="svc__badges">
+                  <span class="badge badge--usp">Landing geo libera</span>
+                  <span class="badge badge--gap">Processo visibile 0/5</span>
+                  <span class="badge badge--gap">FAQ schema 0/5</span>
+                  <span class="badge badge--gap">Metriche portfolio 0/5</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 04 INSIGHT ===== -->
+    <section id="insight">
+      <div class="sec__head">
+        <p class="sec__num">04</p>
+        <div>
+          <p class="sec__kicker">Pattern trasversali · 25 competitor</p>
+          <h2 class="sec__title">10 <em>insight</em> cross-servizio</h2>
+          <p class="sec__sub">Quello che emerge guardando i 25 competitor insieme. La pasta strategica della fase geo: cosa fare diversamente da loro.</p>
+        </div>
+      </div>
+
+      <ol class="insights">
+        <li>
+          <span class="insights__title">Pricing trasparente è gap in <em>4/5 servizi</em></span>
+          <span class="insights__body">Solo Makeitweb (contenuti social) espone 700 €/mese. Sortlist mostra fasce perché è directory. Esporre prezzi o pacchetti "da X €" è la leva di differenziazione strutturale più semplice e meno costosa.</span>
+        </li>
+        <li>
+          <span class="insights__title">Schema markup ricco = <em>gap totale</em></span>
+          <span class="insights__body">Article, LocalBusiness, Organization, BreadcrumbList, AggregateRating, Service, FAQPage: praticamente nessuno li implementa. Opportunità in tutti e 5 i servizi: signal semantico per AI search + struttura per featured snippet/PAA. <em>Nota: il rich result visibile FAQ è stato deprecato il 7/5/2026, lo schema resta utile come signal di comprensione.</em></span>
+        </li>
+        <li>
+          <span class="insights__title">Testimonianze inline: <em>già implementate sul sito Amedani</em></span>
+          <span class="insights__body">Su <code>/come-lavoriamo-con-i-clienti/</code> ci sono già 8+ recensioni complete con foto + nome + ruolo. Solo WMDstudio (siti) e Makeitweb (contenuti) tra i competitor analizzati lo fanno: gli altri linkano a Google. Per le pagine geo: replicare lo stesso pattern del sito principale, con focus su clienti bergamaschi/lombardi quando possibile.</span>
+        </li>
+        <li>
+          <span class="insights__title">Branding ha <em>terreno libero</em></span>
+          <span class="insights__body">Zero landing geo dedicate branding-specifiche nei top 5. Amedani può prendersi quel posizionamento per primo. Pagina deve essere portfolio-heavy + processo visibile.</span>
+        </li>
+        <li>
+          <span class="insights__title">Foto/video social è il <em>secondo gap più forte</em></span>
+          <span class="insights__body">SERP popolata solo da fotografi mono-skill. Nessuna agenzia integrata propone "shooting per social" come servizio dedicato. Amedani entra come unica.</span>
+        </li>
+        <li>
+          <span class="insights__title">Google <em>fonde</em> contenuti e gestione social</span>
+          <span class="insights__body">La SERP serve la stessa landing per entrambe le query. Decisione necessaria: una landing unica (<code>/contenuti-social-bergamo/</code>) o due separate? Separarle = cannibalizzazione SEO certa.</span>
+        </li>
+        <li>
+          <span class="insights__title">Sortlist directory: <em>canale lead parallelo</em></span>
+          <span class="insights__body">Presidia 2 SERP (gestione-social, branding) con fasce prezzi esplicite. Valutare iscrizione di Amedani come canale di lead aggiuntivo: non sostituisce la landing geo ma intercetta chi usa la directory.</span>
+        </li>
+        <li>
+          <span class="insights__title">AI/GEO search è <em>già SERP-presente</em></span>
+          <span class="insights__body">Linoolmostudio ha una sezione dedicata all'ottimizzazione per motori AI (ChatGPT, Gemini, Perplexity). Amedani può posizionarsi su questo angle trasversalmente — costa zero se il sito è ben fatto.</span>
+        </li>
+        <li>
+          <span class="insights__title">Landing geo cross-regionali <em>funzionano</em></span>
+          <span class="insights__body">Extra-web sede Parma e SAY sede non-BG posizionano comunque sui top 5 di Bergamo. Conferma definitiva che la strategia geo è fattibile anche per Amedani (sede Brescia).</span>
+        </li>
+        <li>
+          <span class="insights__title">USP strutturale: <em>integrazione full-stack</em></span>
+          <span class="insights__body">Nessun competitor copre il continuum siti + social + foto/video + branding. I siti-web non producono foto/video, i fotografi non fanno strategia, le social agency subappaltano la produzione. È il differenziatore più forte di Amedani.</span>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ===== 05 LAYOUT ===== -->
+    <section id="layout">
+      <div class="sec__head">
+        <p class="sec__num">05</p>
+        <div>
+          <p class="sec__kicker">5 wireframe sezione-per-sezione</p>
+          <h2 class="sec__title">Bozze layout <em>pagine geo</em></h2>
+          <p class="sec__sub">Per ognuno dei 5 servizi, struttura proposta della landing Bergamo: sezioni, schema markup, title e meta description. Base di lavoro per il design.</p>
+        </div>
+      </div>
+
+      <h3 id="wf-siti"><em>5.1</em> &nbsp; Sviluppo siti web a Bergamo</h3>
+      <div class="wf">
+        <div class="wf__head">
+          <strong>/sviluppo-siti-web-bergamo/</strong>
+          <em>"Studio creativo che integra siti, social e contenuti foto/video per le PMI bergamasche."</em>
+        </div>
+        <div class="wf__row"><span class="wf__step">01</span><span class="wf__desc"><strong>Hero geo-localizzato</strong><em>H1 + sub-claim integrazione full-stack · CTA primaria preventivo · CTA secondaria portfolio</em></span><span class="wf__tag"><span class="badge badge--neutral">Hero</span></span></div>
+        <div class="wf__row"><span class="wf__step">02</span><span class="wf__desc"><strong>Prove sociali immediate</strong><em>Slim band: rating Google + 4-5 logos clienti lombardi/bergamaschi</em></span><span class="wf__tag"><span class="badge badge--gap">Gap 5/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">03</span><span class="wf__desc"><strong>Per chi lavoriamo a Bergamo</strong><em>3-4 card: PMI manifatturiere · studi professionali · brand B2C · e-commerce</em></span><span class="wf__tag"><span class="badge badge--usp">Audience split</span></span></div>
+        <div class="wf__row"><span class="wf__step">04</span><span class="wf__desc"><strong>Cosa sviluppiamo</strong><em>5 tipologie con icone: vetrina · e-commerce · web app · restyling · landing</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">05</span><span class="wf__desc"><strong>Il nostro metodo</strong><em>5 step visivi: discovery → strategia → design → sviluppo → lancio + supporto</em></span><span class="wf__tag"><span class="badge badge--gap">Gap 5/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">06</span><span class="wf__desc"><strong>Tech stack chiaro</strong><em>Astro / headless / accessibilità WCAG / Core Web Vitals + perché lo usiamo</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">07</span><span class="wf__desc"><strong>Portfolio con contesto strategico</strong><em>3-5 progetti con settore + brief + metrica risultato ("+40% lead in 6 mesi")</em></span><span class="wf__tag"><span class="badge badge--gap">Metriche 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">08</span><span class="wf__desc"><strong>Testimonianze inline</strong><em>3-5 clienti con foto reale + nome + azienda + città + quote</em></span><span class="wf__tag"><span class="badge badge--gap">Solo WMD 1/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">09</span><span class="wf__desc"><strong>FAQ con schema FAQPage</strong><em>Costi, tempi, CMS, manutenzione, SEO, autonomia post-consegna</em></span><span class="wf__tag"><span class="badge badge--gap">Schema 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">10</span><span class="wf__desc"><strong>Banda territoriale</strong><em>"Operativi in tutta la Lombardia" + interlinking alle altre città geo Amedani</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">11</span><span class="wf__desc"><strong>Form preventivo multi-step</strong><em>Nome · azienda · email · tel · tipo progetto · budget indicativo · note</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">12</span><span class="wf__desc"><strong>Footer local</strong><em>Sede + telefono + email · Schema LocalBusiness con areaServed Bergamo</em></span><span class="wf__tag"></span></div>
+        <dl class="wf__meta">
+          <dt>Title</dt><dd>Sviluppo siti web a Bergamo | Amedani Studio <em>(44 char)</em></dd>
+          <dt>Meta</dt><dd>Studio creativo a Bergamo specializzato in sviluppo siti web per PMI: vetrina, e-commerce, restyling. Approccio integrato siti+social+foto/video.</dd>
+          <dt>Schema</dt><dd>LocalBusiness · Service · BreadcrumbList · FAQPage · AggregateRating</dd>
+        </dl>
+      </div>
+
+      <h3 id="wf-foto"><em>5.2</em> &nbsp; Shooting foto e video per social a Bergamo</h3>
+      <div class="wf">
+        <div class="wf__head">
+          <strong>/shooting-foto-video-social-bergamo/</strong>
+          <em>"Contenuti progettati per la grammatica social, non foto adattate dopo."</em>
+        </div>
+        <div class="wf__row"><span class="wf__step">01</span><span class="wf__desc"><strong>Hero geo</strong><em>H1 servizio + sub posizionamento social-native · reel/video loop muto 9:16 in hero</em></span><span class="wf__tag"><span class="badge badge--neutral">Hero</span></span></div>
+        <div class="wf__row"><span class="wf__step">02</span><span class="wf__desc"><strong>Prove sociali immediate</strong><em>Rating + 4-5 logos lombardi</em></span><span class="wf__tag"><span class="badge badge--gap">Gap totale</span></span></div>
+        <div class="wf__row"><span class="wf__step">03</span><span class="wf__desc"><strong>Perché uno shooting "per social" è diverso</strong><em>4 card: formati nativi 9:16/1:1/4:5 · caption-ready · multi-output 4-6 settimane · coerenza brand</em></span><span class="wf__tag"><span class="badge badge--usp">USP strutturale</span></span></div>
+        <div class="wf__row"><span class="wf__step">04</span><span class="wf__desc"><strong>Cosa produciamo</strong><em>6 card con icone: reel verticali · carousel · ritratti LinkedIn · BTS · product · mini-doc 60-90s</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">05</span><span class="wf__desc"><strong>Pacchetti indicativi (differenziatore forte)</strong><em>3 fasce: Starter / Growth / Partner — "da X €" + cosa è incluso</em></span><span class="wf__tag"><span class="badge badge--gap">Pricing 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">06</span><span class="wf__desc"><strong>Il nostro metodo (5 step)</strong><em>Brief → Concept e mood board → Pre-produzione → Shooting day → Editing multi-formato</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">07</span><span class="wf__desc"><strong>Portfolio con risultati misurabili</strong><em>"+38% engagement IG in 3 mesi", "+X reel/Y foto/Z ritratti"</em></span><span class="wf__tag"><span class="badge badge--gap">Metriche 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">08</span><span class="wf__desc"><strong>Amedani vs fotografo freelance</strong><em>3 bullet che attaccano la SERP: team integrato · contenuti progettati social · piano editoriale incluso</em></span><span class="wf__tag"><span class="badge badge--usp">Pitch centrale</span></span></div>
+        <div class="wf__row"><span class="wf__step">09</span><span class="wf__desc"><strong>Testimonianze inline</strong><em>3-5 clienti con foto reale + città</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">10</span><span class="wf__desc"><strong>FAQ con schema FAQPage</strong><em>Costi · output/giornata · formati 9:16 · diritti immagine · tempistiche · location vs studio · publishing</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">11</span><span class="wf__desc"><strong>Form preventivo + banda territoriale</strong><em>Tipo shooting · numero contenuti stimato · budget · tel in chiaro</em></span><span class="wf__tag"></span></div>
+        <dl class="wf__meta">
+          <dt>Title</dt><dd>Shooting foto e video per social a Bergamo | Amedani Studio</dd>
+          <dt>Meta</dt><dd>Studio creativo per PMI bergamasche: produciamo foto e video pensati per Instagram, LinkedIn, TikTok. Team integrato strategist + fotografo + videomaker.</dd>
+          <dt>Schema</dt><dd>LocalBusiness · Service · BreadcrumbList · FAQPage · AggregateRating · ItemList (portfolio)</dd>
+        </dl>
+      </div>
+
+      <h3 id="wf-content"><em>5.3</em> &nbsp; Contenuti per social + Gestione social a Bergamo <span class="badge badge--usp" style="vertical-align: middle; margin-left: 8px;">Landing unica proposta</span></h3>
+      <div class="wf">
+        <div class="wf__head">
+          <strong>/contenuti-social-bergamo/</strong>
+          <em>Fonde le 2 query: Google le serve già con la stessa landing nei top 5.</em>
+        </div>
+        <div class="wf__row"><span class="wf__step">01</span><span class="wf__desc"><strong>Hero geo integrato</strong><em>H1: "Contenuti per social a Bergamo: foto, video e gestione integrata" + sub posizionamento "Tutto in casa"</em></span><span class="wf__tag"><span class="badge badge--neutral">Hero</span></span></div>
+        <div class="wf__row"><span class="wf__step">02</span><span class="wf__desc"><strong>Prove sociali immediate</strong><em>Rating + logos + "X anni di esperienza · Y brand seguiti"</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">03</span><span class="wf__desc"><strong>Per chi lavoriamo (specializzazione verticale)</strong><em>4 card: PMI manifatturiere · retail premium · food &amp; hospitality · studi professionali</em></span><span class="wf__tag"><span class="badge badge--usp">Anti-generalismo</span></span></div>
+        <div class="wf__row"><span class="wf__step">04</span><span class="wf__desc"><strong>Cosa produciamo (focus contenuti)</strong><em>6 card con esempi visivi: foto prodotto · reel · caroselli · copy editoriale · grafiche · live coverage</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">05</span><span class="wf__desc"><strong>Cosa gestiamo (focus distribuzione)</strong><em>4 card: piano editoriale · pubblicazione multi-canale · community · campagne ads</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">06</span><span class="wf__desc"><strong>Il nostro metodo (5 step)</strong><em>Discovery → Strategia → <strong>Shooting in sede</strong> → Editing+Copy → Pubblicazione+Report</em></span><span class="wf__tag"><span class="badge badge--usp">Shooting in sede</span></span></div>
+        <div class="wf__row"><span class="wf__step">07</span><span class="wf__desc"><strong>Tabella comparativa onesta</strong><em>Freelance / Agenzia generalista / Amedani — su foto in-house, copy, sito coerente, prezzi</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">08</span><span class="wf__desc"><strong>Portfolio con metriche</strong><em>"+38% reach in 4 mesi", "+120 follower/mese"</em></span><span class="wf__tag"><span class="badge badge--gap">Metriche 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">09</span><span class="wf__desc"><strong>Testimonianze gold standard</strong><em>9 testimonial con foto + ruolo + città + design curato</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">10</span><span class="wf__desc"><strong>Pricing trasparente</strong><em>3 pacchetti starter/pro/enterprise · "Cosa è incluso" · "Nessun vincolo contrattuale"</em></span><span class="wf__tag"><span class="badge badge--gap">Pricing 1/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">11</span><span class="wf__desc"><strong>FAQ schema attivo</strong><em>Costi · tempistiche · shooting · piattaforme · disdetta · sponsorizzate</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">12</span><span class="wf__desc"><strong>Banda territoriale</strong><em>Comuni serviti vicini BG (Treviglio, Dalmine, Seriate, Albino…) + interlinking altre città</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">13</span><span class="wf__desc"><strong>CTA finale multi-step + WhatsApp + Calendly</strong><em>Nome → Settore + obiettivo → Budget · WhatsApp business · Calendly 15 min</em></span><span class="wf__tag"></span></div>
+        <dl class="wf__meta">
+          <dt>Title</dt><dd>Contenuti e gestione social a Bergamo | Amedani Studio</dd>
+          <dt>Meta</dt><dd>Studio creativo per PMI bergamasche: produciamo contenuti professionali (foto, video, copy) e gestiamo i tuoi canali social. Tutto in casa.</dd>
+          <dt>Schema</dt><dd>LocalBusiness · Service · Offer (per pacchetti) · BreadcrumbList · FAQPage · AggregateRating</dd>
+        </dl>
+      </div>
+
+      <h3 id="wf-gestione"><em>5.4</em> &nbsp; Gestione social media a Bergamo <span class="badge badge--neutral" style="vertical-align: middle; margin-left: 8px;">Variante alternativa</span></h3>
+      <p style="font-style: italic; font-family: var(--font-display); color: var(--ink-soft); max-width: 60ch; margin-bottom: 16px; font-variation-settings: 'opsz' 60, 'SOFT' 30;">Da usare solo se si decide di tenere "gestione" separata da "contenuti". Più focalizzata sul flusso strategia + pubblicazione + ads, con metodo brandizzato.</p>
+      <div class="wf">
+        <div class="wf__head">
+          <strong>/gestione-social-media-bergamo/</strong>
+          <em>"Strategia, contenuti, ads e community per PMI bergamasche."</em>
+        </div>
+        <div class="wf__row"><span class="wf__step">01</span><span class="wf__desc"><strong>Hero geo</strong><em>H1 + sub "Foto/video prodotti in-house" · CTA "Affidaci un progetto"</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">02</span><span class="wf__desc"><strong>Prove sociali immediate</strong><em>Rating + logos BG/Lombardia + "Dal 200X al fianco delle PMI lombarde"</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">03</span><span class="wf__desc"><strong>Anchor nav in pagina</strong><em>Sticky: #perche · #cosa-facciamo · #metodo · #portfolio · #fasce · #faq · #contatti</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">04</span><span class="wf__desc"><strong>Per chi (specializzazione)</strong><em>4 card: PMI manifatturiere · studi professionali · B2C food/beverage · e-commerce/D2C</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">05</span><span class="wf__desc"><strong>Cosa include la gestione</strong><em>8 servizi: strategia · contenuti in-house · pubblicazione · ads · UGC · report · crisis · trend</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">06</span><span class="wf__desc"><strong>Metodo brandizzato</strong><em>ASCOLTO → STRATEGIA → PRODUZIONE → PERFORMANCE</em></span><span class="wf__tag"><span class="badge badge--usp">Brand-naming</span></span></div>
+        <div class="wf__row"><span class="wf__step">07</span><span class="wf__desc"><strong>Perché Amedani (USP attacca i gap)</strong><em>4 bullet: produzione in-house · prezzi trasparenti · case study con metriche · sede vicina BS↔BG 50 km</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">08</span><span class="wf__desc"><strong>Portfolio Bergamo &amp; Lombardia</strong><em>Screenshot feed before/after + 2-3 metriche (+follower, +engagement, ROAS)</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">09</span><span class="wf__desc"><strong>Pacchetti &amp; fasce di prezzo</strong><em>Starter · Growth · Premium — da 800 / 1500 / 3000 €/mese</em></span><span class="wf__tag"><span class="badge badge--gap">Pricing 0/4</span></span></div>
+        <div class="wf__row"><span class="wf__step">10</span><span class="wf__desc"><strong>Recensioni inline</strong><em>10-15 recensioni Google complete (foto+nome+data+testo) via widget</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">11</span><span class="wf__desc"><strong>FAQ + Banda territoriale + CTA + Footer</strong><em>Schema FAQPage · pattern URL seriale /agenzia-social-{città}/ · WhatsApp business</em></span><span class="wf__tag"></span></div>
+        <dl class="wf__meta">
+          <dt>Title</dt><dd>Gestione social media a Bergamo | Amedani Studio <em>(49 char)</em></dd>
+          <dt>Meta</dt><dd>Agenzia social media per PMI bergamasche: strategia, contenuti, ads. Produzione foto/video in-house. Pacchetti trasparenti da 800€/mese. Sede Brescia.</dd>
+          <dt>Schema</dt><dd>LocalBusiness · Service · Offer (priceSpecification "from") · BreadcrumbList · FAQPage · AggregateRating</dd>
+        </dl>
+      </div>
+
+      <h3 id="wf-brand"><em>5.5</em> &nbsp; Branding e logo design a Bergamo</h3>
+      <p style="font-style: italic; font-family: var(--font-display); color: var(--ink-soft); max-width: 64ch; margin-bottom: 16px; font-variation-settings: 'opsz' 60, 'SOFT' 30;">Pagina <strong>visiva</strong>, non SEO testuale. Massimo 30-40% testo, 60-70% visual. Portfolio in apertura, processo creativo a step illustrati.</p>
+      <div class="wf">
+        <div class="wf__head">
+          <strong>/branding-logo-design-bergamo/</strong>
+          <em>"Costruiamo brand identity riconoscibili per le aziende bergamasche."</em>
+        </div>
+        <div class="wf__row"><span class="wf__step">01</span><span class="wf__desc"><strong>Hero visivo forte</strong><em>H1 + composizione moodboard/marchi recenti come visual hero · CTA "Raccontaci il tuo progetto"</em></span><span class="wf__tag"><span class="badge badge--usp">Visual-led</span></span></div>
+        <div class="wf__row"><span class="wf__step">02</span><span class="wf__desc"><strong>Casi/portfolio in evidenza (subito dopo hero)</strong><em>3-5 casi con mockup marchio in contesto · settore + cliente + città · 2 righe brief + scelta creativa · tag</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">03</span><span class="wf__desc"><strong>Per chi lavoriamo</strong><em>4 card: PMI lombarde · brand B2C/retail · startup (naming + identity) · rebranding (>10 anni)</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">04</span><span class="wf__desc"><strong>Cosa include il nostro branding</strong><em>7 card granulari: strategy &amp; positioning · naming · logo · sistema visivo · guidelines · applicazioni · rebranding</em></span><span class="wf__tag"><span class="badge badge--usp">vs 1 bullet competitor</span></span></div>
+        <div class="wf__row"><span class="wf__step">05</span><span class="wf__desc"><strong>Processo creativo (sezione molto visiva)</strong><em>6 step illustrati: discovery → moodboard → 3 concept → refinement → identity completa → brand book + handoff</em></span><span class="wf__tag"><span class="badge badge--gap">Processo 0/5</span></span></div>
+        <div class="wf__row"><span class="wf__step">06</span><span class="wf__desc"><strong>Perché Amedani</strong><em>3 USP: approccio sistemico (brand + siti + social + foto coerenti) · trasparenza · sensibilità territorio lombardo</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">07</span><span class="wf__desc"><strong>Portfolio esteso</strong><em>Griglia 6-9 progetti: thumbnail + cliente + tipo lavoro + metrica facoltativa</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">08</span><span class="wf__desc"><strong>Testimonianze</strong><em>3-5 quote con foto reale + nome + azienda + città</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">09</span><span class="wf__desc"><strong>FAQ schema attivo</strong><em>Costi logo / brand identity · cosa è incluso · durata · file consegnati · integrazione sito/social</em></span><span class="wf__tag"></span></div>
+        <div class="wf__row"><span class="wf__step">10</span><span class="wf__desc"><strong>Banda territoriale + Form multi-step + Footer</strong><em>Lombardia · tipo progetto (logo/identity/rebranding/packaging) · brief testuale · LocalBusiness</em></span><span class="wf__tag"></span></div>
+        <dl class="wf__meta">
+          <dt>Title</dt><dd>Branding e logo design a Bergamo | Amedani Studio</dd>
+          <dt>Meta</dt><dd>Studio creativo a Brescia che progetta brand identity per aziende bergamasche: naming, logo, sistema visivo, applicazioni digitali. Approccio sistemico.</dd>
+          <dt>Schema</dt><dd>LocalBusiness · Service (priceRange "€€") · BreadcrumbList · FAQPage · CreativeWork (portfolio)</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===== 06 PROPOSTA ===== -->
+    <section id="proposta">
+      <div class="sec__head">
+        <p class="sec__num">06</p>
+        <div>
+          <p class="sec__kicker">Sintesi delle scelte strategiche</p>
+          <h2 class="sec__title">La <em>proposta</em></h2>
+          <p class="sec__sub">Sette decisioni strategiche che emergono dall'analisi. Per ognuna: cosa proporre, e perché ha senso farlo ora.</p>
+        </div>
+      </div>
+
+      <ul class="recs">
+        <li>
+          <span class="recs__title">Esporre <em>pricing trasparente</em> su tutte le pagine geo</span>
+          <span class="recs__why">È il gap di mercato più sfruttabile: 4 servizi su 5 hanno pricing opaco. Fasce indicative o pacchetti "da X €" costano niente e creano fiducia immediata.</span>
+        </li>
+        <li>
+          <span class="recs__title">Fondere "contenuti social" e "gestione social" in <em>una landing unica</em></span>
+          <span class="recs__why">Google fonde già le due query nei top 5 con la stessa landing. Tenerle separate cannibalizza il ranking; unificarle concentra l'autorità e migliora la conversione.</span>
+        </li>
+        <li>
+          <span class="recs__title">Implementare <em>schema markup ricco</em> su tutte le pagine geo</span>
+          <span class="recs__why">FAQPage, LocalBusiness, Service, AggregateRating: praticamente nessun competitor li usa. È il modo più rapido per conquistare featured snippet e rich results in SERP.</span>
+        </li>
+        <li>
+          <span class="recs__title">Posizionarsi sul <em>foto/video per social</em> come unica agenzia integrata</span>
+          <span class="recs__why">La SERP è popolata solo da fotografi mono-skill. Nessuna agenzia propone "contenuti progettati per la grammatica social" come servizio dedicato. È un terreno strutturalmente vuoto.</span>
+        </li>
+        <li>
+          <span class="recs__title">Conquistare il <em>branding geo</em> per primi</span>
+          <span class="recs__why">Zero competitor hanno una landing geo branding-specifica nei top 5. Una pagina ben costruita può prendersi quel posizionamento prima che il mercato si svegli.</span>
+        </li>
+        <li>
+          <span class="recs__title">Inserire un angle <em>AI / GEO search</em> trasversale</span>
+          <span class="recs__why">Linoolmostudio è già in SERP con una sezione dedicata all'ottimizzazione per motori AI. Per Amedani è un differenziatore a costo zero, posto che il sito sia tecnicamente ben fatto (lo è).</span>
+        </li>
+        <li>
+          <span class="recs__title">Specializzarsi per <em>verticale</em>, non per servizio generico</span>
+          <span class="recs__why">I competitor parlano a "tutti i settori". L'audience split (PMI manifatturiere · studi professionali · brand B2C food/wine) facilita l'auto-identificazione del visitatore e qualifica i lead.</span>
+        </li>
+      </ul>
+
+      <div class="pull">"<em>Tutto in casa</em> è l'unico claim che nessun altro può rivendicare nella SERP geo di Bergamo. È la storia da raccontare."</div>
+    </section>
+
+    <!-- ===== 07 FASI ===== -->
+    <section id="fasi">
+      <div class="sec__head">
+        <p class="sec__num">07</p>
+        <div>
+          <p class="sec__kicker">Roadmap operativa</p>
+          <h2 class="sec__title">Fasi di <em>lavoro</em></h2>
+          <p class="sec__sub">Dalle bozze di layout alle pagine live, in sei fasi. Bergamo è il pilota; il metodo replica poi sulle altre città lombarde.</p>
+        </div>
+      </div>
+
+      <ol class="phases">
+        <li>
+          <span class="phases__num">01</span>
+          <span class="phases__name">Validazione layout</span>
+          <span class="phases__body">Review delle 5 bozze con il team creativo. Conferma delle decisioni strategiche (landing unica contenuti+gestione, pricing trasparente, audience split). Eventuali adattamenti al brand visivo Amedani.</span>
+        </li>
+        <li>
+          <span class="phases__num">02</span>
+          <span class="phases__name">Design ad alta fedeltà</span>
+          <span class="phases__body">Trasformazione dei wireframe in design completi pronti per lo sviluppo. Sistema di componenti riutilizzabili per scalare alle altre città senza ridisegnare da zero.</span>
+        </li>
+        <li>
+          <span class="phases__num">03</span>
+          <span class="phases__name">Estensione analisi alle altre città</span>
+          <span class="phases__body">Replica del metodo sulle 4 città successive (Cremona → Mantova → Vicenza → Verona) con stesse 5 query. Output: master report cross-città per identificare pattern locali specifici.</span>
+        </li>
+        <li>
+          <span class="phases__num">04</span>
+          <span class="phases__name">Sviluppo + schema markup</span>
+          <span class="phases__body">Implementazione delle pagine in Astro con JSON-LD attivo. Verifica trailing slash, canonical, accessibilità WCAG, Core Web Vitals.</span>
+        </li>
+        <li>
+          <span class="phases__num">05</span>
+          <span class="phases__name">Go-live graduale</span>
+          <span class="phases__body">Pubblicazione delle pagine Bergamo, indicizzazione manuale al ritmo di 4-5 URL/giorno per evitare segnali di spam. Monitoraggio settimanale di Search Console.</span>
+        </li>
+        <li>
+          <span class="phases__num">06</span>
+          <span class="phases__name">Roll-out città lombarde</span>
+          <span class="phases__body">Replica del template Bergamo sulle altre città analizzate, con copy e portfolio adattati al mercato locale. Brescia in seconda fase con struttura dedicata per evitare cannibalizzazione del servizio principale.</span>
+        </li>
+      </ol>
+    </section>
+
+    <footer>
+      <div class="colophon">
+        <div>
+          <h5>Metodologia</h5>
+          <p>SERP geo-localizzate via DataForSEO con location target "Bergamo, Lombardy, Italy". Scraping markdown dei top 5 risultati via Jina Reader. Analisi contenuto + layout + schema markup per ogni competitor. Sintesi cross-servizio e bozze layout costruite sui pattern emersi.</p>
+        </div>
+        <div>
+          <h5>Output</h5>
+          <p>5 report di dettaglio per servizio (Sviluppo siti · Foto/video social · Contenuti social · Gestione social · Branding) con schede competitor, gap analysis, layout proposto. Questo documento è la sintesi operativa.</p>
+        </div>
+      </div>
+      <p style="margin-top: 8px;">Amedani Studio · Analisi strategica fase geo · Maggio 2026</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.toc__list a');
+  const navMap = {};
+  navLinks.forEach(a => {
+    const id = a.getAttribute('href').slice(1);
+    navMap[id] = a;
+  });
+  function setActive() {
+    let current = null;
+    const y = window.scrollY + 100;
+    sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
+    navLinks.forEach(a => a.style.color = '');
+    if (current && navMap[current]) navMap[current].style.color = 'var(--accent)';
+  }
+  window.addEventListener('scroll', setActive, { passive: true });
+  setActive();
+</script>
+
+</body>
+</html>

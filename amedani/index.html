@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amedani Studio — Analisi e report</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  body { margin: 0; }
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #A0411E;
+    --accent-soft: #F4DDD2;
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 32px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); min-height: 100vh; }
+  .topbar { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar a { color: var(--ink-3); text-decoration: none; }
+  .topbar a:hover { color: var(--accent); }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 14px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand span { color: var(--accent); }
+  .hero { padding: 80px 0 48px; border-bottom: 1px solid var(--ink); }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(44px, 6vw, 68px); line-height: 0.95; letter-spacing: -0.04em; margin: 0 0 24px; text-transform: uppercase; }
+  .hero h1 .acc { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.55; max-width: 60ch; color: var(--ink-2); }
+  .docs { padding: 56px 0 64px; }
+  .docs__title { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 24px; font-weight: 600; padding-bottom: 12px; border-bottom: 2px solid var(--ink); }
+  .doc { display: grid; grid-template-columns: 130px 1fr 100px; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--grid); align-items: center; text-decoration: none; color: var(--ink); transition: background 0.15s; }
+  .doc:hover { background: #FAFAFA; }
+  .doc:last-of-type { border-bottom: 2px solid var(--ink); }
+  .doc__date { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; font-weight: 500; }
+  .doc__title { font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.25; letter-spacing: -0.01em; }
+  .doc__title small { display: block; font-size: 13px; font-weight: 400; color: var(--ink-3); margin-top: 4px; }
+  .doc__cta { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 600; text-align: right; }
+  .doc__cta::after { content: " →"; }
+  footer { padding: 32px 0 48px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; border-top: 1px solid var(--grid); }
+  @media (max-width: 720px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { padding: 48px 0 32px; }
+    .doc { grid-template-columns: 1fr; gap: 6px; padding: 18px 0; }
+    .doc__cta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="topbar__brand"><a href="../" style="color:var(--ink);">Analisi</a> / <span>Amedani Studio</span></div>
+    <div class="topbar__meta"><a href="../">← Tutti i progetti</a></div>
+  </div>
+
+  <header class="hero">
+    <p class="hero__kicker">amedani.com</p>
+    <h1>Amedani<br><span class="acc">Studio</span></h1>
+    <p class="hero__lede">Sito principale dell'ecosistema, brand di riferimento. Online da inizio aprile 2026 nella sua versione attuale. Analisi e report di seguito.</p>
+  </header>
+
+  <section class="docs">
+    <div class="docs__title">Documenti pubblicati</div>
+
+    <a class="doc" href="performance-2026-05-19.html">
+      <span class="doc__date">19 mag 2026</span>
+      <span class="doc__title">Check performance<small>Stato indicizzazione, Core Web Vitals della pagina pillar foto/video, pool query brand e geo.</small></span>
+      <span class="doc__cta">Apri</span>
+    </a>
+
+    <a class="doc" href="briefing-bergamo-2026-05-13.html">
+      <span class="doc__date">13 mag 2026</span>
+      <span class="doc__title">Briefing strategico geo · Bergamo<small>Mappa SERP geo-localizzata, 25 competitor analizzati, 10 gap di mercato, bozze di layout per le pagine geo.</small></span>
+      <span class="doc__cta">Apri</span>
+    </a>
+  </section>
+
+  <footer>
+    <p>Documenti riservati a Claudio Novaglio e al team Amedani Studio. Non indicizzati dai motori di ricerca.</p>
+  </footer>
+</div>
+</body>
+</html>

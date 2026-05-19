@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContentLove — Check performance · 19 maggio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #C73E5A;
+    --accent-soft: #F8DDE3;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 50ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(38px, 5vw, 60px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.75; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 75ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl tbody tr.tot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding-top: 14px; padding-bottom: 14px; background: #FAFAFA; }
+  .tbl code { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .blocks { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--ink); margin: 32px 0; }
+  .blocks__cell { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; min-height: 240px; }
+  .blocks__cell:nth-child(3n) { border-right: 0; }
+  .blocks__cell:nth-last-child(-n+3) { border-bottom: 0; }
+  .blocks__cell--accent { background: var(--accent); color: var(--bg); }
+  .blocks__cell--ink { background: var(--ink); color: var(--bg); }
+  .blocks__num { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+  .blocks__url { font-family: var(--f-mono); font-size: 10.5px; word-break: break-all; opacity: 0.7; margin-top: 6px; }
+  .blocks__name { font-family: var(--f-sans); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 14px; text-transform: uppercase; }
+  .blocks__stats { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.65; margin: 0 0 18px; padding: 0; list-style: none; opacity: 0.85; }
+  .blocks__stats li { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+  .blocks__stats li span:first-child { opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+  .blocks__stats li strong { font-weight: 600; }
+  .blocks__take { padding-top: 14px; border-top: 1px solid currentColor; font-size: 13px; line-height: 1.45; }
+  .blocks__take strong { font-weight: 700; }
+  .blocks__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .blocks__cell--accent .badge, .blocks__cell--ink .badge { background: rgba(255,255,255,0.1); color: var(--bg); border-color: rgba(255,255,255,0.4); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.2; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 64ch; letter-spacing: -0.02em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  .chart { margin: 32px 0; }
+  .chart__title { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .chart__row { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 14px; padding: 4px 0; font-family: var(--f-mono); font-size: 11.5px; }
+  .chart__day { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .chart__bar { background: var(--grid); height: 22px; position: relative; }
+  .chart__bar span { display: block; height: 100%; background: var(--ink); }
+  .chart__bar.is-mute span { background: var(--ink-3); }
+  .chart__bar.is-acc span { background: var(--accent); }
+  .chart__val { font-weight: 600; text-align: right; color: var(--ink); font-feature-settings: "tnum" on; }
+
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 32px 0 0; }
+  .insights li { counter-increment: ins; display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--grid); }
+  .insights li:last-child { border-bottom: 2px solid var(--ink); }
+  .insights__num { font-family: var(--f-sans); font-weight: 900; font-size: 44px; line-height: 0.85; color: var(--accent); letter-spacing: -0.04em; }
+  .insights__num::before { content: counter(ins, decimal-leading-zero); }
+  .insights__body { font-size: 14.5px; line-height: 1.55; max-width: 84ch; }
+  .insights__title { display: block; font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; text-transform: uppercase; }
+  .insights__title .acc { color: var(--accent); }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 78ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .phases { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li { counter-increment: ph; display: grid; grid-template-columns: 70px 240px 1fr 160px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .phases li:last-child { border-bottom: 2px solid var(--ink); }
+  .phases__num { font-family: var(--f-sans); font-weight: 900; font-size: 28px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+  .phases__num::before { content: counter(ph, decimal-leading-zero); }
+  .phases__name { font-family: var(--f-sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; }
+  .phases__body { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 64ch; }
+  .phases__when { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; text-align: right; }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .blocks { grid-template-columns: 1fr; }
+    .blocks__cell { border-right: 0; }
+    .strip__row, .recs li, .insights li, .phases li { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .insights__num { font-size: 28px; }
+    .colophon { grid-template-columns: 1fr; }
+    .chart__row { grid-template-columns: 100px 1fr 60px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .blocks, .insights li, .recs li, .phases li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink, .blocks__cell--accent, .blocks__cell--ink { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand">CONTENTLOVE / <span>CHECK PERFORMANCE</span></div>
+    <div class="topbar__meta">sito sano · pos 7,7 · "wedding content creator" pos 2 · tracking GA4 da abilitare</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#trend">02</a><a href="#strategy">03</a><a href="#pagine">04</a><a href="#kw">05</a><a href="#insight">06</a><a href="#strategy-wedding">06.5</a><a href="#proposta">07</a><a href="#roadmap">08</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance check · 19 maggio 2026 · post-tecnica · strategia</p>
+      <h1>Top 3<br>su <span class="ml">"wedding<br>content<br>creator"</span>.</h1>
+      <p class="hero__lede">90gg di dati: <strong>318 click, 5.449 impressions, CTR 5,84%, posizione media 7,7</strong>. La query principale "wedding content creator" sta in posizione 2,2 e cresce a livello settimanale. Il brand è solidissimo (CTR 39,78% sulla query "content love"). I fix tecnici di canonical e trailing slash sono verificati live: tutto OK. Ora la fase è strategica: <strong>consolidare ownership di categoria + cluster topical sulle People Also Ask + monetizzazione Academy + funnel</strong> — e abilitare il <strong>conversion tracking GA4</strong>, oggi non ancora attivo (le conversioni avvengono via DM Instagram, email, contatti diretti, ma non sono ancora intercettate dal canale GA4).</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Finestra analisi</dt>
+      <dd>P1: 21.04.2026 → 18.05.2026 (28gg)<br>P2: 24.03.2026 → 20.04.2026 (28gg)<br>Storico: 90gg cumulati GSC</dd>
+      <dt>Asset analizzati</dt>
+      <dd>GSC sc-domain:contentlove.it<br>GA4 property 508534606<br>Verifica HTTP redirect chains via curl<br>Sitemap index 26 URL</dd>
+      <dt>Stato fix tecnici</dt>
+      <dd><span class="badge badge--ok">www→nudo 301</span> <span class="badge badge--ok">trailing slash 308</span> <span class="badge badge--warn">/blog www catena 3 hops</span></dd>
+      <dt>Domanda centrale</dt>
+      <dd>Vogliamo trasformare "essere visibili" in lead/conversioni, o lasciamo che il flusso brand+Paid Social tenga il sito in equilibrio?</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">318</span>
+      <span class="statgrid__lbl">Click GSC · 90gg</span>
+      <span class="statgrid__delta">CTR 5,84% · pos 7,7</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num" style="color:var(--ok)">2,2</span>
+      <span class="statgrid__lbl">Pos · "wedding content creator"</span>
+      <span class="statgrid__delta" style="color:var(--ok)">↑ 31 click su 188 impressions</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">+7</span>
+      <span class="statgrid__lbl">Click "wedding content creator" 28gg</span>
+      <span class="statgrid__delta">16 vs 9 · trend P1>P2</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">tracking</span>
+      <span class="statgrid__lbl">GA4 da abilitare</span>
+      <span class="statgrid__delta">per misurare il ritorno effettivo</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">La storia in cinque punti</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">ContentLove è il sito dell'ecosistema che performa meglio: pos media 7,7 (vs 11,3 di Amedani, 15,2 di StudioUp, 16,1 di LiveCoverage). Il rifacimento e il posizionamento sul "wedding content creator" sta dando risultati. Ora il salto è verticale: tradurre visibilità in lead/iscritti corso/clienti.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">"Wedding content creator" è <span class="acc">in top 3 e cresce</span></span>
+          90gg cumulati: 31 click su 188 impressions, pos 2,2, CTR 16,49%. Compare 28vs28: 16 vs 9 click, +78%. Varianti correlate sono altrettanto solide: <code>wedding content</code> pos 1,2 · <code>wedding content creator italia</code> pos 1,2 · <code>content creator for wedding</code> pos 1,5 · <code>wedding content creators</code> pos 3,0. <strong>ContentLove è il referente nazionale per la categoria.</strong>
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Tutti i <span class="acc">fix tecnici</span> sono live</span>
+          Verifica via curl HEAD: <code>https://www.contentlove.it/ → 301 → contentlove.it/</code> ✓ · <code>contentlove.it/blog → 308 → /blog/</code> ✓ · <code>contentlove.it/portfolio → 308 → /portfolio/</code> ✓. Unica residua: <code>www.contentlove.it/blog</code> fa 3 hop (www→nudo→trailing slash) — funzionale ma migliorabile a 1 hop con regex. Le doppie indicizzazioni www/nudo nei dati GSC sono storia, non problema attivo.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">brand</span> "content love" ha pos 1 e CTR 40%</span>
+          74 click su 186 impressions a posizione 1,4 — CTR 39,78%. La query brand-only è il driver primario, perfettamente sano per un sito che ha investito su brand awareness via social. Le tre varianti brand (<code>content love</code>, <code>contentlove</code>, <code>content of love</code>) cumulano <strong>90 click su 218 impressions</strong>. Brand awareness funziona.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il traffico è <span class="acc">bilanciato</span> · 308 sessioni equamente distribuite</span>
+          GA4 28gg: <strong>Paid Social 123 + Direct 113 + Organic Search 111 + Unassigned 37 + Referral 19 + Organic Social 5</strong>. È la salute di un sito che ha tutti i canali attivi. Non c'è "dipendenza" da un singolo canale. Le conversioni reali (DM Instagram, contatti per booking date, iscrizioni Academy) <strong>avvengono fuori da GA4 in questo momento</strong>: attivare il tracking trasforma quelle azioni in dato analizzabile e permette di vedere quale canale converte di più.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">L'opportunità reale è <span class="acc">verticalità + monetizzazione</span></span>
+          Su 90gg ci sono 4 cluster di intent: <strong>(a)</strong> servizio matrimoni (wedding content creator, content creator wedding); <strong>(b)</strong> Academy/formazione (wedding content creator course, content creation wedding); <strong>(c)</strong> business B2B (wedding planner partnership, location wedding); <strong>(d)</strong> destination wedding Italy (per mercato estero). Oggi tutto converge sulla homepage. <strong>Tre pagine specializzate</strong> + funnel dedicato per ognuna sbloccherebbe lead-gen.
+        </div>
+      </li>
+    </ol>
+
+    <div class="pull">Il sito è sano. La domanda è: <span class="acc">cosa monetizziamo dei 308 utenti/mese?</span></div>
+  </section>
+
+  <!-- ===== 02 TREND ===== -->
+  <section class="sec" id="trend">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">GSC · 28gg vs 28gg precedenti</p>
+        <h2 class="sec__title">Trend<br>SEO</h2>
+      </div>
+      <p class="sec__sub">P1 mostra crescita su "wedding content creator" e leggera flessione su "content love" brand. Pattern atteso quando un sito cresce: l'audience non-brand si allarga, il brand si stabilizza.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">"wedding content creator"</span>
+        <span class="strip__val good">16 click (+7 vs 9)</span>
+        <span class="strip__note strip__note--ok">Crescita commerciale di categoria.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">"content love" (brand)</span>
+        <span class="strip__val">23 click (−6 vs 29)</span>
+        <span class="strip__note">Brand stabile, pos consolidata.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Pos "wedding content creator"</span>
+        <span class="strip__val">2,0 (era 1,6)</span>
+        <span class="strip__note strip__note--warn">Lieve scivolamento · da monitorare.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Pos media globale</span>
+        <span class="strip__val good">7,7</span>
+        <span class="strip__note strip__note--ok">Top 10 medio · sano.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">CTR medio</span>
+        <span class="strip__val good">5,84%</span>
+        <span class="strip__note strip__note--ok">5× sopra studioup, 2× sopra livecoverage.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Sessioni GA4 28gg</span>
+        <span class="strip__val">308</span>
+        <span class="strip__note strip__note--neutral">~11 sessioni/giorno · bilanciate per canale.</span>
+      </div>
+    </div>
+
+    <h3>Compare query <span class="acc">28gg vs 28gg</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">P2 click</th><th class="num">P1 click</th><th class="num">Δ</th><th class="num">P1 pos</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">wedding content creator</td><td class="num">9</td><td class="num">16</td><td class="num ok">+7</td><td class="num ok">2,0</td><td>Driver commerciale in crescita.</td></tr>
+        <tr><td>content love (brand)</td><td class="num">29</td><td class="num">23</td><td class="num bad">−6</td><td class="num ok">1,8</td><td>Brand stabile, lieve flessione fisiologica.</td></tr>
+        <tr><td>content creator wedding</td><td class="num">1</td><td class="num">3</td><td class="num ok">+2</td><td class="num">5,0</td><td>Variante della top, in crescita.</td></tr>
+        <tr><td>palazzo monti della pieve</td><td class="num">0</td><td class="num">3</td><td class="num ok">+3</td><td class="num">9,5</td><td>Page case study che porta traffico.</td></tr>
+        <tr><td>fabio scaglia (sposo)</td><td class="num">2</td><td class="num">0</td><td class="num bad">−2</td><td class="num">5,5</td><td>Volatilità · query non target.</td></tr>
+        <tr><td>contentlove</td><td class="num">9</td><td class="num">0</td><td class="num bad">−9</td><td class="num">—</td><td>Brand variant · oscillazione SERP.</td></tr>
+        <tr><td>wedding content</td><td class="num">2</td><td class="num">0</td><td class="num bad">−2</td><td class="num">1,0</td><td>Pos 1 ma volume ridotto.</td></tr>
+        <tr><td>wedding content creators</td><td class="num">0</td><td class="num">1</td><td class="num ok">+1</td><td class="num ok">1,0</td><td>Plurale dei creator · pos 1 stabile.</td></tr>
+        <tr><td>blog wedding</td><td class="num">0</td><td class="num">1</td><td class="num ok">+1</td><td class="num">4,5</td><td>Nuova query.</td></tr>
+        <tr><td>content wedding creator</td><td class="num">0</td><td class="num">1</td><td class="num ok">+1</td><td class="num ok">1,2</td><td>Variante long-tail.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Distribuzione sessioni <span class="acc">GA4 · 28gg</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Canale</th><th class="num">Sessioni</th><th class="num">Users</th><th class="num">Engag. rate</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">Paid Social</td><td class="num">123</td><td class="num">119</td><td class="num">94,3%</td><td>Driver principale, qualità engagement altissima.</td></tr>
+        <tr><td>Direct</td><td class="num">113</td><td class="num">81</td><td class="num">88,5%</td><td>Brand awareness funziona.</td></tr>
+        <tr><td>Organic Search</td><td class="num">111</td><td class="num">62</td><td class="num">80,2%</td><td>SEO contribuisce in modo solido.</td></tr>
+        <tr><td>Unassigned</td><td class="num">37</td><td class="num">31</td><td class="num warn">18,9%</td><td>Tracking parametri UTM da rivedere.</td></tr>
+        <tr><td>Referral</td><td class="num">19</td><td class="num">17</td><td class="num">84,2%</td><td>Backlink naturali · da mappare.</td></tr>
+        <tr><td>Organic Social</td><td class="num">5</td><td class="num">4</td><td class="num">80%</td><td>Marginale · IG/TikTok porta soprattutto via Paid.</td></tr>
+        <tr class="tot"><td>Totale</td><td class="num">408</td><td class="num">~314</td><td class="num">~70%</td><td>tracking GA4 da abilitare per analisi conversioni.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 03 STRATEGY ===== -->
+  <section class="sec" id="strategy">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Strategia post-tecnica</p>
+        <h2 class="sec__title">Tre<br>verticali</h2>
+      </div>
+      <p class="sec__sub">Tradurre il "siamo in top 3" in business: tre verticali con landing dedicate e funnel separati. Servizio matrimoni, Academy, Business B2B. + un quarto verticale opzionale: destination wedding Italy.</p>
+    </div>
+
+    <div class="blocks">
+      <div class="blocks__cell">
+        <div class="blocks__num">VERTICALE A</div>
+        <div class="blocks__url">Servizio per sposi</div>
+        <h3 class="blocks__name">Wedding<br>Content Creator</h3>
+        <ul class="blocks__stats">
+          <li><span>Pos attuale</span><strong>2,2 (top 3)</strong></li>
+          <li><span>Click 90gg</span><strong>31</strong></li>
+          <li><span>Volume mese</span><strong>~60+ impr/mese</strong></li>
+          <li><span>Intent</span><strong>commerciale</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Pillar "Cosa fa un wedding content creator" + FAQ + prezzi indicativi + CTA "Richiedi disponibilità data".</p>
+          <div class="blocks__badges"><span class="badge badge--ok">in top 3</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">VERTICALE B</div>
+        <div class="blocks__url">Formazione</div>
+        <h3 class="blocks__name">Academy<br>corsi</h3>
+        <ul class="blocks__stats">
+          <li><span>Pos attuale</span><strong>5,3–7,3</strong></li>
+          <li><span>Click 90gg</span><strong>~22</strong></li>
+          <li><span>Volume</span><strong>~95 impr/mese</strong></li>
+          <li><span>Intent</span><strong>educativo + commerciale</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Landing rifatta in chiave conversion (testimonianze, prossima data, prezzo). Lead magnet "5 lezioni gratis".</p>
+          <div class="blocks__badges"><span class="badge badge--warn">underused</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">VERTICALE C</div>
+        <div class="blocks__url">B2B planner/location</div>
+        <h3 class="blocks__name">Business<br>partnership</h3>
+        <ul class="blocks__stats">
+          <li><span>Pos attuale</span><strong>1,6–5,6</strong></li>
+          <li><span>Click 90gg</span><strong>1</strong></li>
+          <li><span>Impressioni</span><strong>21 · pos 1,6</strong></li>
+          <li><span>Intent</span><strong>B2B</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Pagina /business/ rifatta come "diventa partner Content Love". Form B2B dedicato. ROI per planner/location.</p>
+          <div class="blocks__badges"><span class="badge badge--warn">no traffic yet</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">VERTICALE D · opz.</div>
+        <div class="blocks__url">/en/ destination wedding</div>
+        <h3 class="blocks__name">Destination<br>Wedding Italy</h3>
+        <ul class="blocks__stats">
+          <li><span>Pos attuale</span><strong>4,0 (EN)</strong></li>
+          <li><span>Click 90gg</span><strong>22</strong></li>
+          <li><span>Top query</span><strong>"wedding content creator italy"</strong></li>
+          <li><span>Intent</span><strong>USA/UK clienti</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> /en/ con focus destination wedding (Tuscany, Lake Como, Puglia). Outreach a wedding planner italiani con clienti esteri.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">mercato premium</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">TRACKING · prerequisito</div>
+        <div class="blocks__url">GA4 + GTM</div>
+        <h3 class="blocks__name">Conversion<br>tracking</h3>
+        <ul class="blocks__stats">
+          <li><span>Stato</span><strong>tracking eventi non ancora attivo</strong></li>
+          <li><span>Eventi da abilitare</span><strong>form, WhatsApp, telefono, iscrizione Academy, download lead magnet</strong></li>
+          <li><span>Priorità</span><strong>prerequisito di tutto il resto</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Senza il tracking eventi attivo, il traffico esistente (308 sessioni/28 giorni) non è quantificabile in termini di conversione per canale. Attivarlo è il primo passo per rendere tutte le decisioni successive informate sui dati.</p>
+          <div class="blocks__badges"><span class="badge">prerequisito</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">LEAD MAGNET</div>
+        <div class="blocks__url">Quick win conversione</div>
+        <h3 class="blocks__name">Mini-guida<br>per sposi</h3>
+        <ul class="blocks__stats">
+          <li><span>Formato</span><strong>PDF gated</strong></li>
+          <li><span>Title</span><strong>"Cosa pretendere dal tuo wedding content creator"</strong></li>
+          <li><span>Upsell</span><strong>nurturing → contatto</strong></li>
+          <li><span>Effort</span><strong>2gg + form</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Lead magnet B2C sposi. Trasforma traffico organico + Paid Social in DB email lavorabili.</p>
+          <div class="blocks__badges"><span class="badge">funnel</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 04 PAGINE ===== -->
+  <section class="sec" id="pagine">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Top pagine GSC + GA4 · 28gg</p>
+        <h2 class="sec__title">Le pagine<br>che lavorano</h2>
+      </div>
+      <p class="sec__sub">La home concentra 80% del traffico organico e GA4. Le sotto-pagine (/portfolio/, /metodo/, /academy/, /business/) lavorano come sezioni informative ma non come "money pages". Il sito ha bisogno di pagine commerciali dedicate.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>Pagina</th><th class="num">Click GSC 90gg</th><th class="num">Views GA4 28gg</th><th class="num">Pos</th><th>Ruolo strategico</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong"><code>/</code> homepage</td><td class="num">228</td><td class="num">636</td><td class="num ok">6,7</td><td>Pillar generalista · attualmente cattura tutto l'intent.</td></tr>
+        <tr><td><code>/en/</code></td><td class="num">40</td><td class="num">83</td><td class="num ok">4,0</td><td>Versione EN · porta traffico USA/UK.</td></tr>
+        <tr><td><code>/academy/</code></td><td class="num">24</td><td class="num">28</td><td class="num">5,3–7,3</td><td>Formazione · sottoutilizzato per conversione.</td></tr>
+        <tr><td><code>/it/blog/il-matrimonio-di-adriana-spink-e-fabio-scaglia/</code></td><td class="num">8</td><td class="num">~6</td><td class="num">4,9</td><td>Case study · attrae anche query persona.</td></tr>
+        <tr><td><code>/it/blog/wedding-content-in-tempo-reale/</code></td><td class="num">5</td><td class="num">10</td><td class="num ok">3,8</td><td>Articolo educational · cluster wedding content.</td></tr>
+        <tr><td><code>/metodo/</code></td><td class="num">5</td><td class="num">40</td><td class="num">4,6–7,7</td><td>Pagina chiave brand · alto engagement.</td></tr>
+        <tr><td><code>/portfolio/</code></td><td class="num">~3</td><td class="num">50</td><td class="num">5,8</td><td>Portfolio · supporta decisione acquisto.</td></tr>
+        <tr><td><code>/business/</code></td><td class="num">0</td><td class="num">22</td><td class="num ok">1,6–5,6</td><td>Pagina B2B planner/location · zero click organici.</td></tr>
+        <tr><td><code>/blog/</code></td><td class="num">3</td><td class="num">~46</td><td class="num">3,4–7,1</td><td>Hub blog · supporta cluster topical.</td></tr>
+        <tr><td><code>/it/blog/matrimonio-a-palazzo-monti-della-pieve-...</code></td><td class="num">3</td><td class="num">~10</td><td class="num">9,6</td><td>Case study · alto volume impr (606), pos da migliorare.</td></tr>
+        <tr><td><code>/it/blog/come-organizzare-un-matrimonio-social-ready/</code></td><td class="num">2</td><td class="num">~16</td><td class="num">8,5</td><td>How-to · educa target sposi.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 05 KEYWORD ===== -->
+  <section class="sec" id="kw">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Query GSC · 90gg</p>
+        <h2 class="sec__title">Le query<br>che servono</h2>
+      </div>
+      <p class="sec__sub">Tre cluster netti: brand (content love + variants), commerciale (wedding content creator + variants), case study (palazzo monti, fabio scaglia). Il cluster commerciale è il money cluster — è dove arriva domanda non-brand.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Click</th><th class="num">Impr</th><th class="num">CTR</th><th class="num">Pos</th><th>Cluster</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">content love</td><td class="num">74</td><td class="num">186</td><td class="num ok">39,8%</td><td class="num ok">1,4</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td class="strong acc">wedding content creator</td><td class="num acc">31</td><td class="num">188</td><td class="num">16,5%</td><td class="num ok">2,2</td><td><span class="badge badge--ok">commercial · pillar</span></td></tr>
+        <tr><td class="strong">contentlove</td><td class="num">16</td><td class="num">32</td><td class="num ok">50,0%</td><td class="num ok">3,2</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td>content creator wedding</td><td class="num">5</td><td class="num">22</td><td class="num ok">22,7%</td><td class="num ok">2,8</td><td><span class="badge badge--ok">commercial · variante</span></td></tr>
+        <tr><td>palazzo monti della pieve</td><td class="num">3</td><td class="num">606</td><td class="num bad">0,50%</td><td class="num">9,6</td><td><span class="badge badge--ghost">case study · location</span></td></tr>
+        <tr><td>fabio scaglia</td><td class="num">2</td><td class="num">51</td><td class="num">3,9%</td><td class="num">5,8</td><td><span class="badge badge--ghost">persona · case study</span></td></tr>
+        <tr><td>wedding content</td><td class="num">2</td><td class="num">4</td><td class="num ok">50%</td><td class="num ok">1,2</td><td><span class="badge badge--ok">commercial · short</span></td></tr>
+        <tr><td>adriana spink vero nome</td><td class="num">1</td><td class="num">3</td><td class="num">33%</td><td class="num">9,7</td><td><span class="badge badge--ghost">persona</span></td></tr>
+        <tr><td>wedding content creator italia</td><td class="num">1</td><td class="num">5</td><td class="num">20%</td><td class="num ok">1,2</td><td><span class="badge badge--ok">geo · brand-correlato</span></td></tr>
+        <tr><td>wedding content creator italy</td><td class="num">1</td><td class="num">26</td><td class="num">3,9%</td><td class="num">7,2</td><td><span class="badge badge--warn">EN · destination</span></td></tr>
+        <tr><td>content creator for wedding</td><td class="num">1</td><td class="num">2</td><td class="num">50%</td><td class="num ok">1,5</td><td><span class="badge badge--warn">EN · variante</span></td></tr>
+        <tr><td>wedding content creator course</td><td class="num">1</td><td class="num">1</td><td class="num">100%</td><td class="num ok">1,0</td><td><span class="badge badge--ok">academy · ad-perfect</span></td></tr>
+        <tr><td>adriana spink (+ varianti)</td><td class="num">0</td><td class="num">~40</td><td class="num">0%</td><td class="num">~3</td><td><span class="badge badge--ghost">persona · da catturare</span></td></tr>
+        <tr class="tot"><td>Cluster commerciale</td><td class="num">42</td><td class="num">~280</td><td class="num">15%</td><td class="num">~2,2</td><td>Money cluster</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Pattern emerso</h4>
+    <p>Le query "adriana spink + variante" portano 40+ impressions perché Adriana Spink è la <strong>influencer cliente</strong> il cui matrimonio è raccontato nel case study <code>/it/blog/il-matrimonio-di-adriana-spink-e-fabio-scaglia/</code> (8 click 90gg pos 4,9). È il pattern "case study con cliente riconoscibile = landing organica per query brand del cliente" — già attivo e funzionante. Direzione strategica: <strong>selezionare clienti con personal brand riconoscibile</strong> per i prossimi case study, costruendo sistematicamente questo tipo di traffico residuale ad effort zero.</p>
+  </section>
+
+  <!-- ===== 06 INSIGHT ===== -->
+  <section class="sec" id="insight">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">Pattern emersi dai dati</p>
+        <h2 class="sec__title">Sei<br>insight</h2>
+      </div>
+      <p class="sec__sub">Letture incrociate GSC + GA4 + verifiche tecniche live.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">ContentLove è il <span class="acc">sito migliore</span> dell'ecosistema</span>
+          Pos media 7,7 vs 11,3 Amedani, 15,2 StudioUp, 16,1 LiveCoverage. CTR 5,84% vs 1,04% StudioUp e 2,55% LiveCoverage. È il sito che fa più chilometraggio per impression, perché ha un focus verticale chiaro (wedding) e un brand riconoscibile.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">La <span class="acc">leggera flessione</span> sul brand è di consolidamento</span>
+          "content love" passa da 29 → 23 click (28vs28) ma resta a pos 1,4 con CTR 39,78%. Non è perdita di posizionamento, è oscillazione tipica del brand consolidato — di solito è il commercial non-brand che cresce mentre il brand si stabilizza. Esattamente quello che si vede: "wedding content creator" +7 click.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Palazzo Monti della Pieve è il <span class="acc">case study più clickbaitato</span></span>
+          606 impressions in 90gg, pos 9,6, ma solo 3 click (CTR 0,50%). La query "palazzo monti della pieve" è una location famosa: chi cerca vuole il sito della location, non un articolo. Comunque ContentLove appare in SERP — è autorità di codomimio. Title/snippet del blog post da riformulare per agganciare i 600 impressions: "Matrimonio a Palazzo Monti della Pieve · case study wedding content creation" può migliorare CTR.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">flusso multicanale</span> regge · prossimo step misurarlo</span>
+          Paid Social 123 + Direct 113 + Organic 111 (308 sessioni tot 28gg). Bilanciato. Le conversioni esistono (booking, DM, iscrizioni Academy) ma non sono ancora tracciate via GA4 — attivare il tracking è il prossimo step per quantificare il ritorno per canale e capire quale leva ha più impatto.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">mercato estero</span> bussa</span>
+          22 click + 10 impressions su /en/, pos 4,0. Query: "wedding content creator italy", "wedding content creator italy", "content creator for wedding". Il pattern è "stranieri che si sposano in Italia" o "agenzie estere che cercano fornitore italiano". <strong>È un mercato premium</strong> (destination wedding ha budget 5–10× maggiore). Vale lavorarci.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">L'<span class="acc">Academy</span> è il prodotto a margine più alto e sottoutilizzato</span>
+          24 click GSC 90gg su query Academy + 28 views GA4 28gg. Pos 5–7. Title pagina basico. Ma il prodotto formativo ha unit economics molto più favorevoli del servizio "wedding content creator one-off" (un corso può avere 30–80 iscritti × 300–800€ = scalabile). <strong>Leverage</strong>: traffico organico esiste, mancano landing+funnel.
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== 06.5 CONTENT STRATEGY WEDDING ===== -->
+  <section class="sec" id="strategy-wedding">
+    <div class="sec__head">
+      <p class="sec__num">06.5</p>
+      <div>
+        <p class="sec__kicker">SERP wedding content creator · DataForSEO + Jina</p>
+        <h2 class="sec__title">Content strategy<br>wedding</h2>
+      </div>
+      <p class="sec__sub">Mappa SERP reale, volumi, People Also Ask, pattern competitor. Reverse-engineering delle pagine in top 10 per costruire il cluster topical più efficace.</p>
+    </div>
+
+    <h3>Volumi & <span class="acc">keyword</span> chiave</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Volume/mese IT</th><th class="num">CPC</th><th class="num">Trend</th><th>Intent</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">wedding content creator</td><td class="num">50</td><td class="num">€1,36</td><td class="num ok">+40% mese</td><td>commercial</td></tr>
+        <tr><td>content creator matrimonio</td><td class="num">~80 stimato</td><td class="num">—</td><td class="num">stabile</td><td>commercial · educational</td></tr>
+        <tr><td>wedding content creator italia</td><td class="num">~30</td><td class="num">—</td><td class="num">in crescita</td><td>commercial · geo</td></tr>
+        <tr><td>video matrimonio social</td><td class="num">~50</td><td class="num">—</td><td class="num">stabile</td><td>commercial</td></tr>
+        <tr class="tot"><td>Pool wedding content</td><td class="num">~210/mese</td><td class="num">€1,4 medio</td><td class="num ok">crescita 2026</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Lettura</strong>: il bacino è ancora piccolo (~210 ricerche/mese cumulate) ma la curva è in salita (+40% mensile su "wedding content creator"). Mercato in <strong>fase di formazione</strong>: la categoria sta nascendo. Chi presidia ora il vocabolario diventa il punto di riferimento.</p>
+
+    <h3>Anatomia SERP <span class="acc">"wedding content creator italia"</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Pos</th><th>Tipo</th><th>Brand</th><th>Pattern</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td><span class="badge badge--info">AI overview</span></td><td>Google AIO</td><td>SGE attivo → ContentLove citata?</td></tr>
+        <tr><td class="num">2</td><td><span class="badge badge--neutral">directory</span></td><td>Matrimonio.com</td><td>Listing "Wedding Creator Italy" — directory verticale</td></tr>
+        <tr><td class="num"><span class="acc">3</span></td><td><span class="badge badge--ok">organic</span></td><td><strong>ContentLove</strong></td><td>Homepage con USP "24 ore"</td></tr>
+        <tr><td class="num">4</td><td><span class="badge badge--ghost">IG profile</span></td><td>weddingrawmemories (30,8K follower)</td><td>Account IG → Google indicizza profilo</td></tr>
+        <tr><td class="num">5</td><td><span class="badge badge--ghost">blog post</span></td><td>Francesco Caroli</td><td>Articolo educational "chi è / come scegliere"</td></tr>
+        <tr><td class="num">6</td><td><span class="badge badge--ghost">blog post</span></td><td>Blanc Weddings</td><td>"Perché assumere un wedding content creator" — magazine planner</td></tr>
+        <tr><td class="num">7</td><td><span class="badge badge--ghost">blog post</span></td><td>Giulia Barabani Weddings</td><td>Destination wedding planner</td></tr>
+        <tr><td class="num">9</td><td><span class="badge badge--usp">geo page</span></td><td><strong>Elena Dell'Oro</strong></td><td>Pagina dedicata <code>/wedding-content-creator</code> · USP "72h" · focus Valtellina/Lombardia</td></tr>
+        <tr><td class="num">10</td><td><span class="badge badge--usp">page EN</span></td><td>Rellini Art Studio</td><td>Pagina <code>/wedding-content-creator-italy</code> · award "best wedding photographer EWPC 2024"</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Reverse-engineering <span class="acc">competitor diretti</span> (Jina scrape)</h3>
+    <div class="blocks">
+      <div class="blocks__cell">
+        <div class="blocks__num">COMPETITOR · pos 9</div>
+        <div class="blocks__url">elenadellorodesigner.com/wedding-content-creator</div>
+        <h3 class="blocks__name">Elena Dell'Oro</h3>
+        <ul class="blocks__stats">
+          <li><span>H1</span><strong>"Content creator per matrimoni: reel e stories pronti in 72h"</strong></li>
+          <li><span>USP centrali</span><strong>72h delivery · discrezione · vertical-native</strong></li>
+          <li><span>Sezioni H2</span><strong>Live & Social · Editing veloce · Storytelling · Chi sono · FAQ</strong></li>
+          <li><span>Focus geo</span><strong>Valtellina + Lombardia</strong></li>
+          <li><span>CTA</span><strong>"Prenota la call gratuita"</strong></li>
+          <li><span>Output</span><strong>Reel · Stories · Foto dettagli · Template brandizzati</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Pattern semplice ma efficace per persona-brand. ContentLove gioca un livello sopra: brand + team + Academy. <strong>"24h delivery"</strong> (vs 72h di Elena) è già un USP più forte.</p>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">COMPETITOR · pos 5</div>
+        <div class="blocks__url">francescocaroli.it · blog post</div>
+        <h3 class="blocks__name">Francesco<br>Caroli blog</h3>
+        <ul class="blocks__stats">
+          <li><span>Format</span><strong>Long-form educational + jump links</strong></li>
+          <li><span>Anchor sezioni</span><strong>"Chi è" · "Come scegliere il giusto"</strong></li>
+          <li><span>Vantaggio</span><strong>Intercetta intent informational con stesso URL</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> ContentLove ha <code>/it/blog/wedding-content-in-tempo-reale/</code> ma manca un pillar che funga da "chi è / come scegliere / quanto costa". Articolo da costruire.</p>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">PAA · domande reali</div>
+        <div class="blocks__url">People Also Ask Google · da SERP "content creator matrimonio"</div>
+        <h3 class="blocks__name">Domande<br>esistenti</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>PAA 1</span><strong>"Chi sono i content creator per matrimoni?"</strong></li>
+          <li><span>PAA 2</span><strong>"Wedding content creator cosa fa?"</strong></li>
+          <li><span>PAA 3</span><strong>"Quanto costa un videomaker per un matrimonio?"</strong></li>
+          <li><span>PAA 4</span><strong>"Quanto si prende Enzo Miccio..."</strong></li>
+          <li><span>Related</span><strong>"video matrimonio brescia"</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> 3 PAA su 4 sono "definizione + costi". Articolo "Quanto costa un wedding content creator (guida 2026)" è gap concreto — nessuno in top 10 lo presidia con un pricing range chiaro.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">gap concreto</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Cluster topical <span class="acc">proposto</span> (basato su SERP reali)</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Articolo</th><th>Query target</th><th class="num">Vol stimato</th><th>Gap in SERP</th><th>Priorità</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="strong">Quanto costa un wedding content creator (guida 2026)</td>
+          <td><code>quanto costa wedding content creator</code></td>
+          <td class="num">~30</td>
+          <td>PAA Google esplicita · nessuno pubblica range</td>
+          <td><span class="badge badge--ok">P1</span></td>
+        </tr>
+        <tr>
+          <td class="strong">Wedding content creator vs videomaker: 7 differenze</td>
+          <td><code>wedding content creator vs videomaker</code></td>
+          <td class="num">~20</td>
+          <td>Tema ricorrente nei blog ma trattato superficialmente</td>
+          <td><span class="badge badge--ok">P1</span></td>
+        </tr>
+        <tr>
+          <td class="strong">Come scegliere un wedding content creator (checklist)</td>
+          <td><code>come scegliere wedding content creator</code></td>
+          <td class="num">~25</td>
+          <td>F. Caroli ha jump link, ContentLove può fare meglio</td>
+          <td><span class="badge badge--ok">P1</span></td>
+        </tr>
+        <tr>
+          <td class="strong">Wedding content creator Toscana · Lake Como · Puglia</td>
+          <td><code>wedding content creator [destination]</code></td>
+          <td class="num">~15 cad.</td>
+          <td>Mercato destination wedding stranieri</td>
+          <td><span class="badge badge--ok">P2</span></td>
+        </tr>
+        <tr>
+          <td>I 10 errori da evitare con un wedding content creator</td>
+          <td><code>errori wedding content creator</code></td>
+          <td class="num">~10</td>
+          <td>Spazio libero</td>
+          <td><span class="badge badge--neutral">P2</span></td>
+        </tr>
+        <tr>
+          <td>Wedding content creator in stile destination · USA/UK</td>
+          <td><code>wedding content creator italy / italian wedding</code></td>
+          <td class="num">~30 EN</td>
+          <td>Mercato premium</td>
+          <td><span class="badge badge--neutral">P3 · EN</span></td>
+        </tr>
+        <tr>
+          <td>Quanto dura una wedding content creation (full day vs half day)</td>
+          <td><code>durata wedding content creator</code></td>
+          <td class="num">~10</td>
+          <td>Spazio totale</td>
+          <td><span class="badge badge--neutral">P3</span></td>
+        </tr>
+        <tr>
+          <td>Wedding content creator vs fotografo: ruoli complementari</td>
+          <td><code>differenza fotografo content creator</code></td>
+          <td class="num">~15</td>
+          <td>Spazio totale</td>
+          <td><span class="badge badge--neutral">P3</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Pattern del cluster</strong>: ogni articolo punta alla pillar <code>/wedding-content-creator/</code> (da creare come URL dedicato distinto dalla home) e dalla pillar tornano i link agli articoli. Tassonomia decisionale (costi, scelta, differenze) prima di tassonomie esperienziali (durata, geo). FAQ schema su ognuno per intercettare le PAA Google.</p>
+  </section>
+
+  <!-- ===== 07 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Cosa fare e in che ordine</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Quattro priorità: prerequisito tracking, pillar wedding, funnel Academy, espansione EN. In sequenza, perché ogni step alimenta il successivo.</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Attivare conversion tracking <span class="acc">su Google Analytics 4</span></span>
+          <span class="recs__why">Le conversioni reali (booking via DM Instagram, contatti, iscrizioni Academy) avvengono ma oggi non vengono registrate dagli eventi GA4. Abilitando gli eventi base (invio form, click WhatsApp, click messaggio Instagram, click telefono, iscrizione Academy, download lead magnet), il traffico esistente diventa misurabile per canale e per pagina. L'attivazione fa parte del pacchetto comune di tracking previsto per i 4 siti dell'ecosistema.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Pagina pillar <span class="acc">"Wedding Content Creator"</span></span>
+          <span class="recs__why">Oggi la query principale "wedding content creator" è intercettata dalla home. Una pagina dedicata di categoria (es. <code>/wedding-content-creator/</code>) può presidiare meglio l'intent commerciale e portare la posizione da 2,2 verso 1. Contenuto suggerito: definizione del ruolo, differenza con videomaker e fotografo, casi d'uso, range di prezzi, FAQ. Schema markup Service + FAQPage. Internal linking da home, blog e case study.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Cluster di <span class="acc">8 articoli</span> intorno alla pagina pillar</span>
+          <span class="recs__why">Articoli che rispondono alle ricerche correlate emerse in SERP e nei "People Also Ask" di Google: "Quanto costa un wedding content creator", "Wedding content creator vs videomaker", "Cosa chiedere al tuo wedding content creator (checklist)", "I 10 errori da evitare", versioni geo se ha senso (Toscana, Lago di Como, ecc.), "Quanto dura un servizio di wedding content creation". Ogni articolo punta alla pagina pillar e viceversa.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Iterazione landing <span class="acc">Academy</span> in ottica conversione</span>
+          <span class="recs__why">Oggi la pagina Academy è prevalentemente informativa: prezzo, testimonianze e disponibilità della prossima edizione non sono in primo piano. Una versione con focus conversione (testimonianza video di ex-corsiste, prezzo visibile, countdown della prossima edizione, FAQ) può migliorare significativamente il tasso di iscrizione. Un lead magnet "5 lezioni gratuite" può alimentare una pipeline calda di newsletter.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Lead magnet <span class="acc">per sposi</span></span>
+          <span class="recs__why">PDF di 10–15 pagine "Mini-guida agli sposi: cosa pretendere dal tuo wedding content creator", protetto da iscrizione email. Sequenza di 5 email che porta naturalmente alla richiesta di disponibilità. È lo strumento che trasforma il traffico esistente (organico + Paid Social) in un database di contatti caldi e qualificati.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Espansione della versione <span class="acc">inglese</span> per destination wedding</span>
+          <span class="recs__why">La versione /en/ riceve già 22 click in 90 giorni per query del tipo "wedding content creator italy", "content creator for wedding". È il segnale di un mercato estero (USA, UK, DE) che cerca content creator italiani per il proprio matrimonio in Italia (Toscana, Lago di Como, Puglia, Amalfi). Espansione naturale: pagina /en/ rivista con focus destination wedding + 2-3 articoli inglesi dedicati + relazioni con wedding planner italiani specializzati in clienti esteri.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Sistematizzare i <span class="acc">case study</span> con clienti riconoscibili</span>
+          <span class="recs__why">Il case study del matrimonio di Adriana Spink (influencer cliente) ha già 8 click in 90 giorni a posizione 4,9 sul blog post, e oltre 40 visualizzazioni per le query del suo nome. È il pattern che si attiva quando si racconta il matrimonio di una coppia con personal brand riconoscibile: la pagina diventa una mini-landing che cattura traffico residuo continuo. Formalizzare un template di case study e selezionare i prossimi matrimoni da raccontare con questo criterio rende il pattern replicabile.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="pull">Top 3 nella categoria <span class="acc">è il punto di partenza</span>: il cluster di contenuti e il tracking aprono la fase successiva.</div>
+  </section>
+
+  <!-- ===== 08 SEQUENCING ===== -->
+  <section class="sec" id="roadmap">
+    <div class="sec__head">
+      <p class="sec__num">08</p>
+      <div>
+        <p class="sec__kicker">Ordine logico delle attività</p>
+        <h2 class="sec__title">Sequenza<br>suggerita</h2>
+      </div>
+      <p class="sec__sub">Non un calendario, ma l'ordine logico in cui le attività si sbloccano una con l'altra. Le tempistiche concrete vengono calibrate sul contesto operativo.</p>
+    </div>
+
+    <ol class="phases">
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Attivare conversion tracking GA4</span>
+        <span class="phases__body">Prerequisito di tutto il resto. Setup eventi base (form, WhatsApp, DM Instagram, iscrizione Academy). Pacchetto comune ai 4 siti dell'ecosistema.</span>
+        <span class="phases__when">primo step</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Template case study + selezione</span>
+        <span class="phases__body">Formalizzare il pattern del case study di Adriana Spink. Selezionare i prossimi matrimoni da raccontare con clienti dal personal brand riconoscibile.</span>
+        <span class="phases__when">attività continua</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Pagina pillar /wedding-content-creator/</span>
+        <span class="phases__body">Pagina dedicata di categoria. Schema markup. Internal linking sistematico verso e dalla pagina.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Lead magnet + funnel per sposi</span>
+        <span class="phases__body">PDF gated + sequenza di 5 email. Test sulla pagina pillar appena pubblicata.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Cluster di 8 articoli intorno alla pillar</span>
+        <span class="phases__body">Pubblicazione progressiva degli articoli del cluster. Ogni articolo punta alla pillar e viceversa.</span>
+        <span class="phases__when">in parallelo</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Iterazione landing Academy</span>
+        <span class="phases__body">Versione in ottica conversione: testimonianze, prezzo, countdown, FAQ. Lead magnet "5 lezioni gratuite".</span>
+        <span class="phases__when">fase successiva</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Espansione versione /en/ destination wedding</span>
+        <span class="phases__body">Rifacimento della home /en/ con focus destination wedding + articoli inglesi dedicati + outreach a wedding planner italiani.</span>
+        <span class="phases__when">fase successiva</span>
+      </li>
+    </ol>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>Performance Search Console su <code>sc-domain:contentlove.it</code>, confronto 90 giorni e 28 giorni. Google Analytics 4 property 508534606. Verifica diretta dei redirect HTTP via richiesta. SERP DataForSEO sulle query wedding. Reverse-engineering competitor top 10 via Jina Reader.</p>
+    </div>
+    <div>
+      <h5>Coordinate progetto</h5>
+      <p>ContentLove · brand wedding consolidato · top 3 nazionale per "wedding content creator" · Academy come prodotto formativo · versione inglese rivolta al mercato destination wedding.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>Strategia a tre verticali (servizio sposi, Academy, business B2B) · introduzione del lead magnet per sposi · attivazione del tracking eventi su GA4 · iterazione della landing Academy in chiave conversione.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">ContentLove · Check performance · 19 maggio 2026</p>
+
+</div>
+
+</body>
+</html>

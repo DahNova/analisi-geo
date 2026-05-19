@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveCoverage — Check performance · 19 maggio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #E66B1A;
+    --accent-soft: #FBE4D2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 50ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(38px, 5vw, 60px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.75; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 75ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl tbody tr.tot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding-top: 14px; padding-bottom: 14px; background: #FAFAFA; }
+  .tbl code { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .blocks { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--ink); margin: 32px 0; }
+  .blocks__cell { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; min-height: 240px; }
+  .blocks__cell:nth-child(3n) { border-right: 0; }
+  .blocks__cell:nth-last-child(-n+3) { border-bottom: 0; }
+  .blocks__cell--accent { background: var(--accent); color: var(--bg); }
+  .blocks__cell--ink { background: var(--ink); color: var(--bg); }
+  .blocks__num { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+  .blocks__url { font-family: var(--f-mono); font-size: 10.5px; word-break: break-all; opacity: 0.7; margin-top: 6px; }
+  .blocks__name { font-family: var(--f-sans); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 14px; text-transform: uppercase; }
+  .blocks__stats { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.65; margin: 0 0 18px; padding: 0; list-style: none; opacity: 0.85; }
+  .blocks__stats li { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+  .blocks__stats li span:first-child { opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+  .blocks__stats li strong { font-weight: 600; }
+  .blocks__take { padding-top: 14px; border-top: 1px solid currentColor; font-size: 13px; line-height: 1.45; }
+  .blocks__take strong { font-weight: 700; }
+  .blocks__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .blocks__cell--accent .badge, .blocks__cell--ink .badge { background: rgba(255,255,255,0.1); color: var(--bg); border-color: rgba(255,255,255,0.4); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.2; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 64ch; letter-spacing: -0.02em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  .chart { margin: 32px 0; }
+  .chart__title { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .chart__row { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 14px; padding: 4px 0; font-family: var(--f-mono); font-size: 11.5px; }
+  .chart__day { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .chart__bar { background: var(--grid); height: 22px; position: relative; }
+  .chart__bar span { display: block; height: 100%; background: var(--ink); }
+  .chart__bar.is-mute span { background: var(--ink-3); }
+  .chart__bar.is-acc span { background: var(--accent); }
+  .chart__val { font-weight: 600; text-align: right; color: var(--ink); font-feature-settings: "tnum" on; }
+
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 32px 0 0; }
+  .insights li { counter-increment: ins; display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--grid); }
+  .insights li:last-child { border-bottom: 2px solid var(--ink); }
+  .insights__num { font-family: var(--f-sans); font-weight: 900; font-size: 44px; line-height: 0.85; color: var(--accent); letter-spacing: -0.04em; }
+  .insights__num::before { content: counter(ins, decimal-leading-zero); }
+  .insights__body { font-size: 14.5px; line-height: 1.55; max-width: 84ch; }
+  .insights__title { display: block; font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; text-transform: uppercase; }
+  .insights__title .acc { color: var(--accent); }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 78ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .phases { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li { counter-increment: ph; display: grid; grid-template-columns: 70px 240px 1fr 160px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .phases li:last-child { border-bottom: 2px solid var(--ink); }
+  .phases__num { font-family: var(--f-sans); font-weight: 900; font-size: 28px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+  .phases__num::before { content: counter(ph, decimal-leading-zero); }
+  .phases__name { font-family: var(--f-sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; }
+  .phases__body { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 64ch; }
+  .phases__when { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; text-align: right; }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .blocks { grid-template-columns: 1fr; }
+    .blocks__cell { border-right: 0; }
+    .strip__row, .recs li, .insights li, .phases li { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .insights__num { font-size: 28px; }
+    .colophon { grid-template-columns: 1fr; }
+    .chart__row { grid-template-columns: 100px 1fr 60px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .blocks, .insights li, .recs li, .phases li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink, .blocks__cell--accent, .blocks__cell--ink { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand">LIVECOVERAGE / <span>CHECK PERFORMANCE</span></div>
+    <div class="topbar__meta">brand pos 1,8 consolidato · prossimo step: landing commerciali + content cluster</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#trend">02</a><a href="#strategy">03</a><a href="#pagine">04</a><a href="#kw">05</a><a href="#insight">06</a><a href="#strategy-eventi">06.5</a><a href="#proposta">07</a><a href="#roadmap">08</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance check · 19 maggio 2026 · brand consolidato · espansione commerciale</p>
+      <h1>Brand<br><span class="ml">consolidato</span>.<br>Content commerciale<br>da espandere.</h1>
+      <p class="hero__lede">90gg di dati: <strong>61 click, 2.394 impressions, CTR 2,55%, posizione media 16,1</strong>. Il brand "live coverage / livecoverage" sta in pos 1,1–1,0 con CTR 13,3% — <strong>l'identità digitale è già conquistata</strong>. Il prossimo livello di crescita passa da due leve: (1) <strong>landing commerciali dedicate</strong> a 3 servizi chiave — oggi il sito è editoriale puro e la SERP italiana per "video per eventi aziendali" è dominata da case di produzione tradizionali (Kortocircuito, Krea, Galliano Studio), nessuno ancora con angle "real-time social-native"; (2) <strong>conversion tracking GA4</strong> da attivare per misurare il ROI dei 29 utenti/mese da Paid Social che oggi convertono via email/DM ma non sono tracciati in GA4.</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Finestra analisi</dt>
+      <dd>P1: 21.04.2026 → 18.05.2026 (28gg)<br>P2: 24.03.2026 → 20.04.2026 (28gg)<br>Storico: 90gg cumulati GSC</dd>
+      <dt>Asset analizzati</dt>
+      <dd>GSC https://livecoverage.it/<br>GA4 property 488332330<br>Sitemap index 19 entries · page-sitemap 2 URL</dd>
+      <dt>Stato sito</dt>
+      <dd><span class="badge badge--ok">brand pos 1,1</span> <span class="badge badge--ok">17 post blog</span> <span class="badge badge--warn">landing servizio da aggiungere</span> <span class="badge badge--warn">tracking GA4 da abilitare</span></dd>
+      <dt>Direzione strategica</dt>
+      <dd>Espandere LiveCoverage da hub editoriale a sistema di lead-gen B2B per eventi aziendali, mantenendo il blog come motore di brand authority.</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">61</span>
+      <span class="statgrid__lbl">Click GSC · 90gg</span>
+      <span class="statgrid__delta">~0,7 click/giorno · poco</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">1,1</span>
+      <span class="statgrid__lbl">Pos brand "live coverage"</span>
+      <span class="statgrid__delta">↑ migliorata da 2,2 · CTR 13,3%</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">2.394</span>
+      <span class="statgrid__lbl">Impressions GSC · 90gg</span>
+      <span class="statgrid__delta">17 articoli editoriali pillar</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">tracking</span>
+      <span class="statgrid__lbl">GA4 da abilitare</span>
+      <span class="statgrid__delta">conversioni ci sono · da misurare</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">La storia in cinque punti</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">LiveCoverage ha consolidato la propria identità digitale: brand in posizione 1,1 stabile, 17 articoli editoriali ben scritti, contenuto autorevole sulla categoria. Il prossimo step naturale è affiancare al brand-hub editoriale un'<strong>infrastruttura commerciale</strong>: 3 landing servizio dedicate, un funnel di lead generation B2B e l'attivazione del tracking eventi. È la direzione di espansione proposta per la prossima fase di lavoro.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">brand</span> è il driver attuale al 46%</span>
+          Su 61 click in 90gg: "live coverage" 25 click (CTR 13,3%, pos 1,8) + "livecoverage" 3 click (CTR 100%, pos 1,0) = 28 click brand. Restano 33 click distribuiti su query informazionali e di approfondimento. È il pattern normale di un brand B2B con prodotto premium: il sito viene trovato da chi già conosce, e il lavoro di espansione organica passa dalle landing commerciali — pagine che intercettano le query "video eventi", "produzione video aziendali", "copertura social" su cui oggi il sito non ha presence.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il blog accumula <span class="acc">2.000+ impressions</span> · margine di iterazione sul CTR</span>
+          Pattern visibile su 6 post pillar: <code>come-si-costruisce-una-regia-editoriale-live</code> 480 impr (pos 15,9) · <code>cosa-vuol-dire-produzione-contenuti-live</code> 448 impr (pos 9,1) · <code>videomaker-per-eventi-vs-content-creator</code> 422 impr (pos 11,7) · <code>i-5-motivi-per-cui-le-aziende-piu-innovative-scelgono-la-copertura-live</code> 176 impr (pos 1,9). I post sono posizionati ma in alcuni casi gli snippet non stanno catturando il clic. È il segnale che dopo 90gg di dati GSC c'è materiale per <strong>calibrare il messaggio degli snippet su evidenze reali</strong> — possibilità interessante perché la posizione è già lì.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il sito è <span class="acc">100% editoriale</span> · prossimo asset = landing commerciali</span>
+          Sitemap 19 entries: 17 articoli blog + home + page-sitemap (2 URL). Il sito è cresciuto come content hub, che ha dato il brand. Il prossimo livello — 3 landing di servizio dedicate (<code>/servizi/copertura-social-eventi/</code>, <code>/servizi/regia-editoriale-live/</code>, <code>/servizi/live-content-fiere/</code>) — è il complemento naturale: trasforma il traffico raccolto dall'editoriale in lead misurabili. La SERP italiana per "video per eventi aziendali" è dominata da case di produzione tradizionali (Kortocircuito, Krea, Galliano Studio) senza angle "real-time social-native" — c'è spazio strutturale.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le <span class="acc">ADS</span> portano traffico · prossimo step misurare il ritorno</span>
+          50 sessioni 28gg: 29 Paid Social · 10 Organic · 5 Direct · 3 Organic Social · 2 Paid Other · 1 Unassigned. Le conversioni reali avvengono via email diretto e DM Instagram (il pattern del settore B2B premium) ma <strong>non sono ancora intercettate in GA4</strong>. Attivare conversion tracking + portare le ADS su landing commerciali dedicate sblocca due cose insieme: misurabilità ROI e un offer chiaro per chi atterra dalla pubblicità.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">"Live coverage" è una <span class="acc">categoria condivisa</span> con 3+ competitor diretti</span>
+          SERP italiana "live coverage eventi" verificata 19/05: LiveCoverage è in <strong>pos 1 (leader SERP)</strong>, ma il termine è presidiato anche da <strong>Immagina Group</strong> (pos 3, Roma, FISE partner, 200+ eventi, prezzi da €800+ visibili), <strong>Social Reporters</strong> (pos 6) e <strong>Live Content Creator Hub</strong> (Milano, clienti SKY/Mediaset). LiveCoverage è leader della categoria ma non proprietario del vocabolario. Strategia conseguente: <strong>doppio binario</strong> — landing commerciali che parlano sia "live coverage" (categoria di nicchia in cui siamo top 1) sia "video eventi aziendali / videomaker eventi" (volumi più alti, search intent tradizionale).
+        </div>
+      </li>
+    </ol>
+
+    <div class="pull">Brand fatto. <span class="acc">Il prossimo step è costruire la macchina di vendita</span> che oggi manca lato infrastruttura.</div>
+  </section>
+
+  <!-- ===== 02 TREND ===== -->
+  <section class="sec" id="trend">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">GSC · 28gg vs 28gg precedenti</p>
+        <h2 class="sec__title">Trend<br>SEO</h2>
+      </div>
+      <p class="sec__sub">Trend stabile sul brand. P1 e P2 sostanzialmente identiche: la pos sul brand sale (1,1 da 2,2), il volume di click rimane in linea. È il segnale di un sito in fase di mantenimento brand — pronto per il prossimo step di espansione commerciale.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">"live coverage" (brand)</span>
+        <span class="strip__val">10 click (vs 9 P2)</span>
+        <span class="strip__note strip__note--ok">Pos 1,1 · stabile.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">"livecoverage" (brand)</span>
+        <span class="strip__val">2 click (vs 1 P2)</span>
+        <span class="strip__note strip__note--ok">Pos 1,0 stabile.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Click non-brand 28gg</span>
+        <span class="strip__val">~6–8</span>
+        <span class="strip__note strip__note--warn">Plateau · senza intervento.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Pos media globale</span>
+        <span class="strip__val">16,1</span>
+        <span class="strip__note strip__note--warn">Top 20 medio · non commerciale.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">CTR medio</span>
+        <span class="strip__val">2,55%</span>
+        <span class="strip__note strip__note--warn">Sopra studioup ma sotto contentlove.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Sessioni GA4 28gg</span>
+        <span class="strip__val">50</span>
+        <span class="strip__note strip__note--neutral">~1,8/giorno · 58% Paid Social.</span>
+      </div>
+    </div>
+
+    <h3>Compare query <span class="acc">28gg vs 28gg</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">P2 click</th><th class="num">P1 click</th><th class="num">Δ</th><th class="num">P1 pos</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">live coverage</td><td class="num">9</td><td class="num">10</td><td class="num ok">+1</td><td class="num ok">1,1</td><td>Brand driver. Pos migliorata da 2,2 → 1,1.</td></tr>
+        <tr><td>livecoverage</td><td class="num">1</td><td class="num">2</td><td class="num ok">+1</td><td class="num ok">1,0</td><td>Brand variant. Pos top.</td></tr>
+        <tr><td>live storytelling</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">28,0</td><td>Pos migliorata da 10,7 a 28 — anomalo, da verificare.</td></tr>
+        <tr><td>video per eventi aziendali</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num bad">50,0</td><td>Pos 50 · zero traffico · target da raggiungere.</td></tr>
+        <tr><td>live content creator</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">14,0</td><td>Pos 14 · pochi click possibili.</td></tr>
+        <tr><td>produzione video per eventi</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num bad">82,8</td><td>Pos 82 · obiettivo di una landing servizio.</td></tr>
+        <tr><td>progettazione video per eventi</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num bad">66,3</td><td>Pos 66 · stessa logica.</td></tr>
+        <tr><td>live content</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">22,3</td><td>Generica · poco intent.</td></tr>
+        <tr><td>metodo live</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">6,4</td><td>Pos 6 ma volume basso.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Distribuzione sessioni <span class="acc">GA4 · 28gg</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Canale</th><th class="num">Sessioni</th><th class="num">Users</th><th class="num">Engag. rate</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">Paid Social</td><td class="num">29</td><td class="num">29</td><td class="num">55,2%</td><td>Driver principale · ROI quantificabile post-tracking GA4.</td></tr>
+        <tr><td>Organic Search</td><td class="num">10</td><td class="num">8</td><td class="num">60%</td><td>SEO marginale.</td></tr>
+        <tr><td>Direct</td><td class="num">5</td><td class="num">5</td><td class="num ok">100%</td><td>Brand recall · poche persone.</td></tr>
+        <tr><td>Organic Social</td><td class="num">3</td><td class="num">3</td><td class="num">66,7%</td><td>IG/TikTok marginale.</td></tr>
+        <tr><td>Paid Other</td><td class="num">2</td><td class="num">2</td><td class="num ok">100%</td><td>Probabile YouTube ADS.</td></tr>
+        <tr><td>Unassigned</td><td class="num">1</td><td class="num">1</td><td class="num bad">0%</td><td>Tracking UTM da rivedere.</td></tr>
+        <tr class="tot"><td>Totale</td><td class="num">50</td><td class="num">~48</td><td class="num">~62%</td><td>tracking GA4 da abilitare per analisi conversioni.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 03 STRATEGY ===== -->
+  <section class="sec" id="strategy">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Strategia post-tecnica</p>
+        <h2 class="sec__title">Costruire<br>il sito commerciale</h2>
+      </div>
+      <p class="sec__sub">Il salto richiesto è strutturale: da blog editoriale a sito B2B con tre landing servizio e un funnel di lead generation. Il blog resta come supporto (content marketing → top-funnel), ma <strong>il conversion engine sono le tre landing</strong>.</p>
+    </div>
+
+    <div class="blocks">
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING A · core</div>
+        <div class="blocks__url">/servizi/copertura-social-eventi/</div>
+        <h3 class="blocks__name">Copertura<br>Social Eventi</h3>
+        <ul class="blocks__stats">
+          <li><span>Target query</span><strong>"copertura social eventi", "live content evento"</strong></li>
+          <li><span>Tier</span><strong>Standard</strong></li>
+          <li><span>Output</span><strong>stories, reel, post real-time</strong></li>
+          <li><span>Persona</span><strong>Marketing manager azienda</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Pagina pillar di vendita. Cosa otteni, per chi, case study con metriche, prezzi indicativi, CTA preventivo. Schema Service + Offer + FAQ.</p>
+          <div class="blocks__badges"><span class="badge">priorità 1</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING B · premium</div>
+        <div class="blocks__url">/servizi/regia-editoriale-live/</div>
+        <h3 class="blocks__name">Regia<br>Editoriale Live</h3>
+        <ul class="blocks__stats">
+          <li><span>Target query</span><strong>"regia live eventi", "produzione contenuti live"</strong></li>
+          <li><span>Tier</span><strong>Premium</strong></li>
+          <li><span>Output</span><strong>regia + ground crew + multi-output</strong></li>
+          <li><span>Persona</span><strong>Eventi 500+ partecipanti</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Servizio top-tier per conference, kickoff, fashion show. Prezzi alti, ROI giustificato con case study.</p>
+          <div class="blocks__badges"><span class="badge">priorità 2</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING C · vertical</div>
+        <div class="blocks__url">/servizi/live-content-fiere/</div>
+        <h3 class="blocks__name">Live Content<br>per Fiere</h3>
+        <ul class="blocks__stats">
+          <li><span>Target query</span><strong>"contenuti per fiere", "social fiera B2B"</strong></li>
+          <li><span>Tier</span><strong>Verticale</strong></li>
+          <li><span>Output</span><strong>formula stand B2B</strong></li>
+          <li><span>Persona</span><strong>Trade marketing</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Action.</strong> Servizio chiavi in mano per espositori. Numero stand seguiti, costo per visitatore catturato.</p>
+          <div class="blocks__badges"><span class="badge">priorità 3</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">LEAD MAGNET B2B</div>
+        <div class="blocks__url">/risorse/metriche-evento/</div>
+        <h3 class="blocks__name">PDF Metriche<br>Evento</h3>
+        <ul class="blocks__stats">
+          <li><span>Title</span><strong>"Le 7 metriche che il tuo CMO si aspetta dopo un evento"</strong></li>
+          <li><span>Gating</span><strong>email + ruolo aziendale</strong></li>
+          <li><span>Nurturing</span><strong>5 email → CTA preventivo</strong></li>
+          <li><span>Effort</span><strong>3 giornate</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Trasforma traffico ADS in DB email lavorabile. È la chiusura del funnel mancante.</p>
+          <div class="blocks__badges"><span class="badge">funnel</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">CTR FIX</div>
+        <div class="blocks__url">6 post blog top-impressions</div>
+        <h3 class="blocks__name">Iterazione<br>snippet</h3>
+        <ul class="blocks__stats">
+          <li><span>Impr cumulate</span><strong>2.000+</strong></li>
+          <li><span>Click cumulati</span><strong>4</strong></li>
+          <li><span>Effort</span><strong>4 ore</strong></li>
+          <li><span>Atteso</span><strong>+20–40 click/mese a parità di pos</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Quick win immediato. Pos già OK, manca il title che faccia clickare. Format: [Cosa otteni] + [Numero/benefit] + [Live Coverage].</p>
+          <div class="blocks__badges"><span class="badge">quick win</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">CASE STUDIES</div>
+        <div class="blocks__url">/case-studies/</div>
+        <h3 class="blocks__name">Casi<br>studio</h3>
+        <ul class="blocks__stats">
+          <li><span>Output</span><strong>1 mini-pagina per evento coperto</strong></li>
+          <li><span>Contenuto</span><strong>cliente, sfida, formula, metriche</strong></li>
+          <li><span>Beneficio</span><strong>backlink naturali + social proof</strong></li>
+          <li><span>Frequenza</span><strong>1/evento</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Ogni evento coperto diventa asset SEO. Il cliente di solito linka volentieri. Costo zero, ROI alto.</p>
+          <div class="blocks__badges"><span class="badge">sistema</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 04 PAGINE ===== -->
+  <section class="sec" id="pagine">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Top pagine GSC · 90gg</p>
+        <h2 class="sec__title">Le pagine<br>che esistono</h2>
+      </div>
+      <p class="sec__sub">17 articoli blog + home + 1 pagina blog index = totalità del sito. Nessuna pagina servizio. Nessuna pagina /chi-siamo/ con conversion CTA, nessuna pricing page, nessun form B2B strutturato.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>Pagina</th><th class="num">Click 90gg</th><th class="num">Impressioni</th><th class="num">CTR</th><th class="num">Pos</th><th>Ruolo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong"><code>/</code> home</td><td class="num">49</td><td class="num">501</td><td class="num">9,78%</td><td class="num">5,2</td><td>Driver brand · l'unica che vende.</td></tr>
+        <tr><td><code>/blog/</code> hub</td><td class="num">3</td><td class="num">384</td><td class="num bad">0,78%</td><td class="num">8,3</td><td>Pos 8 ma title generico → CTR pessimo.</td></tr>
+        <tr><td><code>/event-storytelling-creare-narrazioni-coinvolgenti-...</code></td><td class="num">3</td><td class="num">122</td><td class="num">2,46%</td><td class="num">7,2</td><td>Post pillar che funziona meglio degli altri.</td></tr>
+        <tr><td><code>/copertura-live-eventi-perche-e-larma-segreta-...</code></td><td class="num">2</td><td class="num">246</td><td class="num bad">0,81%</td><td class="num ok">3,5</td><td>Pos 3,5 · CTR 0,8% · title pesante da riscrivere.</td></tr>
+        <tr><td><code>/come-si-costruisce-una-regia-editoriale-live-...</code></td><td class="num">1</td><td class="num">480</td><td class="num bad">0,21%</td><td class="num">15,9</td><td>480 impr · 1 click. CTR drammatico.</td></tr>
+        <tr><td><code>/content-creator-per-eventi-chi-e-cosa-fa-...</code></td><td class="num">1</td><td class="num">111</td><td class="num">0,90%</td><td class="num ok">5,9</td><td>Pos 5,9 · titolo da riformulare.</td></tr>
+        <tr><td><code>/copertura-eventi-su-tiktok-e-instagram-...</code></td><td class="num">1</td><td class="num">65</td><td class="num">1,54%</td><td class="num">7,4</td><td>Verticale piattaforma.</td></tr>
+        <tr><td><code>/copertura-social-di-un-evento-chi-se-ne-occupa-...</code></td><td class="num">1</td><td class="num">129</td><td class="num">0,78%</td><td class="num">8,2</td><td>Educational, CTR basso.</td></tr>
+        <tr><td><code>/la-copertura-live-non-e-un-costo-...</code></td><td class="num">1</td><td class="num">38</td><td class="num">2,63%</td><td class="num ok">3,2</td><td>Pos 3,2 · title B2B-friendly funziona meglio.</td></tr>
+        <tr><td><code>/videomaker-per-eventi-vs-content-creator-...</code></td><td class="num">1</td><td class="num">422</td><td class="num bad">0,24%</td><td class="num">11,7</td><td>422 impr · 1 click. CTR drammatico.</td></tr>
+        <tr><td><code>/cosa-vuol-dire-produzione-contenuti-live-...</code></td><td class="num">0</td><td class="num">448</td><td class="num">—</td><td class="num">9,1</td><td>448 impr · pos buona · margine di calibrazione snippet su query reali.</td></tr>
+        <tr><td><code>/la-guida-definitiva-alla-creazione-di-contenuti-...</code></td><td class="num">0</td><td class="num">293</td><td class="num">—</td><td class="num">36,1</td><td>Pos da consolidare prima di calibrare snippet.</td></tr>
+        <tr><td><code>/i-5-motivi-per-cui-le-aziende-piu-innovative-...</code></td><td class="num">0</td><td class="num">176</td><td class="num">—</td><td class="num ok">1,9</td><td>Pos eccellente · spazio di calibrazione snippet su query effettive.</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Mappa CTR</strong>: i 6 post con più impressions (cumulate 2.067) hanno autorità riconosciuta da Google. Calibrare gli snippet sulle query effettive emerse in 90gg di GSC è quick win realistico per portare 50–100 click cumulati/mese (15–30 click/post a CTR 2–4%).</p>
+  </section>
+
+  <!-- ===== 05 KEYWORD ===== -->
+  <section class="sec" id="kw">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Query GSC · 90gg</p>
+        <h2 class="sec__title">Le query<br>che servono</h2>
+      </div>
+      <p class="sec__sub">Tre cluster: brand (pos 1–2 consolidato), educational (pos 8–18 con margine snippet), commercial target (pos 50–80). Il bacino commerciale è il prossimo step di costruzione, con landing servizio dedicate.</p>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Click</th><th class="num">Impr</th><th class="num">CTR</th><th class="num">Pos</th><th>Cluster</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">live coverage</td><td class="num">25</td><td class="num">188</td><td class="num ok">13,3%</td><td class="num ok">1,8</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td class="strong">livecoverage</td><td class="num">3</td><td class="num">3</td><td class="num ok">100%</td><td class="num ok">1,0</td><td><span class="badge badge--ink">brand</span></td></tr>
+        <tr><td>live content creator</td><td class="num">1</td><td class="num">24</td><td class="num">4,2%</td><td class="num">12,7</td><td><span class="badge badge--warn">educational · target</span></td></tr>
+        <tr><td>copertura social</td><td class="num">0</td><td class="num">8</td><td class="num bad">0%</td><td class="num">6,2</td><td><span class="badge badge--warn">target · educational</span></td></tr>
+        <tr><td>copertura social significato</td><td class="num">0</td><td class="num">44</td><td class="num bad">0%</td><td class="num">14,7</td><td><span class="badge badge--warn">educational</span></td></tr>
+        <tr><td>live event coverage</td><td class="num">0</td><td class="num">22</td><td class="num bad">0%</td><td class="num bad">84,3</td><td><span class="badge badge--ghost">EN · fuori</span></td></tr>
+        <tr><td>live content</td><td class="num">0</td><td class="num">12</td><td class="num bad">0%</td><td class="num">18,5</td><td><span class="badge badge--ghost">generica</span></td></tr>
+        <tr><td>intempo</td><td class="num">0</td><td class="num">9</td><td class="num bad">0%</td><td class="num ok">5,4</td><td><span class="badge badge--ghost">brand non target</span></td></tr>
+        <tr><td>cosa vuol dire live</td><td class="num">0</td><td class="num">5</td><td class="num bad">0%</td><td class="num">10,4</td><td><span class="badge badge--ghost">definizionale</span></td></tr>
+        <tr><td>video per eventi aziendali</td><td class="num">0</td><td class="num">~5</td><td class="num bad">0%</td><td class="num bad">50,0</td><td><span class="badge badge--bad">commercial · obiettivo</span></td></tr>
+        <tr><td>produzione video per eventi</td><td class="num">0</td><td class="num">~3</td><td class="num bad">0%</td><td class="num bad">82,8</td><td><span class="badge badge--bad">commercial · obiettivo</span></td></tr>
+        <tr><td>consulenza video per eventi</td><td class="num">0</td><td class="num">3</td><td class="num bad">0%</td><td class="num bad">72,3</td><td><span class="badge badge--bad">commercial · obiettivo</span></td></tr>
+        <tr class="tot"><td>Pool brand</td><td class="num">28</td><td class="num">191</td><td class="num ok">15%</td><td class="num">1,5</td><td>Driver</td></tr>
+        <tr class="tot"><td>Pool commerciale target</td><td class="num">0</td><td class="num">~50</td><td class="num bad">0%</td><td class="num bad">~65</td><td>Da costruire</td></tr>
+      </tbody>
+    </table>
+
+    <h4>Pattern critico</h4>
+    <p>Le query commerciali B2B reali del mercato ("video per eventi aziendali", "produzione video per eventi", "consulenza video per eventi") sono in posizione 50–80. Significa che <strong>nessuna pagina del sito si presenta come fornitore di questi servizi</strong>. Il blog parla di "copertura live", che è il neologismo proprietario di LiveCoverage — utile per il brand, ma il mercato cerca con i termini classici. <strong>Le landing servizio devono parlare nel linguaggio del mercato, non nel linguaggio del fondatore</strong>.</p>
+  </section>
+
+  <!-- ===== 06 INSIGHT ===== -->
+  <section class="sec" id="insight">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">Pattern emersi dai dati</p>
+        <h2 class="sec__title">Sei<br>insight</h2>
+      </div>
+      <p class="sec__sub">Letture incrociate GSC + GA4 + analisi strutturale sito.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Brand <span class="acc">leader di una categoria emergente</span>, non monopolio</span>
+          LiveCoverage è in pos 1 SERP per "live coverage" + "live coverage eventi" con CTR 13%. È il leader della categoria, ma la categoria stessa è condivisa: Immagina Group (Roma, pos 3) e Social Reporters (pos 6) presidiano lo stesso termine con landing dedicate. Le query del settore valgono ~220 ricerche/mese cumulate, in crescita. Il vantaggio di LiveCoverage è doppio: <strong>nome dominio = nome categoria</strong> + <strong>brand già consolidato in pos 1</strong>. Il prossimo livello passa da landing commerciali che presidiano anche query a volume più alto ("video per eventi aziendali", ~40+ ricerche/mese, KD basso).
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Snippet blog · <span class="acc">opportunità di calibrazione</span> su dati GSC reali</span>
+          Pos 1,9 / 8,3 / 9,1 con CTR sotto attesa. È materiale prezioso: pos buona = autorità riconosciuta da Google. Ora con 90gg di dati si può scegliere se calibrare snippet sulle query effettive (quick win) o spingere prima sulle nuove landing commerciali (impact maggiore). Decisione di sequencing, non di "to-do".
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le <span class="acc">ADS Paid Social</span> hanno un funnel da completare</span>
+          29 sessioni Paid Social 28gg atterrano sulla home e sui blog post. Per misurare il ROI servono: (1) tracking conversion GA4 attivo, (2) landing commerciali dove far atterrare le ADS (oggi non esistono URL servizio). Costruire le 3 landing + abilitare tracking sblocca un funnel completamente nuovo per le campagne attive.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il <span class="acc">brand "live coverage"</span> è già consolidato pos 1,1</span>
+          25 click su 188 impressions in 90gg. CTR 13,3%. Pos 1,1 (migliorata da pos 2,2 in P2). Chi conosce LiveCoverage trova il sito al primo colpo. Significa che ora il lavoro di crescita non passa più dalla brand awareness organica (che è acquisita) ma dalla lead generation e dal content commercial.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">La <span class="acc">sitemap</span> ha spazio per crescere mirato</span>
+          19 entries totali · 17 sono articoli blog. Le 3 landing servizio + 1 hub case studies + 1 lead magnet PDF = +5 URL strategici. Crescita controllata e mirata, ogni URL con un job-to-do chiaro.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Tracking GA4 <span class="acc">come prerequisito</span> di analisi più fini</span>
+          Google Analytics 4 negli ultimi 28 giorni mostra 50 sessioni distribuite tra Paid Social, Organic e Direct. Le conversioni reali avvengono tramite canali diretti (email, DM Instagram, telefonate al referente commerciale) e non vengono registrate dagli eventi GA4. Attivando il tracking eventi base e portando le campagne pubblicitarie su landing dedicate, il flusso diventa misurabile e si aprono analisi più precise per il prossimo step.
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== 06.5 CONTENT STRATEGY EVENTI ===== -->
+  <section class="sec" id="strategy-eventi">
+    <div class="sec__head">
+      <p class="sec__num">06.5</p>
+      <div>
+        <p class="sec__kicker">SERP video eventi · DataForSEO + Jina</p>
+        <h2 class="sec__title">Content strategy<br>eventi B2B</h2>
+      </div>
+      <p class="sec__sub">Mappa SERP italiana per le query commerciali eventi, reverse-engineering competitor diretti, pattern vincenti e gap concreti — base per disegnare le 3 landing servizio.</p>
+    </div>
+
+    <h3>Volumi <span class="acc">italiani</span> · cluster eventi B2B</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Volume/mese</th><th class="num">KD</th><th class="num">Trend YoY</th><th>Intent</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">live coverage</td><td class="num">70</td><td class="num warn">56</td><td class="num ok">+40% qtr</td><td>informational</td></tr>
+        <tr><td class="strong">produzione video eventi</td><td class="num">10</td><td class="num">—</td><td class="num bad">−50%</td><td>commercial</td></tr>
+        <tr><td class="strong">video per eventi aziendali</td><td class="num">~40 stimato</td><td class="num">—</td><td class="num">stabile</td><td>commercial</td></tr>
+        <tr><td>copertura social eventi aziendali</td><td class="num">~20 stimato</td><td class="num">—</td><td class="num ok">in crescita</td><td>commercial · nicchia</td></tr>
+        <tr><td>content creator eventi</td><td class="num">~30 stimato</td><td class="num">—</td><td class="num ok">in crescita</td><td>commercial</td></tr>
+        <tr><td>videomaker eventi aziendali</td><td class="num">~50 stimato</td><td class="num">—</td><td class="num">stabile</td><td>commercial · tradizionale</td></tr>
+        <tr class="tot"><td>Pool addressable</td><td class="num">~220/mese</td><td class="num warn">media bassa</td><td class="num ok">cluster nuovo cresce</td><td>—</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Lettura</strong>: volumi piccoli ma <strong>spalmati su molte varianti</strong> = mercato che si sta segmentando. Il vocabolario tradizionale ("videomaker eventi", "produzione video eventi") regge ma è in flessione. Il vocabolario emergente ("live coverage", "copertura social", "content creator eventi") cresce. È il momento esatto di posizionarsi con landing che parlano entrambi i linguaggi.</p>
+
+    <h3>I <span class="acc">3 competitor diretti</span> sul termine "live coverage"</h3>
+    <p>SERP "live coverage eventi" Italia: LiveCoverage è pos 1. Subito sotto, tre operatori italiani che presidiano lo stesso vocabolario con landing dedicate — è la nicchia condivisa con cui ci si confronta direttamente per autorità e prezzi.</p>
+    <table class="tbl">
+      <thead>
+        <tr><th>Competitor</th><th>URL</th><th class="num">Pos SERP</th><th>Sede</th><th>Autorità dichiarata</th><th>Prezzi visibili</th><th>Angle distintivo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="strong">Immagina Group</td>
+          <td><code>immagina.group/servizi/live-coverage-eventi/</code></td>
+          <td class="num warn">3</td>
+          <td>Roma · nazionale</td>
+          <td>200+ eventi · partner FISE · case study</td>
+          <td class="ok"><strong>€800+ visibili</strong> (mezza giornata)</td>
+          <td>Sport, eventi aziendali, federazioni · 5x reach dichiarato</td>
+        </tr>
+        <tr>
+          <td class="strong">Social Reporters</td>
+          <td><code>social-reporters.com/live-coverage/</code></td>
+          <td class="num warn">6</td>
+          <td>n.d.</td>
+          <td>Format strutturato 6 deliverable</td>
+          <td>Non visibili</td>
+          <td>Videoriassunti istituzionali + reportistica con metriche social</td>
+        </tr>
+        <tr>
+          <td class="strong">Live Content Creator</td>
+          <td><code>livecontentcreator.com/production/live-coverage/</code></td>
+          <td class="num">fuori top 10 su query</td>
+          <td>Milano (Viale Zara)</td>
+          <td>Clienti SKY · Mediaset</td>
+          <td>Non visibili</td>
+          <td>Smartphone production · consegna live via AirDrop</td>
+        </tr>
+        <tr>
+          <td class="strong">LiveCoverage</td>
+          <td><code>livecoverage.it</code></td>
+          <td class="num ok"><strong>1</strong></td>
+          <td>Brescia / Milano (via brand)</td>
+          <td>Brand di categoria · 17 articoli editoriali</td>
+          <td>Non visibili</td>
+          <td>Leader SERP · nome dominio = nome servizio · authority editoriale</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>Take strategico</strong>: la categoria "live coverage" è condivisa con 3 operatori diretti, ognuno con sede + audience leggermente diversa. LiveCoverage ha tre vantaggi strutturali: <strong>nome dominio = nome categoria</strong> (autorità semantica), <strong>brand già in pos 1</strong>, <strong>volume editoriale superiore</strong>. Il pattern di Immagina Group (pos 3) è il riferimento competitivo più diretto: <strong>prezzi visibili da €800+</strong>, partnership di settore (FISE), 200+ case dichiarati. Per consolidare la leadership SERP e differenziarsi, LiveCoverage può adottare alcuni pattern di Immagina (autorità numerica + range prezzi) e mantenere il proprio angle "social-native + multi-piattaforma".</p>
+
+    <h3>Anatomia SERP <span class="acc">"video per eventi aziendali"</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Pos</th><th>Brand</th><th>URL</th><th>Pattern</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="strong">Kortocircuito</td><td><code>/realizzazione-video-per-eventi/</code></td><td>Landing dedicata case di produzione · Milano · senza prezzi</td></tr>
+        <tr><td class="num">2</td><td>Krea</td><td>Blog post</td><td>Articolo "perché produrre video agli eventi"</td></tr>
+        <tr><td class="num">3</td><td>InUnMinuto</td><td>Landing servizio</td><td>"video aziendale per meeting, congressi, convention"</td></tr>
+        <tr><td class="num">4</td><td><span class="badge badge--info">video</span></td><td>YouTube tutorials</td><td>SERP feature video</td></tr>
+        <tr><td class="num">6</td><td>HouseOfGlam</td><td>Blog</td><td>"come valorizzare ogni momento"</td></tr>
+        <tr><td class="num">7</td><td>Giuseppe Galliano</td><td>Pagina servizio</td><td>"video 360°", aspetti immersivi</td></tr>
+        <tr><td class="num">8</td><td>StreamingAziendale</td><td>Pagina servizio</td><td>Live streaming + post-produzione</td></tr>
+        <tr><td class="num">9</td><td>Gleeye</td><td>Blog</td><td>Educational generico</td></tr>
+        <tr><td class="num">10</td><td>MediaticaNetwork</td><td>Magazine</td><td>"tipologie di video aziendali"</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>Pattern dominante</strong>: case di produzione cinematografica tradizionali + blog educational. Nessuno presidia esplicitamente "<strong>contenuti real-time per social</strong>" o "<strong>vertical-native</strong>". Tutti parlano di video corporate, recap, livestream tradizionale. <strong>Spazio strutturale per un angle distintivo</strong> (real-time + social-first + multi-piattaforma + 9:16).</p>
+
+    <h3>Reverse-engineering <span class="acc">competitor #1</span> (Kortocircuito · Jina scrape)</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Elemento</th><th>Kortocircuito (pos 1)</th><th>Implicazione per LiveCoverage</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">Title</td><td><em>"Realizzazione video per eventi | Kortocircuito film production"</em></td><td>Format chiaro · da replicare con angle distintivo</td></tr>
+        <tr><td class="strong">H1</td><td><em>"Video per Eventi"</em></td><td>Generico · LiveCoverage può fare meglio con "Copertura social + video per eventi aziendali"</td></tr>
+        <tr><td class="strong">Sezioni H2</td><td>"Il fascino del live" · "Buona la prima" · "Vuoi realizzare un video?"</td><td>Solo 3 sezioni · superficiale · spazio per espandere</td></tr>
+        <tr><td class="strong">USP centrali</td><td>"un evento è solo live, non si può sbagliare" · attenzione al dettaglio</td><td>Stesso terreno semantico ma LiveCoverage ha già un brand sulla parola "live"</td></tr>
+        <tr><td class="strong">Tipologie video</td><td>Non listate · descritte genericamente</td><td><strong>Gap concreto</strong>: LiveCoverage può listare deliverable (reel, stories, recap, livestream, photo)</td></tr>
+        <tr><td class="strong">Prezzi</td><td>Assenti</td><td>Pattern di settore · ma esporre range = differenziazione</td></tr>
+        <tr><td class="strong">CTA</td><td>Form contatto + telefono</td><td>Semplice · da migliorare con form qualificante</td></tr>
+        <tr><td class="strong">Processo</td><td>Non descritto</td><td><strong>Gap concreto</strong>: aggiungere "ASCOLTO → SET-UP → LIVE → CONSEGNA"</td></tr>
+        <tr><td class="strong">Portfolio</td><td>2 video Vimeo embed</td><td>Buona base · LiveCoverage può fare di più con case study metriche social</td></tr>
+        <tr><td class="strong">Testimonianze</td><td>Assenti</td><td><strong>Gap concreto</strong>: nessuno mette voce cliente</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Pattern <span class="acc">specialist nicchia</span> · "copertura social eventi"</h3>
+    <p>SERP molto frammentata: SMM freelance (Annarita Schioppa, Greta Cavallari), reel Instagram (Valentina Tonutti), 1 location (LocationAMilano), 1 agency (SAY Agency), blog generici. <strong>Nessun competitor diretto con landing dedicata a livello agency con metodo strutturato</strong>. Annarita Schioppa è la più strutturata e usa H1 "Rendi il tuo evento memorabile con la copertura social giusta" + 6 deliverable elencati (branding evento, hashtag, pagina social, creator partnerships, foto pro, report metriche).</p>
+
+    <p><strong>Take-away</strong>: lo spazio "copertura social eventi aziendali" a livello agency strutturata è ancora poco presidiato — i risultati sono SMM freelance, blog generici, una location. Diverso dallo spazio "live coverage" dove la nicchia ha già 3-4 operatori diretti. LiveCoverage può ownare anche questo cluster con una landing dedicata + metodo strutturato, sfruttando l'autorità già accumulata.</p>
+
+    <h3>Le 3 landing <span class="acc">servizio</span> · costruzione informata</h3>
+    <div class="blocks">
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING A · pillar</div>
+        <div class="blocks__url">/servizi/copertura-social-eventi/</div>
+        <h3 class="blocks__name">Copertura<br>Social Eventi</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>Target kw</span><strong>"copertura social eventi" + "video eventi aziendali"</strong></li>
+          <li><span>USP vs SERP</span><strong>metodo strutturato vs SMM freelance e blog generici</strong></li>
+          <li><span>Sezioni</span><strong>Cosa otteni · Per chi · Metodo (4 step) · Case study con metriche · FAQ</strong></li>
+          <li><span>Gap presidiati</span><strong>processo + testimonianze + deliverable elencati</strong></li>
+          <li><span>CTA</span><strong>Form qualificante (azienda, ruolo, data evento, budget)</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Pillar principale. Schema Service + Offer + FAQ. Intercetta sia vocabolario "tradizionale" (video eventi) sia "nuovo" (copertura social).</p>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING B · premium</div>
+        <div class="blocks__url">/servizi/regia-editoriale-live/</div>
+        <h3 class="blocks__name">Regia Editoriale<br>Live</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>Target kw</span><strong>"regia live eventi" · "produzione contenuti live"</strong></li>
+          <li><span>USP vs SERP</span><strong>regia editoriale 4 piattaforme parallele</strong></li>
+          <li><span>Sezioni</span><strong>Cosa includiamo · Team (ground crew + regia) · Output multi-piattaforma · Pricing range</strong></li>
+          <li><span>Per</span><strong>conference, kickoff, fashion show, brand experience</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Tier premium. Schema Service. Mostrare un range tipo "da 8.000€" è angle differenziante (nessuno espone prezzi in SERP).</p>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">LANDING C · verticale</div>
+        <div class="blocks__url">/servizi/live-content-fiere/</div>
+        <h3 class="blocks__name">Live Content<br>Fiere</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>Target kw</span><strong>"contenuti per fiere" · "social per stand fiera"</strong></li>
+          <li><span>USP</span><strong>formula chiavi-in-mano per espositore</strong></li>
+          <li><span>Sezioni</span><strong>Cosa otteni 3 giorni fiera · Numero contenuti · ROI per visitatore catturato</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Verticale fieristico = revenue ricorrente (calendario fiere annuali). Mercato basso-competitivo (nessuno in SERP italiana).</p>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">CTR · 6 post blog</div>
+        <div class="blocks__url">Calibrazione snippet</div>
+        <h3 class="blocks__name">Iterazione<br>snippet blog</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>Asset esistente</span><strong>17 articoli ben scritti</strong></li>
+          <li><span>Pos buone</span><strong>5 post in pos &lt;15</strong></li>
+          <li><span>Azione</span><strong>iterare title/meta su query GSC reali</strong></li>
+          <li><span>Atteso</span><strong>+20–40 click/mese</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Dopo 90gg di dati GSC si conoscono le query effettive. Calibrare gli snippet su quelle (non riscrittura cieca) è quick win a effort basso.</p>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">CONTENT CLUSTER</div>
+        <div class="blocks__url">Blog espansione 6 articoli</div>
+        <h3 class="blocks__name">Cluster<br>commerciale</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>1</span><strong>"Quanto costa la copertura social di un evento aziendale (guida 2026)"</strong></li>
+          <li><span>2</span><strong>"Live coverage vs videomaker tradizionale: 5 differenze ROI"</strong></li>
+          <li><span>3</span><strong>"Copertura live eventi: 7 fornitori italiani a confronto"</strong></li>
+          <li><span>4</span><strong>"Le 7 metriche che il tuo CMO si aspetta dopo un evento" (gated PDF)</strong></li>
+          <li><span>5</span><strong>"Brief perfetto per un live coverage: 12 domande"</strong></li>
+          <li><span>6</span><strong>"Copertura social fiere B2B: case study completo"</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Cluster di intent commerciale + comparison + lead magnet. Ognuno punta alle landing servizio.</p>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">SYSTEM · ricorrente</div>
+        <div class="blocks__url">Case study per evento</div>
+        <h3 class="blocks__name">Case study<br>sistematici</h3>
+        <ul class="blocks__stats" style="font-size: 11.5px;">
+          <li><span>Format</span><strong>1 mini-pagina per evento coperto</strong></li>
+          <li><span>Contenuto</span><strong>cliente, sfida, formula, output, metriche social</strong></li>
+          <li><span>Effort</span><strong>1gg per evento</strong></li>
+          <li><span>Beneficio</span><strong>backlink naturali da cliente + SEO ricorrente</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Take.</strong> Asset SEO continuo. Ogni evento coperto si trasforma in pagina che porta traffico per anni.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 07 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Cosa fare e in che ordine</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Tre tier sequenziali: quick win immediato (title blog + tracking), pillar commerciale (3 landing servizio), sistema lead-gen (case study + lead magnet + ADS retargeting su landing).</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Attivare conversion tracking <span class="acc">su Google Analytics 4</span></span>
+          <span class="recs__why">Le conversioni reali avvengono via canali diretti (email, DM Instagram, telefonate) ma non vengono registrate dagli eventi di Google Analytics. Abilitando gli eventi base (invio form, click WhatsApp, click telefono, click email, richiesta preventivo), il traffico esistente — in particolare quello che arriva dalle campagne pubblicitarie — diventa misurabile e analizzabile per canale. L'attivazione fa parte del pacchetto comune di tracking previsto per i 4 siti dell'ecosistema.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Calibrazione snippet <span class="acc">dei 6 post a maggior visibilità</span></span>
+          <span class="recs__why">Sei articoli del blog accumulano oltre 2.000 visualizzazioni combinate in Search Console: hanno autorità riconosciuta da Google, lo spazio di iterazione è sullo snippet che invita al click. Calibrare title e meta description integrando elementi come numeri, anno o beneficio diretto, sulla base delle query reali emerse in 90 giorni di dati. Esempi: da "Cosa vuol dire produzione contenuti live" verso "Produzione contenuti live: cos'è e quanto costa nel 2026"; da "I 5 motivi per cui le aziende innovative scelgono..." verso "Copertura live: 5 motivi per cui le aziende top la scelgono".</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Pagina principale <span class="acc">/servizi/copertura-social-eventi/</span></span>
+          <span class="recs__why">Landing commerciale principale. Da costruire con: cosa il cliente riceve (deliverable elencati esplicitamente), per chi è pensata, casi studio con metriche social, indicazione di range di prezzo, FAQ. Form di richiesta preventivo qualificante (azienda, ruolo, data evento, budget range). Schema markup Service + Offer + FAQ. Le query commerciali target sono "copertura social eventi", "live content evento", "video per eventi aziendali", "contenuti per evento aziendale".</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Pagine <span class="acc">tier premium</span> + <span class="acc">verticale fiere</span></span>
+          <span class="recs__why">Due landing aggiuntive: <code>/servizi/regia-editoriale-live/</code> per il tier premium (con regia in cabina, troupe ground crew, output multicanale parallelo) e <code>/servizi/live-content-fiere/</code> per il verticale fiere (formula chiavi in mano per espositori). Stessa struttura della landing principale. Coprono insieme le tre tipologie di domanda B2B presenti sul mercato.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Lead magnet <span class="acc">B2B</span> per decisori marketing</span>
+          <span class="recs__why">Un PDF di 15–20 pagine "Le 7 metriche che il tuo CMO si aspetta dopo un evento", protetto da iscrizione (email + ruolo + azienda). Sequenza email di 5 step che porta naturalmente alla richiesta di preventivo. È lo strumento che trasforma il traffico esistente in un database di contatti qualificati per il sales funnel.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Sistematizzare i <span class="acc">case study</span> di ogni evento coperto</span>
+          <span class="recs__why">Ogni evento gestito può diventare una mini-pagina di case study: cliente, sfida, formula del servizio, output (con embed di reel e stories prodotte), metriche social. È un asset SEO continuo — il cliente di norma linka volentieri il caso studio, generando backlink naturali — e supporta le tre landing servizio con esempi concreti.</span>
+        </div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Allineare le <span class="acc">campagne ADS</span> con le nuove landing</span>
+          <span class="recs__why">Una volta pubblicate le tre landing servizio, le campagne Paid Social attualmente attive potranno essere ridirette dai post del blog (che oggi sono il punto di atterraggio) verso le landing dedicate, con messaggi e offer coerenti. Un test A/B può misurare l'effetto sul tasso di conversione. L'intervento richiede coordinamento con chi gestisce le campagne pubblicitarie.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="pull">Tre landing + un lead magnet + tracking attivo trasformano <span class="acc">il brand consolidato</span> in un sistema di lead generation B2B misurabile.</div>
+  </section>
+
+  <!-- ===== 08 SEQUENCING ===== -->
+  <section class="sec" id="roadmap">
+    <div class="sec__head">
+      <p class="sec__num">08</p>
+      <div>
+        <p class="sec__kicker">Ordine logico delle attività</p>
+        <h2 class="sec__title">Sequenza<br>suggerita</h2>
+      </div>
+      <p class="sec__sub">Non un calendario, ma l'ordine logico in cui le attività si sbloccano una con l'altra. Le tempistiche concrete vengono calibrate sul contesto operativo.</p>
+    </div>
+
+    <ol class="phases">
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Calibrazione snippet dei 6 post a maggior visibilità</span>
+        <span class="phases__body">Iterazione su title e meta per gli articoli che già intercettano oltre 2.000 visualizzazioni cumulate in Search Console.</span>
+        <span class="phases__when">primo step</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Attivazione conversion tracking GA4</span>
+        <span class="phases__body">Eventi base. Pacchetto comune ai 4 siti dell'ecosistema.</span>
+        <span class="phases__when">in parallelo</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Pagina principale /copertura-social-eventi/</span>
+        <span class="phases__body">Landing commerciale principale. Layout, contenuti, casi studio, range di prezzi, form di richiesta preventivo qualificante. Schema markup.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Lead magnet "Le 7 metriche evento"</span>
+        <span class="phases__body">PDF protetto da iscrizione + sequenza nurturing di 5 email. Test sulla landing principale appena pubblicata.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Pagine tier premium + verticale fiere</span>
+        <span class="phases__body">Due landing replicate sul modello della pagina principale: <code>/regia-editoriale-live/</code> e <code>/live-content-fiere/</code>.</span>
+        <span class="phases__when">fase successiva</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Allineamento campagne ADS sulle landing</span>
+        <span class="phases__body">Reindirizzo delle campagne attive dalle pagine del blog alle landing commerciali. Test A/B sul tasso di conversione.</span>
+        <span class="phases__when">a seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Sistematizzazione case study</span>
+        <span class="phases__body">Template fisso + mini-pagina per ogni evento coperto. Attività ricorrente sul calendario eventi.</span>
+        <span class="phases__when">attività continua</span>
+      </li>
+    </ol>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>Performance Search Console su <code>https://livecoverage.it/</code>, confronto 90 giorni e 28 giorni. Google Analytics 4 property 488332330. Verifica strutturale della sitemap e dei redirect HTTP. SERP DataForSEO su query commerciali eventi. Reverse-engineering competitor top 10 via Jina Reader.</p>
+    </div>
+    <div>
+      <h5>Coordinate progetto</h5>
+      <p>LiveCoverage · brand consolidato in posizione 1 della SERP italiana per "live coverage" · sito a base editoriale solida · prossimo step naturale: aggiungere un'infrastruttura commerciale (landing servizio e tracking). Mercato B2B eventi premium ancora in fase di formazione. Campagne pubblicitarie social attualmente attive.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>Direzione "lead generation B2B" come prossimo livello del progetto · costruzione delle 3 landing servizio · attivazione del tracking eventi su GA4 · allineamento delle campagne pubblicitarie con le nuove landing.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">LiveCoverage · Check performance · 19 maggio 2026</p>
+
+</div>
+
+</body>
+</html>

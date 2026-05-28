@@ -263,7 +263,7 @@
         <div class="insights__num"></div>
         <div class="insights__body">
           <span class="insights__title">Una sola strategia, quattro implementazioni</span>
-          Sui quattro siti dell'ecosistema il tracking è costruito attorno a un singolo evento GA4 di conversione (<code>generate_lead</code>), declinato per canale via parametro <code>lead_type</code>: form, mail, phone, whatsapp (più <em>calendly</em> per LiveCoverage). La differenza tra un sito e l'altro non sta in <em>cosa</em> si traccia, ma in <em>come</em> i singoli eventi vengono catturati a livello tecnico, perché i CMS sono diversi (tre siti su Astro — Amedani, ContentLove, LiveCoverage — e StudioUp su WordPress).
+          Sui quattro siti dell'ecosistema il tracking è costruito attorno a un singolo evento GA4 di conversione (<code>generate_lead</code>), declinato per canale via parametro <code>lead_type</code>: form, mail, phone, whatsapp (più <em>calendly</em> per LiveCoverage). La differenza tra un sito e l'altro non sta in <em>cosa</em> si traccia, ma in <em>come</em> i singoli eventi vengono catturati a livello tecnico, perché i CMS sono diversi (tre siti su Astro — Amedani, ContentLove, StudioUp — e LiveCoverage su WordPress).
         </div>
       </li>
       <li>
@@ -284,7 +284,7 @@
         <div class="insights__num"></div>
         <div class="insights__body">
           <span class="insights__title">Le form sui siti Astro richiedono un data layer custom</span>
-          Tre siti su quattro sono in Astro (Amedani, ContentLove, LiveCoverage). Il quarto è StudioUp, in WordPress + Elementor. Su Astro le form non passano da plugin standard che emettono già eventi: serve aggiungere al data layer un evento personalizzato dopo la validazione della form, in modo che GTM lo possa intercettare. Su WordPress il problema non si pone — esistono listener consolidati per Elementor/CF7 e simili. StudioUp oggi non ha form contatti attive sul sito, quindi è una partita che si affronterà al momento della loro reintroduzione.
+          Tre siti su quattro sono in Astro (Amedani, ContentLove, StudioUp). Il quarto è LiveCoverage, in WordPress + Elementor. Su Astro le form non passano da plugin standard che emettono già eventi: serve aggiungere al data layer un evento personalizzato dopo la validazione della form, in modo che GTM lo possa intercettare. Su WordPress il problema non si pone — esistono listener consolidati per Elementor/CF7 e simili. StudioUp oggi non ha form contatti attive sul sito, quindi è una partita che si affronterà al momento della loro reintroduzione.
         </div>
       </li>
       <li>

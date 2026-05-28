@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amedani Studio — Performance · 27 maggio 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Analisi della regressione di performance osservata su amedani.com tra il 19 e il 27 maggio 2026. Punteggio PageSpeed mobile fluttuante 40-82 (era stabile 70+), cause sospette su adapter Cloudflare/Astro, font e immagini hero.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #A0411E;
+    --accent-soft: #F4DDD2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand a { color: var(--ink-3); text-decoration: none; }
+  .topbar__brand a:hover { color: var(--accent); }
+  .topbar__brand .sep { color: var(--ink-3); margin: 0 8px; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 56ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(38px, 5vw, 60px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.75; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 78ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl code { font-family: var(--f-mono); font-size: 11.5px; color: var(--ink-2); background: var(--accent-soft); padding: 1px 5px; }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; vertical-align: middle; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(20px, 2.4vw, 28px); line-height: 1.25; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 68ch; letter-spacing: -0.015em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+  .pull em { font-style: normal; color: var(--ink-3); font-weight: 600; }
+
+  .crit { border: 2px solid var(--accent); background: var(--accent-soft); padding: 32px 36px; margin: 36px 0; }
+  .crit h3 { border: 0; margin: 0 0 14px; padding: 0; display: block; color: var(--accent); font-size: 22px; }
+  .crit p { color: var(--ink-2); max-width: 84ch; }
+  .crit code { font-family: var(--f-mono); font-size: 12px; background: rgba(255,255,255,0.6); padding: 2px 6px; word-break: break-all; }
+
+  .fluct { margin: 36px 0; border: 2px solid var(--ink); }
+  .fluct__head { padding: 14px 22px; background: var(--ink); color: var(--bg); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .fluct__row { display: grid; grid-template-columns: 110px 1fr 60px; align-items: center; gap: 14px; padding: 10px 22px; border-bottom: 1px solid var(--grid); font-family: var(--f-mono); font-size: 12px; }
+  .fluct__row:last-child { border-bottom: 0; }
+  .fluct__t { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .fluct__bar { background: var(--grid); height: 20px; position: relative; }
+  .fluct__bar span { display: block; height: 100%; }
+  .fluct__bar .b-bad { background: var(--accent); }
+  .fluct__bar .b-warn { background: var(--warn); }
+  .fluct__bar .b-ok { background: var(--ok); }
+  .fluct__val { font-weight: 700; text-align: right; color: var(--ink); }
+  .fluct__val.is-bad { color: var(--accent); }
+  .fluct__val.is-warn { color: var(--warn); }
+  .fluct__val.is-ok { color: var(--ok); }
+
+  .causes { display: grid; grid-template-columns: repeat(2, 1fr); border: 2px solid var(--ink); margin: 36px 0; }
+  .cause { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; }
+  .cause:nth-child(2n) { border-right: 0; }
+  .cause:nth-last-child(-n+2) { border-bottom: 0; }
+  .cause__n { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin-bottom: 12px; }
+  .cause__t { font-family: var(--f-sans); font-weight: 800; font-size: 19px; line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 14px; text-transform: uppercase; }
+  .cause__t .acc { color: var(--accent); }
+  .cause__body { font-size: 13.5px; line-height: 1.55; color: var(--ink-2); margin-bottom: 14px; }
+  .cause__plaus { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; padding: 4px 9px; display: inline-block; border: 1px solid currentColor; font-weight: 600; }
+  .cause__plaus--high { color: var(--accent); }
+  .cause__plaus--mid { color: var(--warn); }
+  .cause__plaus--low { color: var(--ink-3); }
+
+  .timeline-call { list-style: none; padding: 0; margin: 36px 0; border-top: 2px solid var(--ink); }
+  .timeline-call li { display: grid; grid-template-columns: 130px 1fr 200px; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--grid); align-items: baseline; }
+  .timeline-call li:last-child { border-bottom: 2px solid var(--ink); }
+  .timeline-call__t { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--ink-3); text-transform: uppercase; font-weight: 500; }
+  .timeline-call__what { font-family: var(--f-sans); font-weight: 600; font-size: 15px; line-height: 1.35; }
+  .timeline-call__what code { font-family: var(--f-mono); font-size: 12px; background: var(--accent-soft); padding: 1px 5px; }
+  .timeline-call__result { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; text-align: right; color: var(--ink-3); }
+  .timeline-call__result strong { color: var(--ink); font-size: 13px; }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 80ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .causes { grid-template-columns: 1fr; }
+    .cause { border-right: 0; }
+    .strip__row, .recs li, .timeline-call li { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .fluct__row { grid-template-columns: 80px 1fr 50px; padding: 8px 14px; }
+    .colophon { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .cause, .recs li, .timeline-call li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand"><a href="../">Analisi</a><span class="sep">/</span><a href="./" style="color:var(--ink);">Amedani</a><span class="sep">/</span><span>PERFORMANCE</span></div>
+    <div class="topbar__meta">Snapshot 27.05.2026 · regressione osservata</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#osservato">02</a><a href="#ipotesi">03</a><a href="#interventi">04</a><a href="#proposta">05</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance · 27 maggio 2026</p>
+      <h1>Regressione<br>di <span class="ml">performance</span><br>da chiarire.</h1>
+      <p class="hero__lede">Snapshot delle prestazioni di amedani.com al 27 maggio. Il punteggio PageSpeed mobile della home mostra una <strong>forte fluttuazione</strong> sulla stessa URL nello spazio di pochi minuti — oscillazioni del 40–82 — laddove fino a circa una settimana fa il sito si attestava stabilmente su un punteggio di 70+. Il dato è in via di stabilizzazione lato sviluppo: durante la sessione di analisi di oggi sono già stati portati a regime due interventi (compressione del font hero, riduzione del buffer del video di copertura) che hanno migliorato lo Speed Index. Restano due aree da indagare per chiudere il ciclo: il comportamento dell'adapter Cloudflare/Astro modificato di recente e l'impatto del blocco automatico di Iubenda sul caricamento iniziale.</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Snapshot</dt>
+      <dd>27.05.2026 · sessione di analisi congiunta tra SEO e sviluppo</dd>
+      <dt>Misurazioni</dt>
+      <dd>PageSpeed Insights mobile + desktop · Lighthouse audit · ispezione codice e network</dd>
+      <dt>Stato</dt>
+      <dd><span class="badge badge--warn">in stabilizzazione</span> <span class="badge badge--bad">LCP > 4s</span> <span class="badge badge--ok">CLS 0</span></dd>
+      <dt>Aree aperte</dt>
+      <dd>Adapter Cloudflare/Astro · autoblocking Iubenda · audit pillar foto/video parallelo al check 19.05</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">40–82</span>
+      <span class="statgrid__lbl">PageSpeed mobile · range osservato</span>
+      <span class="statgrid__delta">stessa URL · finestra di pochi minuti</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">70+</span>
+      <span class="statgrid__lbl">Punteggio stabile pre-regressione</span>
+      <span class="statgrid__delta" style="color:var(--ok)">benchmark da ricostituire</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">7,4 → 4,5s</span>
+      <span class="statgrid__lbl">Speed Index · prima/dopo interventi sessione</span>
+      <span class="statgrid__delta">font + video buffer ridotti</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">0</span>
+      <span class="statgrid__lbl">CLS · Cumulative Layout Shift</span>
+      <span class="statgrid__delta" style="color:var(--ok)">tenuta layout = ottima</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">Cosa sta succedendo</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Il sito al 27 maggio segna un quadro prestazionale diverso da quello osservato sette giorni fa nel check del 19. Il dato non è ancora stabilizzato: durante la stessa sessione di test si è osservato un range di punteggi mobile che varia del 50% sulla stessa URL. Diagnosi in corso, due cause sospette già parzialmente affrontate.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">Punteggio mobile pre-regressione</span>
+        <span class="strip__val good">~70+ stabile</span>
+        <span class="strip__note strip__note--ok">Benchmark ricordato dalla sessione di lavoro precedente.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Punteggio mobile al 27.05</span>
+        <span class="strip__val acc">40–82 fluttuante</span>
+        <span class="strip__note strip__note--bad">Stessa URL, finestra di pochi minuti, scarto del 50%.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">LCP osservato</span>
+        <span class="strip__val acc">3,8–8 s</span>
+        <span class="strip__note strip__note--bad">Soglia raccomandata &lt; 2,5s. Variabile a seconda della run.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Speed Index</span>
+        <span class="strip__val">3–4,5 s</span>
+        <span class="strip__note strip__note--warn">In miglioramento durante la sessione (-2,5s dopo interventi).</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">CLS · Layout shift</span>
+        <span class="strip__val good">0</span>
+        <span class="strip__note strip__note--ok">Tenuta visiva ottima. Rimozione intro animata pagante.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">FCP · First Contentful Paint</span>
+        <span class="strip__val">stabile · buono</span>
+        <span class="strip__note strip__note--ok">Il primo paint resta veloce. Il problema è il <em>second paint</em>.</span>
+      </div>
+    </div>
+
+    <div class="pull">Il <span class="acc">first paint</span> è veloce, il <span class="acc">second paint</span> no. Le prime due slide vengono caricate vuote · è lì che il browser perde tempo.</div>
+  </section>
+
+  <!-- ===== 02 OSSERVATO ===== -->
+  <section class="sec" id="osservato">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">Il pattern di fluttuazione</p>
+        <h2 class="sec__title">Cosa è stato<br>osservato</h2>
+      </div>
+      <p class="sec__sub">La caratteristica peculiare del problema è la fluttuazione. Non si tratta di un calo netto e stabile (che indicherebbe una causa unica e facilmente isolabile), ma di un punteggio che oscilla del 50% sulla stessa URL nello spazio di minuti. È il segnale di una causa intermittente, non strutturale.</p>
+    </div>
+
+    <div class="fluct">
+      <div class="fluct__head">
+        <span>Misurazioni PageSpeed mobile · home amedani.com · sessione 27.05</span>
+        <span style="opacity:0.7">stessa URL · stessa rete · device diversi</span>
+      </div>
+      <div class="fluct__row"><span class="fluct__t">Run 1 · 14:42</span><div class="fluct__bar"><span class="b-bad" style="width:40%"></span></div><span class="fluct__val is-bad">40</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 2 · 14:48</span><div class="fluct__bar"><span class="b-bad" style="width:52%"></span></div><span class="fluct__val is-bad">52</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 3 · 14:55</span><div class="fluct__bar"><span class="b-warn" style="width:60%"></span></div><span class="fluct__val is-warn">60</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 4 · 15:02</span><div class="fluct__bar"><span class="b-warn" style="width:66%"></span></div><span class="fluct__val is-warn">66</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 5 · 15:08</span><div class="fluct__bar"><span class="b-warn" style="width:67%"></span></div><span class="fluct__val is-warn">67</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 6 · 15:14</span><div class="fluct__bar"><span class="b-warn" style="width:49%"></span></div><span class="fluct__val is-warn">49</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 7 · 15:21</span><div class="fluct__bar"><span class="b-ok" style="width:82%"></span></div><span class="fluct__val is-ok">82</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 8 · 15:30</span><div class="fluct__bar"><span class="b-warn" style="width:61%"></span></div><span class="fluct__val is-warn">61</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 9 · 15:38</span><div class="fluct__bar"><span class="b-warn" style="width:60%"></span></div><span class="fluct__val is-warn">60</span></div>
+      <div class="fluct__row"><span class="fluct__t">Run 10 · 15:46</span><div class="fluct__bar"><span class="b-warn" style="width:47%"></span></div><span class="fluct__val is-warn">47</span></div>
+    </div>
+
+    <h3>Pattern visivo · <span class="acc">rendering iniziale</span></h3>
+    <p>Nel rendering catturato da Lighthouse, le <strong>prime due slide del filmstrip sono completamente bianche</strong>: il browser ha ricevuto la pagina ma non ha ancora dipinto contenuti. Le slide successive iniziano a mostrare contenuto. Durante la sessione, dopo gli interventi di compressione del font, il primo frame ha iniziato a mostrare già la scritta principale — un piccolo guadagno percettivo, ma significativo per il calcolo di LCP e Speed Index.</p>
+
+    <h3>Confronto con <span class="acc">le altre property</span></h3>
+    <p>Nella stessa finestra di test sono state misurate anche le altre property dell'ecosistema. <strong>Anche StudioUp ha mostrato fluttuazione</strong> sulla stessa URL — 70/100 sui run desktop, 85 mobile in alcuni run dopo essere stato a 70 — senza alcuna modifica recente al sito. Questo è un dato importante: <strong>parte della variabilità potrebbe non dipendere dal sito ma da come Google ha indurito recentemente le regole di Page Speed, o da bias temporanei del servizio</strong>. Va tenuto presente come variabile esogena prima di attribuire tutto al sito.</p>
+
+    <h3>Quello che <span class="acc">non</span> sta variando</h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Metrica</th><th>Stato</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">CLS · Layout shift</td><td><span class="badge badge--ok">stabile 0</span></td><td>Tenuta visiva ottima. Rimozione dell'intro animata pagante.</td></tr>
+        <tr><td class="strong">FCP · First Contentful Paint</td><td><span class="badge badge--ok">buono</span></td><td>Il primo paint è rapido. Il rallentamento avviene dopo.</td></tr>
+        <tr><td class="strong">TBT · Total Blocking Time</td><td><span class="badge badge--ok">contenuto</span></td><td>Il JavaScript non sta bloccando in modo significativo il main thread.</td></tr>
+        <tr><td class="strong">Byte scaricati</td><td><span class="badge badge--warn">in calo</span></td><td>Dopo gli interventi di compressione font è già sceso. Miglioramento oggettivo lato peso.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== 03 IPOTESI ===== -->
+  <section class="sec" id="ipotesi">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Quattro cause sospette · ordine di plausibilità</p>
+        <h2 class="sec__title">Possibili<br>cause</h2>
+      </div>
+      <p class="sec__sub">Quattro ipotesi sul tavolo, di cui due già parzialmente affrontate durante la sessione. La prima è la più probabile in quanto coincide temporalmente con la regressione osservata.</p>
+    </div>
+
+    <div class="causes">
+
+      <div class="cause">
+        <div class="cause__n">Ipotesi 1 · Coincide con la regressione temporale</div>
+        <h4 class="cause__t">Adapter <span class="acc">Cloudflare/Astro</span> modificato di recente</h4>
+        <div class="cause__body">Per risolvere un problema sulle form, l'adapter Cloudflare/Astro è stato recentemente modificato: la configurazione <code>prerender: true</code> non è più applicata a tutta la sitemap come prima, alcune pagine vengono ora servite in modalità non statica. Questo cambia il tempo di risposta lato server e il tipo di rendering che Page Speed osserva. È l'ipotesi più probabile perché coincide nel tempo con il momento in cui le prestazioni hanno iniziato a regredire.</div>
+        <span class="cause__plaus cause__plaus--high">Plausibilità alta</span>
+      </div>
+
+      <div class="cause">
+        <div class="cause__n">Ipotesi 2 · Già affrontata nella sessione</div>
+        <h4 class="cause__t">Font hero in formato <span class="acc">TrueType</span> invece di WOFF</h4>
+        <div class="cause__body">Il font hero veniva caricato come TrueType non compresso, con un peso di circa 270 KB e tipologia di caricamento "block" (il browser aspetta che il font sia scaricato prima di dipingere il testo). Durante la sessione è stato compresso e modificato in modalità swap (il browser dipinge subito con un font di fallback, e sostituisce quando arriva il vero font). <strong>Già migliorato</strong>: il punteggio è salito di circa 8 punti immediatamente.</div>
+        <span class="cause__plaus cause__plaus--mid">Plausibilità media · già fix</span>
+      </div>
+
+      <div class="cause">
+        <div class="cause__n">Ipotesi 3 · Già affrontata nella sessione</div>
+        <h4 class="cause__t">Video di copertura <span class="acc">in formato HLS</span> con buffering attivo</h4>
+        <div class="cause__body">Il video hero è servito in formato HLS, che dovrebbe essere asincrono e non bloccante. Tuttavia, dall'analisi del network nella sessione si è osservato che il buffering "dietro" stava effettivamente occupando il main thread durante il caricamento iniziale, rallentando l'LCP. Durante la sessione il buffer è stato ridotto. <strong>Già migliorato</strong>: lo Speed Index è sceso da circa 7s a 4,5s.</div>
+        <span class="cause__plaus cause__plaus--mid">Plausibilità media · già fix</span>
+      </div>
+
+      <div class="cause">
+        <div class="cause__n">Ipotesi 4 · Strutturale, impatto stabile</div>
+        <h4 class="cause__t">Autoblocking di <span class="acc">Iubenda</span></h4>
+        <div class="cause__body">Iubenda è uno script che deve caricarsi in modo sincrono all'inizio della pagina, perché ha il compito di bloccare automaticamente gli altri script di terze parti finché l'utente non ha dato il consenso. Questo comportamento è strutturale, non può essere "deferrato". Impatta sempre le prestazioni — su tutti i siti che lo usano — ma <strong>non spiega la fluttuazione</strong>: se fosse l'unica causa, il punteggio sarebbe stabile su un valore basso, non oscillante. Probabilmente contribuisce di 5–10 punti in modo costante.</div>
+        <span class="cause__plaus cause__plaus--low">Plausibilità · contribuisce ma non causa</span>
+      </div>
+
+    </div>
+
+    <h3>Variabile esogena · <span class="acc">comportamento di PageSpeed stesso</span></h3>
+    <p>Va tenuta in conto un'ipotesi alternativa: la fluttuazione potrebbe in parte dipendere da <strong>cambi recenti nel motore di misurazione di PageSpeed</strong>, non dal sito. Lo stesso pattern di oscillazione si è osservato su StudioUp (sito non toccato di recente), che ha fatto 70/100/85 a distanza di pochi run. Questo è un segnale a favore della tesi "lato Google", che però non esclude le altre — le ipotesi 1 e 4 sopra restano valide. La risposta più onesta è: probabilmente entrambe le cose contribuiscono, in proporzioni che si chiariranno solo con più giorni di osservazione.</p>
+  </section>
+
+  <!-- ===== 04 INTERVENTI ===== -->
+  <section class="sec" id="interventi">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Cosa è già stato fatto durante la sessione</p>
+        <h2 class="sec__title">Interventi<br>già a regime</h2>
+      </div>
+      <p class="sec__sub">Cronologia dei due interventi tecnici applicati durante la sessione di analisi del 27 maggio, con il risultato osservato in tempo reale dopo il deploy.</p>
+    </div>
+
+    <ol class="timeline-call">
+      <li>
+        <span class="timeline-call__t">Intervento 1</span>
+        <span class="timeline-call__what">Compressione del <strong>font hero</strong> e cambio di display mode<br><code>truetype, font-display: block</code> → <code>woff, font-display: swap</code></span>
+        <span class="timeline-call__result"><strong>+8 punti mobile</strong>misurazione successiva: 52 → 60</span>
+      </li>
+      <li>
+        <span class="timeline-call__t">Intervento 2</span>
+        <span class="timeline-call__what">Riduzione del <strong>buffer del video</strong> di copertura<br>Ottimizzazione del comportamento HLS al primo caricamento</span>
+        <span class="timeline-call__result"><strong>Speed Index 7s → 4,5s</strong>− 2,5 secondi di SI · LCP da 8s a 3,8s nelle run successive</span>
+      </li>
+    </ol>
+
+    <div class="pull">Due interventi già a regime nella sessione. La <span class="acc">media</span> degli ultimi run è migliorata · resta da osservare se la <span class="acc">stabilità</span> torna nei giorni successivi.</div>
+  </section>
+
+  <!-- ===== 05 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Aree di lavoro proposte</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Le attività proposte per chiudere il ciclo della regressione e tornare a un benchmark stabile. La sequenza è: osservazione su più giorni → audit mirato sulle ipotesi 1 e 4 → ottimizzazioni puntuali → ricontrollo della cartella foto/video (collegato al check del 19 maggio).</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Osservazione su <span class="acc">5–7 giorni</span> · ricostituzione benchmark</span>
+          <span class="recs__why">Prima di interpretare ulteriormente i dati, è utile raccogliere 5–7 giorni di misurazioni mobile a intervalli regolari (es. mattino, mezzogiorno, sera). Su ciascuna run salvare punteggio + LCP + Speed Index. Una media su questo dataset permette di distinguere segnale da rumore — la singola run è poco significativa, l'andamento di una settimana lo è. Lo stesso dataset va raccolto in parallelo per StudioUp (sito di controllo non toccato) per separare il segnale "lato sito" dal segnale "lato Google".</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Osservazione<strong>Output</strong>Benchmark settimanale</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Audit dettagliato <span class="acc">adapter Cloudflare/Astro</span></span>
+          <span class="recs__why">Esaminare il diff dell'ultima modifica all'adapter Cloudflare/Astro per capire quali pagine ora non hanno più <code>prerender: true</code> e con che impatto sui tempi di risposta server-side. È l'ipotesi con la plausibilità più alta perché coincide nel tempo con la regressione. Se confermata, valutare un'iterazione che mantenga la fix delle form ma riapplichi il prerender alle pagine che ne traevano vantaggio.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Audit lato dev<strong>Output</strong>Decisione su rollback parziale</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Audit immagini <span class="acc">parallelo al check 19.05</span></span>
+          <span class="recs__why">Il check di performance del 19 maggio aveva identificato un'immagine hero da 2,97 MB sulla pagina pillar <code>/servizi/produzione-foto-video-aziendali/</code>, con LCP a 7,4 secondi. Verificare lo stato attuale di quell'immagine specifica e di quelle sulle altre pillar di servizio (grafica, siti web, social media): la regressione di oggi potrebbe avere componenti che si sommano a quel problema preesistente. Audit Lighthouse mirato sulle 4 pillar.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Audit immagini<strong>Output</strong>Lista interventi</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Quantificare l'impatto di <span class="acc">Iubenda</span></span>
+          <span class="recs__why">L'autoblocking di Iubenda contribuisce in modo costante a un calo prestazionale. Per quantificarlo in modo non distruttivo: una misurazione Lighthouse in finestra incognito con e senza Iubenda attivo (lato sviluppo, in ambiente di test, non in produzione). Se il delta misurato è inferiore ai 10 punti, l'attenzione si concentra altrove. Se è significativamente maggiore, ha senso valutare l'evoluzione verso una "forced consent mode" governata interamente da GTM — descritta nel report di tracking del 27 maggio.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Misurazione mirata<strong>Output</strong>Quantificazione delta</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Monitoraggio periodico <span class="acc">continuativo</span></span>
+          <span class="recs__why">Una volta tornati a un benchmark stabile, è utile abilitare un monitoraggio automatico delle performance (anche con un tool esterno come PageSpeed Insights API schedulato giornalmente, oppure un servizio di synthetic monitoring). Questo evita di accorgersi delle regressioni solo a posteriori: una notifica quando il punteggio mobile scende sotto soglia è il modo per intervenire prima che impatti l'indicizzazione delle pagine.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Monitoraggio<strong>Output</strong>Alert su regressioni</div>
+      </li>
+    </ul>
+
+    <div class="pull">Due ipotesi su quattro <span class="acc">già affrontate</span> nella sessione. Le altre due si chiariscono con più giorni di osservazione · prima di muovere altre leve.</div>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>PageSpeed Insights · Lighthouse audit · ispezione network e codice via DevTools · confronto cross-property con StudioUp come controllo · cronologia commit lato sviluppo.</p>
+    </div>
+    <div>
+      <h5>Stato</h5>
+      <p>Sito online da circa 60 giorni · indicizzazione 87% (check 19.05). Performance in stabilizzazione dopo regressione osservata · benchmark da ricostituire su finestra di 5–7 giorni.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>Audit adapter Cloudflare/Astro · audit immagini pillar (parallelo al check 19.05) · quantificazione impatto Iubenda · monitoraggio periodico continuativo.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">Amedani Studio · Performance · 27 maggio 2026</p>
+
+</div>
+
+</body>
+</html>

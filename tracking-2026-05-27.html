@@ -435,11 +435,11 @@
       <div class="siteblock siteblock--livecoverage">
         <span class="siteblock__badge">LiveCoverage</span>
         <h3 class="siteblock__name">Live<br>Coverage</h3>
-        <p class="siteblock__url">livecoverage.it · Astro · Calendly</p>
+        <p class="siteblock__url">livecoverage.it · WordPress · Elementor · Calendly</p>
         <div class="siteblock__row"><span class="k">Container GTM</span><span class="v"><span class="badge badge--bad">da creare</span> · oggi solo GA4 diretto</span></div>
         <div class="siteblock__row"><span class="k">GA4 collegato</span><span class="v"><span class="badge badge--ok">sì</span> · va spostato dentro al GTM</span></div>
         <div class="siteblock__row"><span class="k">Meta Pixel</span><span class="v"><span class="badge badge--warn">da verificare</span></span></div>
-        <div class="siteblock__row"><span class="k">Form events</span><span class="v"><span class="badge badge--bad">data layer custom</span></span></div>
+        <div class="siteblock__row"><span class="k">Form events</span><span class="v"><span class="badge badge--bad">Listener Elementor</span> · da configurare con il nuovo container GTM</span></div>
         <div class="siteblock__row"><span class="k">Calendly → GA4</span><span class="v"><span class="badge badge--bad">integrazione nativa da attivare</span> · CSP da verificare</span></div>
         <div class="siteblock__row"><span class="k">Click events</span><span class="v"><span class="badge badge--bad">da configurare</span> · GTM</span></div>
         <div class="siteblock__row"><span class="k">Iubenda consent DB</span><span class="v"><span class="badge badge--bad">non configurato</span></span></div>
@@ -449,11 +449,11 @@
       <div class="siteblock siteblock--studioup">
         <span class="siteblock__badge">StudioUp</span>
         <h3 class="siteblock__name">Studio<br>Up</h3>
-        <p class="siteblock__url">studioup.it · WordPress · Elementor</p>
+        <p class="siteblock__url">studioup.it · Astro</p>
         <div class="siteblock__row"><span class="k">Container GTM</span><span class="v"><span class="badge badge--ok">attivo</span></span></div>
         <div class="siteblock__row"><span class="k">GA4 collegato</span><span class="v"><span class="badge badge--ok">sì</span></span></div>
         <div class="siteblock__row"><span class="k">Meta Pixel</span><span class="v"><span class="badge badge--warn">verifica posizione</span> · da consolidare in GTM se installato a codice</span></div>
-        <div class="siteblock__row"><span class="k">Form events</span><span class="v">Listener Elementor pronti · setup quando verranno reintrodotte form sul sito</span></div>
+        <div class="siteblock__row"><span class="k">Form events</span><span class="v">Data layer custom · setup quando verranno reintrodotte form sul sito</span></div>
         <div class="siteblock__row"><span class="k">Click events</span><span class="v"><span class="badge badge--bad">da configurare</span> · GTM</span></div>
         <div class="siteblock__row"><span class="k">Iubenda consent DB</span><span class="v"><span class="badge badge--ghost">N/A oggi (nessuna form)</span> · da affrontare con la reintroduzione</span></div>
       </div>
@@ -473,7 +473,7 @@
     </div>
 
     <h3>Il pattern <span style="color:var(--ink-3)">"data layer custom"</span></h3>
-    <p>Su WordPress, plugin come Elementor o WPForms emettono già di loro un evento al momento dell'invio form, ed è sufficiente che GTM lo ascolti — è il caso di StudioUp quando le form verranno reintrodotte. Sui siti in Astro (Amedani, ContentLove, LiveCoverage) non c'è un plugin che faccia da tramite: la form è codice direttamente nel sito. Per renderla osservabile a GTM, basta che il codice della form, <em>dopo</em> aver verificato che l'invio sia andato a buon fine (la cosiddetta "post-validation"), aggiunga un evento al data layer della pagina. GTM lo intercetta e fa partire tutto il resto: l'evento su Google Analytics, l'evento su Meta Pixel, e qualunque altra integrazione successiva.</p>
+    <p>Su WordPress, plugin come Elementor o WPForms emettono già di loro un evento al momento dell'invio form, ed è sufficiente che GTM lo ascolti — è il caso di LiveCoverage per le form Elementor del sito. Sui siti in Astro (Amedani, ContentLove, StudioUp) non c'è un plugin che faccia da tramite: la form è codice direttamente nel sito. Per renderla osservabile a GTM, basta che il codice della form, <em>dopo</em> aver verificato che l'invio sia andato a buon fine (la cosiddetta "post-validation"), aggiunga un evento al data layer della pagina. GTM lo intercetta e fa partire tutto il resto: l'evento su Google Analytics, l'evento su Meta Pixel, e qualunque altra integrazione successiva.</p>
 
     <h4>Forma dell'evento <span style="color:var(--ink-3)">data layer</span></h4>
     <p>Il nome dell'evento da emettere nel data layer è stato concordato come <code>FormSubmitAStudio</code> — standardizzato e univoco sui quattro siti dell'ecosistema, sufficientemente "unique" da non rischiare di collidere con eventi emessi da librerie di terze parti o da CMS futuri. GTM lo intercetta come trigger e fa partire la chiamata GA4 (<code>generate_lead</code> con <code>lead_type: form</code>) e Meta.</p>
@@ -579,7 +579,7 @@
         <span class="recs__n"></span>
         <div class="recs__body">
           <span class="recs__t">Setup eventi conversione <span style="color:var(--ink-3)">su Amedani e StudioUp</span></span>
-          <span class="recs__why">I container GTM sono già attivi su entrambi i siti e gli accessi ci sono. Si possono attivare gli eventi click standard (mail, telefono, WhatsApp) e consolidare il GA4 di destinazione. Su Amedani resta da configurare la form contatti, che richiede la convenzione del data layer custom della sezione 04. Su StudioUp le form non sono oggi attive sul sito: il setup avverrà nel momento in cui verranno reintrodotte, appoggiandosi ai listener Elementor disponibili.</span>
+          <span class="recs__why">I container GTM sono già attivi su entrambi i siti e gli accessi ci sono. Si possono attivare gli eventi click standard (mail, telefono, WhatsApp) e consolidare il GA4 di destinazione. Su Amedani resta da configurare la form contatti, che richiede la convenzione del data layer custom della sezione 04. Su StudioUp le form non sono oggi attive sul sito: il setup avverrà nel momento in cui verranno reintrodotte, applicando la stessa convenzione del data layer custom degli altri siti Astro (sezione 04).</span>
         </div>
         <div class="recs__meta"><strong>Sito</strong>Amedani · StudioUp<strong>Tipo</strong>Setup GTM</div>
       </li>
@@ -587,7 +587,7 @@
         <span class="recs__n"></span>
         <div class="recs__body">
           <span class="recs__t">Abilitazione accessi container <span style="color:var(--ink-3)">ContentLove</span></span>
-          <span class="recs__why">Il container GTM è presente ma non ancora accessibile dal mio account. Una volta abilitato l'accesso, si fa la stessa attività di setup eventi standard del punto precedente. ContentLove è in Astro: sulla parte form si applica la stessa convenzione del data layer custom prevista per gli altri siti Astro (Amedani, LiveCoverage), sezione 04.</span>
+          <span class="recs__why">Il container GTM è presente ma non ancora accessibile dal mio account. Una volta abilitato l'accesso, si fa la stessa attività di setup eventi standard del punto precedente. ContentLove è in Astro: sulla parte form si applica la stessa convenzione del data layer custom prevista per gli altri siti Astro (Amedani, StudioUp), sezione 04.</span>
         </div>
         <div class="recs__meta"><strong>Sito</strong>ContentLove<strong>Tipo</strong>Accesso + setup</div>
       </li>
@@ -603,7 +603,7 @@
         <span class="recs__n"></span>
         <div class="recs__body">
           <span class="recs__t">Data layer custom <span style="color:var(--ink-3)">per le form Astro</span></span>
-          <span class="recs__why">Sui tre siti Astro (Amedani, ContentLove, LiveCoverage) serve definire la convenzione del data layer post-validation. È un piccolo lavoro condiviso tra sviluppo e tracking: si concorda la struttura dell'evento (sezione 04), si applica una sola volta nel codice della form, da quel momento ogni nuova form segue lo stesso pattern.</span>
+          <span class="recs__why">Sui tre siti Astro (Amedani, ContentLove, StudioUp) serve definire la convenzione del data layer post-validation. È un piccolo lavoro condiviso tra sviluppo e tracking: si concorda la struttura dell'evento (sezione 04), si applica una sola volta nel codice della form, da quel momento ogni nuova form segue lo stesso pattern.</span>
         </div>
         <div class="recs__meta"><strong>Sito</strong>Astro (3 siti)<strong>Tipo</strong>Convenzione codice</div>
       </li>
@@ -702,7 +702,7 @@
   <div class="colophon">
     <div>
       <h5>Scope</h5>
-      <p>4 property dell'ecosistema Amedani: <code>amedani.com</code>, <code>contentlove.it</code>, <code>livecoverage.it</code>, <code>studioup.it</code>. Tre in Astro, StudioUp in WordPress + Elementor.</p>
+      <p>4 property dell'ecosistema Amedani: <code>amedani.com</code>, <code>contentlove.it</code>, <code>livecoverage.it</code>, <code>studioup.it</code>. Tre in Astro, LiveCoverage in WordPress + Elementor.</p>
     </div>
     <div>
       <h5>Strumenti</h5>

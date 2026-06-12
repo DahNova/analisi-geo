@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amedani Studio — Vademecum contenuti · blog e casi studio</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Vademecum redazionale per il copywriter di Amedani Studio: standard editoriali per blog e casi studio, anti-pattern AI da evitare, struttura citabile, SEO 2026 post-May core update e checklist pre-consegna.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #A0411E;
+    --accent-soft: #F4DDD2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 15px; line-height: 1.6; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  /* topbar */
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand a { color: var(--ink-3); text-decoration: none; }
+  .topbar__brand a:hover { color: var(--accent); }
+  .topbar__brand .sep { color: var(--ink-3); margin: 0 8px; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  /* hero */
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(44px, 6vw, 76px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 56ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  /* statgrid */
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 34px 26px 30px; border-right: 1px solid var(--ink); }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(34px, 4.5vw, 52px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 12px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 500; line-height: 1.45; opacity: 0.8; }
+
+  /* sections */
+  .sec { padding: 72px 0 64px; border-bottom: 1px solid var(--ink); }
+  .sec:last-of-type { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 92px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 42px; padding-bottom: 26px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 54px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(26px, 3.2vw, 36px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 14px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 52ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; font-weight: 600; }
+
+  p { margin: 0 0 16px; max-width: 76ch; }
+  p strong { font-weight: 600; }
+  .lead-p { font-size: 16px; color: var(--ink-2); }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 20px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 30px 0 12px; }
+  a.inline { color: var(--accent); }
+
+  ul.bul { margin: 0 0 18px; padding-left: 0; list-style: none; max-width: 76ch; }
+  ul.bul li { padding: 7px 0 7px 26px; position: relative; border-bottom: 1px solid var(--grid); }
+  ul.bul li:last-child { border-bottom: 0; }
+  ul.bul li::before { content: "→"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  ul.bul li strong { font-weight: 600; }
+
+  /* tables */
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.5; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl code, p code, li code { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); background: var(--accent-soft); padding: 1px 5px; }
+
+  /* do / dont */
+  .dd { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--ink); margin: 30px 0; }
+  .dd__col { padding: 26px 26px 28px; }
+  .dd__col--bad { background: var(--accent-soft); border-right: 1px solid var(--ink); }
+  .dd__col--ok { background: var(--ok-soft); }
+  .dd__tag { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; display: inline-block; }
+  .dd__col--bad .dd__tag { color: var(--accent); }
+  .dd__col--ok .dd__tag { color: var(--ok); }
+  .dd__q { font-size: 14.5px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+  .dd__q em { font-style: normal; font-weight: 600; }
+
+  /* pull quote */
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(19px, 2.3vw, 27px); line-height: 1.25; margin: 44px 0; padding: 30px 34px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 70ch; letter-spacing: -0.015em; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  /* crit / note box */
+  .crit { border: 2px solid var(--accent); background: var(--accent-soft); padding: 28px 32px; margin: 32px 0; }
+  .crit h4 { color: var(--accent); margin: 0 0 12px; font-size: 11px; }
+  .crit p { color: var(--ink-2); max-width: 82ch; margin-bottom: 10px; }
+  .crit p:last-child { margin-bottom: 0; }
+
+  .note { border-left: 3px solid var(--grid-strong); padding: 4px 0 4px 20px; margin: 22px 0; color: var(--ink-3); font-size: 13.5px; max-width: 74ch; }
+
+  /* recent-updates timeline */
+  .updates { list-style: none; padding: 0; margin: 32px 0; border-top: 2px solid var(--ink); }
+  .updates li { display: grid; grid-template-columns: 150px 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--grid); align-items: baseline; }
+  .updates li:last-child { border-bottom: 2px solid var(--ink); }
+  .updates__d { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--accent); text-transform: uppercase; font-weight: 600; }
+  .updates__t { font-size: 14px; line-height: 1.5; }
+  .updates__t strong { font-weight: 600; }
+
+  /* numbered case-study steps */
+  .steps { counter-reset: st; margin: 30px 0; border-top: 2px solid var(--ink); }
+  .step { display: grid; grid-template-columns: 64px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); }
+  .step:last-child { border-bottom: 2px solid var(--ink); }
+  .step__n { font-family: var(--f-sans); font-weight: 900; font-size: 32px; line-height: 0.9; letter-spacing: -0.03em; color: var(--accent); }
+  .step__b h4 { margin: 0 0 8px; color: var(--ink); font-size: 14px; font-family: var(--f-sans); font-weight: 800; letter-spacing: -0.01em; text-transform: none; }
+  .step__b p { margin: 0; font-size: 13.5px; color: var(--ink-2); max-width: 74ch; }
+
+  /* checklist */
+  .check { margin: 26px 0; }
+  .check__group { margin-bottom: 28px; }
+  .check__gt { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); font-weight: 700; padding-bottom: 10px; border-bottom: 2px solid var(--ink); margin-bottom: 6px; }
+  .check__item { display: grid; grid-template-columns: 26px 1fr; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--grid); align-items: start; font-size: 14px; }
+  .check__box { width: 16px; height: 16px; border: 1.5px solid var(--ink); margin-top: 2px; }
+  .check__item--final { background: #FAFAFA; padding: 14px 12px; border: 2px solid var(--ink); grid-template-columns: 26px 1fr; margin-top: 8px; font-weight: 700; }
+  .check__item--final .check__box { border-color: var(--accent); }
+
+  footer { padding: 44px 0 60px; font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; }
+  footer p { max-width: none; margin: 0 0 6px; }
+  .backlink { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .backlink a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 820px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .topbar { grid-template-columns: 1fr; gap: 6px; text-align: left; }
+    .topbar__meta, .topbar__nav { text-align: left; }
+    .hero { grid-template-columns: 1fr; gap: 36px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding-left: 0; padding-top: 24px; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell:nth-child(2) { border-right: 0; }
+    .statgrid__cell:nth-child(-n+2) { border-bottom: 1px solid var(--ink); }
+    .sec__head { grid-template-columns: 1fr; gap: 10px; }
+    .sec__num { font-size: 36px; }
+    .dd { grid-template-columns: 1fr; }
+    .dd__col--bad { border-right: 0; border-bottom: 1px solid var(--ink); }
+    .updates li, .step { grid-template-columns: 1fr; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand"><a href="../">Analisi</a><span class="sep">/</span><a href="./">Amedani</a><span class="sep">/</span><span>Vademecum</span></div>
+    <div class="topbar__meta">12 giugno 2026</div>
+    <div class="topbar__nav"><a href="./">← Progetto Amedani</a></div>
+  </div>
+
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Vademecum redazionale · blog e casi studio</p>
+      <h1>Vademecum<br><span class="ml">contenuti</span></h1>
+      <p class="hero__lede">Lo standard con cui scrivere i testi del blog e i casi studio di Amedani Studio, così che arrivino alla revisione finale già pronti. Non è SEO teorica: è la lista di regole concrete che applico io quando scrivo per amedani.com, messa nero su bianco.</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>A chi serve</dt>
+      <dd>Al copywriter che cura i contenuti ricorsivi (blog + casi studio).</dd>
+      <dt>Cosa copre</dt>
+      <dd>Tono, anti-slop, struttura, SEO 2026, casi studio, checklist.</dd>
+      <dt>Come arriva a Claudio</dt>
+      <dd>Tu scrivi corpo + FAQ + titolo proposto. Title/meta e editing finale li curo io.</dd>
+      <dt>Formato richiesto</dt>
+      <dd>Testo semplice con titoli H2/H3. Niente meta tag o schema.</dd>
+    </dl>
+  </header>
+
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">48%</span>
+      <span class="statgrid__lbl">Query Google con risposta AI · BrightEdge, feb 2026</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">−61%</span>
+      <span class="statgrid__lbl">CTR organico dove c'è una risposta AI · Seer, set 2025</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">3,2×</span>
+      <span class="statgrid__lbl">Citazioni AI in più per contenuto fresco &lt;30gg · ConvertMate 2026</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">17%</span>
+      <span class="statgrid__lbl">Fonti citate dall'AI che sono anche in top 10 organica · BrightEdge</span>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">Il contesto degli ultimi mesi</p>
+        <h2 class="sec__title">Il principio che regge tutto nel 2026</h2>
+      </div>
+      <p class="sec__sub">Senza capire cosa è cambiato tra marzo e giugno 2026, le regole sembrano arbitrarie. Non lo sono.</p>
+    </div>
+
+    <p class="lead-p">Nel 2026 un testo non viene più letto solo da una persona. Viene letto prima da una macchina che lo spezzetta, ne estrae due frasi e decide se citarlo in una risposta sintetica. Scrivere bene oggi significa scrivere per tutti e due: la persona che legge la sintesi e la macchina che la costruisce. Tutto quello che segue discende da qui.</p>
+
+    <h3>Cosa è successo <span class="acc">tra marzo e giugno</span></h3>
+    <p>Il <strong>21 maggio 2026 Google ha rilasciato il May 2026 Core Update</strong>, chiuso il 2 giugno dopo dodici giorni, due giorni dopo l'annuncio di AI Mode come default per gli utenti USA. La sintesi circolata tra gli analisti è netta: "March was meh, but May is big". Chi ha perso visibilità sono soprattutto i siti che reimpacchettano informazione già esistente. Chi ha tenuto è chi pubblica contenuto originale, con un punto di vista e dati propri.</p>
+    <p>Nella stessa settimana ChatGPT è passato al modello GPT-5.5 come default, e un'analisi SISTRIX su 3,8 milioni di risposte ha misurato il <strong>47% delle citazioni ridistribuito in 48 ore</strong> (dato su query in tedesco, non ancora replicato sull'italiano: vale come direzione, non come certezza). Due aggiornamenti diversi, su superfici diverse, nella stessa settimana, che hanno premiato lo stesso tipo di contenuto: originale, nativo nella lingua, con un'opinione informata dietro.</p>
+
+    <ul class="updates">
+      <li><span class="updates__d">30 apr 2026</span><span class="updates__t"><strong>Preferred Sources</strong> di Google esteso a tutte le lingue, italiano incluso. Il brand recall diventa anche segnale di scoperta lato utente.</span></li>
+      <li><span class="updates__d">6 mag 2026</span><span class="updates__t"><strong>Expert Advice update</strong>: le risposte AI di Google citano anche forum pubblici (Reddit, blog) con link inline accanto al testo.</span></li>
+      <li><span class="updates__d">7 mag 2026</span><span class="updates__t"><strong>FAQ rich results deprecati</strong>: lo schema FAQ non genera più i riquadri ricchi. Resta utile come gancio di citabilità per l'AI.</span></li>
+      <li><span class="updates__d">7–8 mag 2026</span><span class="updates__t"><strong>Bug Search Console</strong>: una settimana di dati sotto-riportati. Promemoria che una sola fonte di dati non basta.</span></li>
+      <li><span class="updates__d">21 mag → 2 giu</span><span class="updates__t"><strong>May 2026 Core Update</strong>: premiati i contenuti originali con punto di vista, penalizzati i repackager.</span></li>
+    </ul>
+
+    <p>C'è poi un dato di cadenza che cambia la pianificazione. Tra il core update di marzo e quello di maggio sono passate circa <strong>sei settimane</strong>, contro i tre mesi tipici del 2024-2025. I contenuti datati invecchiano più in fretta, e la freschezza è uno dei segnali a leva più alta: uno studio ConvertMate misura un'associazione 3,2 volte più alta con le citazioni AI per i contenuti aggiornati entro trenta giorni (correlazione, non nesso causale dimostrato). Tradotto: una rubrica che esce con regolarità batte un articolo perfetto pubblicato due volte l'anno. La cadenza ricorsiva che state mettendo a piano non è un vezzo, è la strategia giusta.</p>
+
+    <h3>Perché il "contenuto eccellente" <span class="acc">da solo non basta più</span></h3>
+    <p>Per dieci anni il modello è stato: scrivi il pezzo più completo, guadagni link, sali. Aveva un presupposto implicito che oggi non regge, cioè che a leggere fosse una persona. Per una quota crescente di ricerche, a leggere per primo è un sistema che spezza il testo in blocchi e cita un singolo passaggio. Il lettore umano arriva dopo, se arriva. La qualità resta il prezzo del biglietto, ma da sola non basta: servono tre cose.</p>
+    <ul class="bul">
+      <li><strong>Citabilità.</strong> Il testo deve essere estraibile a pezzi: prima frase di ogni sezione autonoma, dati completi, pronomi risolti. È la parte su cui hai pieno controllo, ed è la più importante di questo vademecum.</li>
+      <li><strong>Distribuzione.</strong> Un'idea vive di più se esiste anche fuori dal sito. Non è compito tuo nell'immediato, ma spiega perché il contenuto deve essere notiziabile, non generico.</li>
+      <li><strong>Esperienza diretta.</strong> Casi reali, dati di progetto, opinioni basate su lavoro vero sono ciò che una macchina non può replicare. È il motivo per cui i casi studio valgono oro.</li>
+    </ul>
+    <div class="pull">Originale, citabile e fontato. Questi tre aggettivi sono <span class="acc">l'intero gioco</span>.</div>
+  </section>
+
+  <!-- 02 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">Come suona Amedani</p>
+        <h2 class="sec__title">Tono di voce</h2>
+      </div>
+      <p class="sec__sub">Un professionista che spiega, non un'azienda che si presenta. Se una frase potrebbe stare in qualunque brochure, va tolta.</p>
+    </div>
+
+    <ul class="bul">
+      <li><strong>Frasi brevi e dichiarative.</strong> Un concetto per frase. Se rileggendo devi prendere fiato a metà, spezza.</li>
+      <li><strong>Prima persona dove c'è esperienza diretta, seconda persona col lettore.</strong> "Quando lavoro su un sito locale, parto da..." e "Se gestisci un e-commerce, il primo controllo è...". Evita il "noi" aziendale se non è genuinamente plurale.</li>
+      <li><strong>Niente registro accademico.</strong> "Si evince che" diventa "si vede che". "Al fine di" diventa "per". "Mediante" diventa "con".</li>
+      <li><strong>Niente entusiasmo gonfiato.</strong> Fuori "straordinario", "rivoluzionario", "incredibilmente". Un dato forte parla da sé.</li>
+      <li><strong>Apri con la sostanza.</strong> La prima frase di ogni pezzo e di ogni sezione porta un fatto, non un preambolo.</li>
+    </ul>
+
+    <div class="dd">
+      <div class="dd__col dd__col--bad">
+        <span class="dd__tag">✕ Da evitare</span>
+        <p class="dd__q">"Nell'attuale panorama digitale, è fondamentale comprendere come la SEO locale rappresenti una straordinaria opportunità per le aziende che desiderano sbloccare il proprio potenziale sul territorio."</p>
+      </div>
+      <div class="dd__col dd__col--ok">
+        <span class="dd__tag">✓ Meglio</span>
+        <p class="dd__q">"Il 46% delle ricerche su Google ha un intento locale. Per un'attività che lavora su un territorio preciso, è il canale con il ritorno più alto a parità di spesa."</p>
+      </div>
+    </div>
+    <p class="note">La seconda dice una cosa vera, con un numero, in metà delle parole. È quella la direzione.</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Il filtro anti-slop</p>
+        <h2 class="sec__title">Anti-pattern AI da eliminare</h2>
+      </div>
+      <p class="sec__sub">Un testo macchina non ripulito si riconosce al primo paragrafo, e Google lo classifica a basso valore. Usare l'AI per le bozze è legittimo; il testo finale non deve sembrarne uscito.</p>
+    </div>
+
+    <h4>A · Trattino lungo</h4>
+    <p>In italiano non si usa. Zero occorrenze. Al suo posto: virgola, due punti, punto e virgola o parentesi. È il segnale numero uno di testo tradotto da un LLM inglese.</p>
+
+    <h4>B · Frasi vuote da togliere sempre</h4>
+    <table class="tbl">
+      <thead><tr><th style="width:34%">Tipo</th><th>Esempi da cancellare</th></tr></thead>
+      <tbody>
+        <tr><td>Aperture e chiusure</td><td>"In definitiva", "In conclusione", "Approfondiamo", "Esploriamo", "Immergiamoci"</td></tr>
+        <tr><td>Premesse inutili</td><td>"È importante sottolineare che", "Non è un segreto che", "Vale la pena menzionare"</td></tr>
+        <tr><td>Riempitivi</td><td>"Nell'era digitale", "Nell'attuale panorama", "In un mondo sempre più"</td></tr>
+        <tr><td>Connettori a vuoto</td><td>"A tal proposito", "Come abbiamo visto", "Non sorprende che"</td></tr>
+      </tbody>
+    </table>
+
+    <h4>C · Calchi dall'inglese</h4>
+    <table class="tbl">
+      <thead><tr><th style="width:42%">Calco</th><th>Alternativa</th></tr></thead>
+      <tbody>
+        <tr><td>"Sbloccare il potenziale"</td><td>Di' cosa migliora concretamente</td></tr>
+        <tr><td>"Navigare il panorama"</td><td>"Orientarsi tra", "gestire"</td></tr>
+        <tr><td>"Game-changer"</td><td>"Una svolta", "un cambio di passo"</td></tr>
+        <tr><td>"Sfruttare" (usato ovunque)</td><td>"Usare", "impiegare", "adottare"</td></tr>
+        <tr><td>"Robusto" (per una strategia)</td><td>"Solido", "strutturato"</td></tr>
+        <tr><td>"Olistico"</td><td>"Complessivo", "integrato"</td></tr>
+        <tr><td>"Azionabile"</td><td>"Concreto", "applicabile", "operativo"</td></tr>
+      </tbody>
+    </table>
+
+    <h4>D · Pattern di struttura</h4>
+    <ul class="bul">
+      <li><strong>Non aprire ogni sezione con una domanda.</strong> Varia: un dato, un'affermazione, un piccolo aneddoto.</li>
+      <li><strong>Non mettere sempre tre elementi.</strong> La "triade" è il tic più riconoscibile dell'AI. Usa 2, 4, 5 elementi quando serve.</li>
+      <li><strong>Fuori "Ma non è tutto" e "Ma c'è di più".</strong></li>
+      <li><strong>Varia la lunghezza delle sezioni.</strong> Una di 80 parole, un'altra di 400. Sezioni tutte uguali sono un altro segnale macchina.</li>
+    </ul>
+
+    <h4>E · Punteggiatura e misura</h4>
+    <ul class="bul">
+      <li>Punti esclamativi: zero, al massimo uno in tutto il pezzo. Emoji nel corpo: zero.</li>
+      <li>"Fondamentale" e "cruciale": massimo uno ciascuno per articolo.</li>
+      <li>"Ottimizzare" e derivati: massimo tre o quattro per articolo.</li>
+      <li>Virgola prima della "e" nelle elencazioni: no ("A, B e C", non "A, B, e C").</li>
+    </ul>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Il principio non negoziabile</p>
+        <h2 class="sec__title">Ogni dato ha una fonte</h2>
+      </div>
+      <p class="sec__sub">Ciò che fa la differenza tra un contenuto credibile e uno qualunque.</p>
+    </div>
+
+    <div class="crit">
+      <h4>Regola d'oro</h4>
+      <p>Ogni affermazione fattuale ha una fonte nominata e una data. Se non trovi la fonte, non scrivi il dato. Un dato numerico è completo quando ha numero, unità di misura, anno e fonte: "il 48% delle query (BrightEdge, febbraio 2026)" è completo. "Quasi metà delle ricerche" non lo è.</p>
+    </div>
+
+    <ul class="bul">
+      <li><strong>Distingui correlazione da causa.</strong> Se due cose si muovono insieme, non scrivere che una causa l'altra. Nel dubbio usa "correlato a", non "causa". Un lettore esperto smonta subito il salto logico.</li>
+      <li><strong>Mai claim di unicità non verificati.</strong> Niente "siamo gli unici", "approccio proprietario", "primo sul mercato", "termine che abbiamo coniato" senza verifica. Si ritorcono contro al primo controllo.</li>
+      <li><strong>Dichiara i limiti.</strong> Dove ha senso, una sezione su cosa non sai, dove i dati sono incerti, per chi non è adatto quello che proponi. Un limite dichiarato non indebolisce il pezzo, lo rende affidabile.</li>
+    </ul>
+
+    <div class="pull">Il test prima di pubblicare: <span class="acc">"Lo firmerei con il mio nome?"</span> Se la risposta è no, il testo non è pronto, a prescindere da come è stato scritto.</div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">L'impalcatura</p>
+        <h2 class="sec__title">Come è fatto un articolo</h2>
+      </div>
+      <p class="sec__sub">La stessa struttura funziona sia per chi legge sia per le macchine che citano.</p>
+    </div>
+
+    <h3>Apertura <span class="acc">(prime 150 parole)</span></h3>
+    <p>Risposta diretta alla domanda del lettore entro le prime righe, con un dato concreto in apertura. Niente preamboli. Subito dopo: qual è il problema che l'articolo risolve e cosa ci troverà il lettore. Se parte da un'esperienza diretta ("Su un progetto di local SEO ho visto che...") meglio ancora.</p>
+
+    <h3>Corpo</h3>
+    <ul class="bul">
+      <li><strong>H2 per le sezioni, H3 per le sotto-sezioni.</strong> Mai saltare livelli (no da H2 a H4).</li>
+      <li><strong>Ogni sezione: affermazione, dato di supporto, implicazione pratica.</strong> Cosa è vero, chi lo dice, cosa ci fai.</li>
+      <li><strong>La prima frase di ogni H2 deve reggersi da sola.</strong> Test: se la stacchi e ci metti sotto la firma "Amedani Studio", funziona come citazione autonoma? Se sì, è citabile.</li>
+      <li><strong>Pronomi sempre risolti.</strong> "Questo", "quello", "lo strumento": se per capirli serve la frase prima, sostituisci col nome esplicito. Le macchine leggono i blocchi isolati.</li>
+      <li><strong>Un paragrafo, un concetto.</strong> Tabelle per i confronti, liste per i pattern ricorrenti. Dati con fonte e anno in ogni sezione.</li>
+    </ul>
+
+    <h3>Lunghezza, limiti, chiusura, FAQ</h3>
+    <p>Non c'è un numero fisso: la lunghezza segue la profondità reale, non un obiettivo di parole. Meglio 800 parole dense che 2.000 allungate. Dove il tema lo consente, chiudi con una sezione onesta sui limiti. In fondo, un solo invito all'azione verso la pagina contatti, e cinque o sei FAQ su domande vere, ognuna con risposta autonoma e completa.</p>
+    <p class="note">Nota tecnica: lo schema FAQ non genera più i riquadri ricchi in Google (deprecati il 7 maggio 2026), ma le FAQ ben scritte restano utili perché vengono citate nelle risposte AI. Servono ancora, per un motivo diverso da prima.</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">L'essenziale, senza essere SEO</p>
+        <h2 class="sec__title">SEO 2026 per chi scrive</h2>
+      </div>
+      <p class="sec__sub">Non ti serve essere un esperto SEO. Ti servono cinque concetti, perché cambiano come imposti un pezzo.</p>
+    </div>
+
+    <ul class="bul">
+      <li><strong>1 · L'intento viene prima di tutto.</strong> Prima di scrivere, guarda cosa Google mostra già per quella ricerca. Se mostra guide, scrivi una guida; se mostra pagine prodotto, una guida non si posizionerà. Il formato sbagliato è la causa numero uno di un contenuto che non rende. Nel dubbio, chiedimelo.</li>
+      <li><strong>2 · Esperienza, prima ancora che competenza.</strong> Un articolo che racconta un caso reale, con uno screenshot o un dato di progetto, vale più di uno che ripete nozioni disponibili ovunque. Ogni volta che puoi sostituire un'affermazione generica con un esempio vissuto, fallo.</li>
+      <li><strong>3 · Scrivi per essere estratto.</strong> Prima frase autonoma per sezione, dati completi, pronomi risolti, un concetto per paragrafo. È l'accorgimento che oggi sposta di più la visibilità nelle risposte AI.</li>
+      <li><strong>4 · Originale e in italiano batte tradotto e generico.</strong> Sia il core update di Google sia il cambio di modello di ChatGPT hanno premiato le fonti originali nella lingua della query.</li>
+      <li><strong>5 · Attento ai dati che invecchiano.</strong> Nel 2026 le cose cambiano in fretta. Quando scrivi di una "feature" specifica di Google, segnalamelo come punto sensibile, così lo verifichiamo prima di pubblicare. I contenuti sui principi durano; quelli sulle singole funzioni vanno trattati come notizie con una data.</li>
+    </ul>
+  </section>
+
+  <!-- 07 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Il contenuto a più alto valore</p>
+        <h2 class="sec__title">Template caso studio</h2>
+      </div>
+      <p class="sec__sub">Raccontano esperienza diretta e risultati misurabili: ciò che né un concorrente né una macchina possono copiare. Vanno scritti con cura.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__n">1</div>
+        <div class="step__b">
+          <h4>Contesto del cliente</h4>
+          <p>Chi è, in che settore, su che territorio. Quanto basta a inquadrare, senza dati riservati. Se il cliente non vuole essere nominato, descrivilo per categoria ("un'attività di ristorazione a Brescia").</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">2</div>
+        <div class="step__b">
+          <h4>Il problema di partenza</h4>
+          <p>Qual era la situazione prima, con un dato che la fotografa. "Il sito riceveva X visite al mese", "non compariva per le ricerche del suo settore sul territorio". Concreto e, dove possibile, quantificato.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">3</div>
+        <div class="step__b">
+          <h4>L'intervento</h4>
+          <p>Cosa è stato fatto, in ordine. Niente gergo: spiega le azioni in modo che le capisca anche chi non è del mestiere. È la parte dove dimostri competenza, quindi specifica, non vaga.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">4</div>
+        <div class="step__b">
+          <h4>I risultati, con numeri reali</h4>
+          <p>La sezione che regge tutto. Dati veri, con periodo di riferimento: "da X a Y visite organiche in Z mesi". Se un numero non è verificabile, non lo scrivi. Risultati gonfiati fanno più danno che bene.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">5</div>
+        <div class="step__b">
+          <h4>Cosa ha funzionato (e cosa no)</h4>
+          <p>Quali leve hanno contato di più e, se c'è, cosa rifaresti diversamente. L'onestà costruisce credibilità.</p>
+        </div>
+      </div>
+    </div>
+    <p class="note">Regole trasversali: numeri sempre verificabili, mai promettere risultati come garantiti (la SEO richiede tempo, dipende da molti fattori), un solo invito all'azione in chiusura. Un caso studio è una promessa pubblica: deve poggiare su fatti.</p>
+  </section>
+
+  <!-- 08 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">08</p>
+      <div>
+        <p class="sec__kicker">La parte operativa</p>
+        <h2 class="sec__title">Checklist pre-consegna</h2>
+      </div>
+      <p class="sec__sub">Spunta tutto prima di mandarmi il pezzo. Se tutte le caselle sono piene, è pronto.</p>
+    </div>
+
+    <div class="check">
+      <div class="check__group">
+        <div class="check__gt">Sostanza</div>
+        <div class="check__item"><span class="check__box"></span><span>La risposta alla domanda del lettore è nelle prime 150 parole</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Ogni dato numerico ha fonte e anno</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Nessun claim di unicità o primato non verificato</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Dove serve, correlazione e causa sono distinte</span></div>
+        <div class="check__item"><span class="check__box"></span><span>C'è almeno un elemento di esperienza diretta (esempio, caso, dato)</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Dove ha senso, c'è una nota sui limiti</span></div>
+      </div>
+
+      <div class="check__group">
+        <div class="check__gt">Struttura e citabilità</div>
+        <div class="check__item"><span class="check__box"></span><span>La prima frase di ogni sezione H2 si regge da sola</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Tutti i pronomi sono risolti (niente "questo/quello" ambigui)</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Ogni paragrafo tratta un solo concetto</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Gerarchia dei titoli corretta (H2 poi H3, senza salti)</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Cinque o sei FAQ, ognuna con risposta autonoma</span></div>
+      </div>
+
+      <div class="check__group">
+        <div class="check__gt">Anti-slop</div>
+        <div class="check__item"><span class="check__box"></span><span>Zero trattini lunghi</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Zero frasi vuote ("In definitiva", "Nell'era digitale", ecc.)</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Zero calchi dall'inglese ("sbloccare il potenziale", "robusto", "olistico")</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Non tutte le sezioni aprono con una domanda, niente "triadi" forzate</span></div>
+        <div class="check__item"><span class="check__box"></span><span>Massimo un punto esclamativo, zero emoji, "ottimizzare" max 3-4 volte</span></div>
+      </div>
+
+      <div class="check__item check__item--final"><span class="check__box"></span><span>Il test finale: lo firmerei con il mio nome</span></div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="sec">
+    <div class="sec__head">
+      <p class="sec__num">09</p>
+      <div>
+        <p class="sec__kicker">La consegna</p>
+        <h2 class="sec__title">Cosa mandarmi e come</h2>
+      </div>
+      <p class="sec__sub">Più il pezzo arriva pulito, meno tocco, prima va online.</p>
+    </div>
+
+    <ul class="bul">
+      <li><strong>Formato.</strong> Testo semplice (Google Doc, Word o Markdown), con i titoli marcati come H2/H3. Niente impaginazione complicata: il contenuto, non la forma.</li>
+      <li><strong>Cosa includere.</strong> Corpo dell'articolo o del caso studio, le FAQ, e un titolo proposto (lo affino io sui dati di Search Console, ma il tuo è il punto di partenza).</li>
+      <li><strong>Cosa non serve.</strong> Meta tag, dati strutturati, immagini ottimizzate, link interni precisi: li metto io in pubblicazione. Se hai in mente un collegamento utile, segnalamelo a parte.</li>
+      <li><strong>Le fonti.</strong> Allega o cita i link da cui hai preso i dati. Mi serve per il controllo finale e velocizza tutto.</li>
+    </ul>
+
+    <p class="lead-p">L'obiettivo è semplice: che tu arrivi con materiale già buono, e che la cadenza ricorsiva di blog e casi studio parta con uno standard alto fin dal primo pezzo. Per qualsiasi dubbio mentre scrivi, scrivimi: meglio una domanda prima che una riscrittura dopo.</p>
+  </section>
+
+  <footer>
+    <p class="backlink"><a href="./">← Torna al progetto Amedani Studio</a></p>
+    <p style="margin-top:18px;">Documento riservato a Claudio Novaglio e al team Amedani Studio. Non indicizzato dai motori di ricerca. Versione 12 giugno 2026.</p>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LiveCoverage — Check performance · 16 giugno 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Update mensile di livecoverage.it al 16 giugno 2026. Nel periodo le campagne a pagamento — driver principale del traffico — non erano attive: i numeri riflettono la sola base organica. Il brand tiene la posizione 1, alcune query commerciali migliorano. Confronto 28gg vs 28gg su GSC, GA4 e Bing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #E66B1A;
+    --accent-soft: #FCE6D2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand a { color: var(--ink-3); text-decoration: none; }
+  .topbar__brand a:hover { color: var(--accent); }
+  .topbar__brand .sep { color: var(--ink-3); margin: 0 8px; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 52ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__cell--ok { background: var(--ok); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(34px, 4.6vw, 56px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.78; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 75ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl tbody tr.tot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding-top: 14px; padding-bottom: 14px; background: #FAFAFA; }
+  .tbl code { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .blocks { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--ink); margin: 32px 0; }
+  .blocks__cell { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; min-height: 230px; }
+  .blocks__cell:nth-child(3n) { border-right: 0; }
+  .blocks__cell:nth-last-child(-n+3) { border-bottom: 0; }
+  .blocks__cell--accent { background: var(--accent); color: var(--bg); }
+  .blocks__cell--ink { background: var(--ink); color: var(--bg); }
+  .blocks__num { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+  .blocks__url { font-family: var(--f-mono); font-size: 10.5px; word-break: break-all; opacity: 0.7; margin-top: 6px; }
+  .blocks__name { font-family: var(--f-sans); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 14px; text-transform: uppercase; }
+  .blocks__stats { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.65; margin: 0 0 18px; padding: 0; list-style: none; opacity: 0.85; }
+  .blocks__stats li { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+  .blocks__stats li span:first-child { opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+  .blocks__stats li strong { font-weight: 600; }
+  .blocks__take { padding-top: 14px; border-top: 1px solid currentColor; font-size: 13px; line-height: 1.45; }
+  .blocks__take strong { font-weight: 700; }
+  .blocks__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .blocks__cell--accent .badge, .blocks__cell--ink .badge { background: rgba(255,255,255,0.1); color: var(--bg); border-color: rgba(255,255,255,0.4); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.2; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 64ch; letter-spacing: -0.02em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  .chart { margin: 32px 0; }
+  .chart__title { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .chart__row { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 14px; padding: 4px 0; font-family: var(--f-mono); font-size: 11.5px; }
+  .chart__day { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .chart__bar { background: var(--grid); height: 22px; position: relative; }
+  .chart__bar span { display: block; height: 100%; background: var(--ink); }
+  .chart__bar.is-mute span { background: var(--ink-3); }
+  .chart__bar.is-acc span { background: var(--accent); }
+  .chart__bar.is-ok span { background: var(--ok); }
+  .chart__val { font-weight: 600; text-align: right; color: var(--ink); font-feature-settings: "tnum" on; }
+
+  .chan { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--grid); font-family: var(--f-mono); font-size: 12px; }
+  .chan:last-child { border-bottom: 0; }
+  .chan__name { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 11px; }
+  .chan__track { background: var(--grid); height: 18px; position: relative; }
+  .chan__track span { display: block; height: 100%; }
+  .chan__track .p1 { background: var(--grid-strong); }
+  .chan__track .p2 { background: var(--accent); }
+  .chan__v { text-align: right; }
+  .chan__v b { color: var(--ink); }
+
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 32px 0 0; }
+  .insights li { counter-increment: ins; display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--grid); }
+  .insights li:last-child { border-bottom: 2px solid var(--ink); }
+  .insights__num { font-family: var(--f-sans); font-weight: 900; font-size: 44px; line-height: 0.85; color: var(--accent); letter-spacing: -0.04em; }
+  .insights__num::before { content: counter(ins, decimal-leading-zero); }
+  .insights__body { font-size: 14.5px; line-height: 1.55; max-width: 84ch; }
+  .insights__title { display: block; font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; text-transform: uppercase; }
+  .insights__title .acc { color: var(--accent); }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 78ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .phases { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li { counter-increment: ph; display: grid; grid-template-columns: 70px 240px 1fr 160px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .phases li:last-child { border-bottom: 2px solid var(--ink); }
+  .phases__num { font-family: var(--f-sans); font-weight: 900; font-size: 28px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+  .phases__num::before { content: counter(ph, decimal-leading-zero); }
+  .phases__name { font-family: var(--f-sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; }
+  .phases__body { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 64ch; }
+  .phases__when { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; text-align: right; }
+
+  .crit { border: 2px solid var(--accent); background: var(--accent-soft); padding: 32px 36px; margin: 36px 0; }
+  .crit h3 { border: 0; margin: 0 0 14px; padding: 0; display: block; color: var(--accent); font-size: 22px; }
+  .crit p { color: var(--ink-2); max-width: 78ch; }
+  .crit code { font-family: var(--f-mono); font-size: 12px; background: rgba(255,255,255,0.6); padding: 2px 6px; word-break: break-all; }
+  .crit--ok { border-color: var(--ok); background: var(--ok-soft); }
+  .crit--ok h3 { color: var(--ok); }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .blocks { grid-template-columns: 1fr; }
+    .blocks__cell { border-right: 0; }
+    .strip__row, .recs li, .insights li, .phases li, .chan { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .insights__num { font-size: 28px; }
+    .colophon { grid-template-columns: 1fr; }
+    .chart__row { grid-template-columns: 100px 1fr 60px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .blocks, .insights li, .recs li, .phases li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink, .blocks__cell--accent, .blocks__cell--ink { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand"><a href="../">Analisi</a><span class="sep">/</span><a href="./" style="color:var(--ink);">LiveCoverage</a><span class="sep">/</span><span>CHECK PERFORMANCE</span></div>
+    <div class="topbar__meta">Update 16.06.2026 · mese senza spinta a pagamento · brand pos 1 intatto</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#trend">02</a><a href="#ga4">03</a><a href="#pagine">04</a><a href="#kw">05</a><a href="#insight">06</a><a href="#proposta">07</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance check · 16 giugno 2026 · update mensile</p>
+      <h1>Mese senza<br><span class="ml">spinta</span>.<br>La base<br>organica parla.</h1>
+      <p class="hero__lede">Il dato chiave del periodo va letto prima dei numeri: nel mese trascorso le <strong>campagne a pagamento — il driver principale del traffico di LiveCoverage — non erano attive</strong>. Le sessioni passano da 50 a 13, ma il movimento riflette l'assenza dell'investimento pubblicitario, non un calo organico del sito. La parte SEO racconta una storia diversa e incoraggiante: il <strong>brand resta saldamente in posizione 1</strong>, e diverse <strong>query commerciali migliorano spontaneamente la loro posizione</strong> — "progettazione video per eventi" sale dalla pos 66 alla 27, "event coverage" dalla 66 alla 2. Il contenuto editoriale sta maturando proprio sui termini di business. Resta da costruire l'infrastruttura commerciale — le 3 landing servizio e il tracking — indicata a maggio: è la leva che trasforma questa maturazione in richieste.</p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Finestra analisi</dt>
+      <dd>P1: 19.05.2026 → 15.06.2026 (28gg)<br>P2: 21.04.2026 → 18.05.2026 (28gg)</dd>
+      <dt>Asset analizzati</dt>
+      <dd>GSC https://livecoverage.it/<br>GA4 property 488332330<br>DataForSEO Labs · IT<br>Bing Webmaster · query</dd>
+      <dt>Da leggere con attenzione</dt>
+      <dd><span class="badge badge--warn">campagne ferme nel periodo</span> <span class="badge badge--ok">brand pos 1</span> <span class="badge badge--ok">query commerciali su</span></dd>
+      <dt>Aree di lavoro principali</dt>
+      <dd>3 landing servizio · tracking Calendly→GA4 · riattivazione campagne verso le landing · calibrazione snippet editoriali.</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">0</span>
+      <span class="statgrid__lbl">Sessioni Paid Social nel periodo</span>
+      <span class="statgrid__delta">erano 31 · campagne non attive</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">pos 1,0</span>
+      <span class="statgrid__lbl">Brand "live coverage" · CTR alto</span>
+      <span class="statgrid__delta">identità digitale intatta</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--ok">
+      <span class="statgrid__num">66 → 2</span>
+      <span class="statgrid__lbl">"event coverage" · posizione</span>
+      <span class="statgrid__delta">query commerciali in risalita organica</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">637</span>
+      <span class="statgrid__lbl">Impressions GSC · 28gg</span>
+      <span class="statgrid__delta">base editoriale che resta visibile</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">La storia in cinque punti</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Il mese va letto per quello che è: una fotografia della sola base organica, scattata mentre la spinta a pagamento era in pausa. Il sito non ha perso terreno SEO — anzi, su alcune query commerciali ne ha guadagnato. La leva di crescita resta quella indicata a maggio: costruire l'infrastruttura commerciale che oggi ancora manca.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il calo di traffico è <span class="acc">l'assenza delle campagne</span>, non il sito</span>
+          GA4 segna 13 sessioni contro le 50 del mese precedente, ma la lettura per canale è netta: la voce <strong>Paid Social passa da 31 a 0 sessioni</strong>. Era il driver principale (oltre il 60% del traffico). Spente le campagne nel periodo, resta la sola base organica e diretta. Non è un problema di posizionamento o di sito: è la naturale conseguenza di un mese senza investimento pubblicitario.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il brand <span class="acc">tiene la posizione 1</span></span>
+          La query "live coverage" resta in posizione 1,0 e "livecoverage" in 1,0: l'identità digitale conquistata è intatta. I click brand del periodo sono pochi in valore assoluto, ma è atteso quando viene meno il flusso pubblicitario che induce ricerche di brand. La base di riconoscimento non si è mossa: appena la spinta riprende, il brand è pronto a raccoglierla.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Le query commerciali <span class="acc">migliorano da sole</span></span>
+          È il segnale più interessante del mese. Senza nuove pagine, il contenuto editoriale sta guadagnando posizione su termini di business: <code>progettazione video per eventi</code> dalla 66 alla 27, <code>event coverage</code> dalla 66 alla 2, <code>video per eventi aziendali</code> dalla 50 alla 43, <code>videomaker per eventi</code> dalla 25 alla 17. Compaiono anche <code>live agency</code> e <code>coverage live</code> in posizione 2. Il terreno commerciale si sta scaldando: è il momento giusto per costruirci sopra le landing dedicate.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il sito è ancora <span class="acc">100% editoriale</span></span>
+          La struttura è quella del check precedente: 17 articoli blog + home, nessuna landing di servizio. Le pagine commerciali proposte a maggio (<code>/servizi/copertura-social-eventi/</code>, <code>/servizi/regia-editoriale-live/</code>, <code>/servizi/live-content-fiere/</code>) non sono ancora online. È la ragione per cui il traffico, quando le campagne sono ferme, non ha una pagina di conversione dove atterrare: il blog informa, ma non vende. Costruire le tre landing è il passo che dà al sito un motore commerciale proprio.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">La domanda di categoria <span class="acc">esiste ed è ricca</span></span>
+          Tra GSC e Bing, il bacino di ricerche attorno alla categoria è vivo e variegato: dalle informazionali ("live coverage significato", "copertura social cos'è") alle commerciali ("video coverage", "produzione contenuti foto/video per evento di marketing", "scatti professionali in tempo reale per eventi"). C'è una domanda reale che oggi vede gli articoli ma non trova un'offerta strutturata. È esattamente il vuoto che le landing servizio sono pensate per riempire.
+        </div>
+      </li>
+    </ol>
+
+    <div class="pull">Il mese fotografa la <span class="acc">base organica da sola</span> · il brand tiene, le query salgono · ora serve l'infrastruttura commerciale per raccogliere.</div>
+  </section>
+
+  <!-- ===== 02 TREND ===== -->
+  <section class="sec" id="trend">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">GSC · 28gg vs 28gg precedenti</p>
+        <h2 class="sec__title">Trend<br>ricerca</h2>
+      </div>
+      <p class="sec__sub">Su Search Console il volume di click è basso — coerente con un sito editoriale senza pagine di conversione e con il brand poco sollecitato dalle campagne ferme — ma il dato di posizione racconta un miglioramento diffuso sulle query commerciali. È la base che si rafforza sotto la superficie.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">Click totali 28gg</span>
+        <span class="strip__val">9</span>
+        <span class="strip__note strip__note--warn">Base organica senza spinta campagne. Brand poco sollecitato.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Impressions totali 28gg</span>
+        <span class="strip__val">637</span>
+        <span class="strip__note">Il bacino editoriale resta visibile e stabile.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Brand "live coverage"</span>
+        <span class="strip__val good">pos 1,0</span>
+        <span class="strip__note strip__note--ok">Identità digitale intatta.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">"event coverage"</span>
+        <span class="strip__val good">pos 2,0 (era 66)</span>
+        <span class="strip__note strip__note--ok">Balzo organico su query commerciale.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">"progettazione video per eventi"</span>
+        <span class="strip__val good">pos 26,5 (era 66)</span>
+        <span class="strip__note strip__note--ok">Quasi 40 posizioni guadagnate.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Sessioni GA4 28gg</span>
+        <span class="strip__val">13 (era 50)</span>
+        <span class="strip__note strip__note--warn">Paid Social 31 → 0: campagne ferme nel periodo.</span>
+      </div>
+    </div>
+
+    <h3>Query commerciali · <span class="acc">posizione che migliora</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">Pos P2</th><th class="num">Pos P1</th><th class="num">Δ posizioni</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">event coverage</td><td class="num">66,0</td><td class="num ok">2,0</td><td class="num ok">+64</td><td>Balzo deciso su termine commerciale inglese.</td></tr>
+        <tr><td class="strong">progettazione video per eventi</td><td class="num">66,3</td><td class="num">26,5</td><td class="num ok">+40</td><td>Obiettivo diretto di una landing servizio.</td></tr>
+        <tr><td class="strong">videomaker per eventi</td><td class="num">25,2</td><td class="num">16,6</td><td class="num ok">+9</td><td>Volume tradizionale più alto, si avvicina.</td></tr>
+        <tr><td class="strong">video per eventi aziendali</td><td class="num">50,0</td><td class="num">43,5</td><td class="num ok">+7</td><td>Lento ma costante avvicinamento.</td></tr>
+        <tr><td>live content</td><td class="num">22,3</td><td class="num">10,6</td><td class="num ok">+12</td><td>Categoria di nicchia, entra in top 11.</td></tr>
+        <tr><td>live agency</td><td class="num">—</td><td class="num ok">2,0</td><td class="num ok">nuova</td><td>Nuova query in top 3.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Impressions giornaliere · <span class="acc">ultimi 14 giorni</span></h3>
+    <div class="chart">
+      <div class="chart__title">Impressions giornaliere · 02.06 → 15.06 (i click sono troppo sporadici per un grafico significativo)</div>
+      <div class="chart__row"><span class="chart__day">02 giu · MAR</span><div class="chart__bar is-mute"><span style="width:44%"></span></div><span class="chart__val">17</span></div>
+      <div class="chart__row"><span class="chart__day">03 giu · MER</span><div class="chart__bar is-mute"><span style="width:59%"></span></div><span class="chart__val">23</span></div>
+      <div class="chart__row"><span class="chart__day">04 giu · GIO</span><div class="chart__bar is-acc"><span style="width:100%"></span></div><span class="chart__val">39</span></div>
+      <div class="chart__row"><span class="chart__day">05 giu · VEN</span><div class="chart__bar is-acc"><span style="width:85%"></span></div><span class="chart__val">33</span></div>
+      <div class="chart__row"><span class="chart__day">06 giu · SAB</span><div class="chart__bar is-mute"><span style="width:46%"></span></div><span class="chart__val">18</span></div>
+      <div class="chart__row"><span class="chart__day">07 giu · DOM</span><div class="chart__bar is-mute"><span style="width:51%"></span></div><span class="chart__val">20</span></div>
+      <div class="chart__row"><span class="chart__day">08 giu · LUN</span><div class="chart__bar is-mute"><span style="width:54%"></span></div><span class="chart__val">21</span></div>
+      <div class="chart__row"><span class="chart__day">09 giu · MAR</span><div class="chart__bar is-acc"><span style="width:95%"></span></div><span class="chart__val">37</span></div>
+      <div class="chart__row"><span class="chart__day">10 giu · MER</span><div class="chart__bar is-mute"><span style="width:41%"></span></div><span class="chart__val">16</span></div>
+      <div class="chart__row"><span class="chart__day">11 giu · GIO</span><div class="chart__bar is-mute"><span style="width:38%"></span></div><span class="chart__val">15</span></div>
+      <div class="chart__row"><span class="chart__day">12 giu · VEN</span><div class="chart__bar is-mute"><span style="width:67%"></span></div><span class="chart__val">26</span></div>
+      <div class="chart__row"><span class="chart__day">13 giu · SAB</span><div class="chart__bar is-mute"><span style="width:38%"></span></div><span class="chart__val">15</span></div>
+      <div class="chart__row"><span class="chart__day">14 giu · DOM</span><div class="chart__bar is-mute"><span style="width:49%"></span></div><span class="chart__val">19</span></div>
+      <div class="chart__row"><span class="chart__day">15 giu · LUN</span><div class="chart__bar is-mute"><span style="width:56%"></span></div><span class="chart__val">22</span></div>
+    </div>
+    <p style="margin-top:18px; font-size:13px; color:var(--ink-3);">Le impressions restano costanti attorno alle 20 al giorno: il sito continua a comparire nelle ricerche di categoria. È la prova che la visibilità organica non è calata — manca lo strato di traffico a pagamento che porta i volumi, e una pagina di conversione dove farlo atterrare.</p>
+  </section>
+
+  <!-- ===== 03 GA4 ===== -->
+  <section class="sec" id="ga4">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">GA4 · la lettura per canale</p>
+        <h2 class="sec__title">Il canale<br>che mancava</h2>
+      </div>
+      <p class="sec__sub">La distribuzione per canale spiega tutto il movimento del mese in una riga: senza Paid Social, il traffico complessivo si riduce alla sua componente organica e diretta. È un dato di contesto, non di salute del sito.</p>
+    </div>
+
+    <h3>Sessioni per canale · <span class="acc">P2 → P1</span></h3>
+    <div style="margin: 24px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 8px 0;">
+      <div class="chan"><span class="chan__name">Paid Social</span><div class="chan__track"><span class="p2" style="width:90%"></span></div><span class="chan__v"><b>29 → 0</b> · campagne ferme</span></div>
+      <div class="chan"><span class="chan__name">Paid Other</span><div class="chan__track"><span class="p2" style="width:6%"></span></div><span class="chan__v"><b>2 → 0</b></span></div>
+      <div class="chan"><span class="chan__name">Organic Search</span><div class="chan__track"><span class="p2" style="width:31%"></span></div><span class="chan__v"><b>10 → 2</b></span></div>
+      <div class="chan"><span class="chan__name">Direct</span><div class="chan__track"><span class="p2" style="width:16%"></span></div><span class="chan__v"><b>5 → 8</b> · l'unico in crescita</span></div>
+      <div class="chan"><span class="chan__name">Organic Social</span><div class="chan__track"><span class="p2" style="width:6%"></span></div><span class="chan__v"><b>3 → 2</b></span></div>
+      <div class="chan"><span class="chan__name">Totale sessioni</span><div class="chan__track"><span class="p1" style="width:26%"></span></div><span class="chan__v"><b>50 → 13</b></span></div>
+    </div>
+
+    <p>Il <strong>Diretto è l'unico canale in crescita</strong> (5 → 8): sono le persone che arrivano digitando il sito o tornando, cioè il nucleo di riconoscimento del brand, che regge anche senza spinta. Tutto il resto della differenza è il venir meno del Paid Social. La lettura corretta non è "il sito ha perso traffico", ma "questo mese non c'è stato l'investimento che porta traffico" — due cose molto diverse per le decisioni che ne seguono.</p>
+
+    <div class="crit">
+      <h3>Tracking · Calendly → GA4 da attivare</h3>
+      <p>Nel periodo GA4 non registra eventi di conversione. Per LiveCoverage la via di tracciamento prevista è l'integrazione nativa <strong>Calendly → GA4</strong> (prenotazione di una call), poi ricondotta allo schema lead dell'ecosistema. Finché non è attiva — e finché non c'è una pagina di servizio con CTA chiara verso la prenotazione — le richieste reali avvengono via email e contatto diretto, fuori dal canale misurabile. Attivare il tracking è il prerequisito per poter dire, alla riaccensione delle campagne, quanto effettivamente convertono.</p>
+    </div>
+  </section>
+
+  <!-- ===== 04 PAGINE ===== -->
+  <section class="sec" id="pagine">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">Top pagine GSC · 28gg</p>
+        <h2 class="sec__title">Le pagine<br>che ci sono</h2>
+      </div>
+      <p class="sec__sub">La home porta i pochi click brand, il blog regge il bacino di impressions. Manca, per disegno attuale, una pagina che trasformi l'interesse in contatto: è il vuoto che le landing servizio sono pensate per colmare.</p>
+    </div>
+
+    <div class="blocks">
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">01 — Brand</div>
+        <div class="blocks__url">/</div>
+        <h3 class="blocks__name">Home</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>6</strong></li>
+          <li><span>Impressioni</span><strong>131</strong></li>
+          <li><span>CTR</span><strong>4,58%</strong></li>
+          <li><span>Pos media</span><strong>9,8</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Raccoglie il traffico brand. È anche, di fatto, l'unica pagina con funzione semi-commerciale: andrebbe affiancata da landing di servizio dedicate.</p>
+          <div class="blocks__badges"><span class="badge">brand</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">02 — Hub editoriale</div>
+        <div class="blocks__url">/blog/</div>
+        <h3 class="blocks__name">Blog hub<br>+ 17 articoli</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>1 (hub)</strong></li>
+          <li><span>Impressioni</span><strong>142 (hub)</strong></li>
+          <li><span>Pos media</span><strong>28,2</strong></li>
+          <li><span>Ruolo</span><strong>brand authority</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Il motore di autorità del sito. Ben scritto, posizionato su molte query, ma gli snippet catturano pochi click: c'è margine per calibrarli sulle evidenze GSC.</p>
+          <div class="blocks__badges"><span class="badge badge--ghost">editoriale</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">03 — Pillar che sale</div>
+        <div class="blocks__url">/cosa-vuol-dire-produzione-contenuti-live/</div>
+        <h3 class="blocks__name">Produzione<br>contenuti live</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>1</strong></li>
+          <li><span>Impressioni</span><strong>97</strong></li>
+          <li><span>Pos media</span><strong>5,2</strong></li>
+          <li><span>Intent</span><strong>educativo + commerciale</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> In top 5 su un tema di categoria. Da agganciare con link interno verso la futura landing "regia editoriale live".</p>
+          <div class="blocks__badges"><span class="badge badge--ok">pos 5,2</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">04 — Tema social</div>
+        <div class="blocks__url">/copertura-eventi-su-tiktok-e-instagram/</div>
+        <h3 class="blocks__name">Copertura su<br>TikTok / IG</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>1</strong></li>
+          <li><span>Impressioni</span><strong>14</strong></li>
+          <li><span>Pos media</span><strong>7,9</strong></li>
+          <li><span>Intent</span><strong>commerciale di nicchia</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Tema vicino al servizio core (copertura social). Ottimo candidato a diventare/alimentare la landing "copertura social eventi".</p>
+          <div class="blocks__badges"><span class="badge badge--ok">core</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">05 — Bacino ampio</div>
+        <div class="blocks__url">/la-guida-definitiva-...-video-live-per-eventi/</div>
+        <h3 class="blocks__name">Guida video<br>live eventi</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>0</strong></li>
+          <li><span>Impressioni</span><strong>147</strong></li>
+          <li><span>Pos media</span><strong>49,2</strong></li>
+          <li><span>Potenziale</span><strong>pillar commerciale</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Tante impressions ma posizione profonda: è una pillar che, rafforzata e linkata, può diventare la porta d'ingresso alle landing servizio.</p>
+          <div class="blocks__badges"><span class="badge badge--warn">da spingere</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">06 — Da costruire</div>
+        <div class="blocks__url">/servizi/...</div>
+        <h3 class="blocks__name">3 Landing<br>servizio</h3>
+        <ul class="blocks__stats">
+          <li><span>Stato</span><strong>non ancora online</strong></li>
+          <li><span>Copertura social</span><strong>priorità 1</strong></li>
+          <li><span>Regia live</span><strong>priorità 2</strong></li>
+          <li><span>Live fiere</span><strong>priorità 3</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Le pagine di conversione proposte a maggio. Sono il motore commerciale mancante: dove far atterrare le campagne e dove convertire la domanda di categoria.</p>
+          <div class="blocks__badges"><span class="badge">DA COSTRUIRE</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 KEYWORD ===== -->
+  <section class="sec" id="kw">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Domanda di categoria · GSC + Bing</p>
+        <h2 class="sec__title">La domanda<br>che c'è</h2>
+      </div>
+      <p class="sec__sub">Incrociando Google e Bing emerge una domanda di categoria ricca e in larga parte non ancora intercettata in chiave commerciale. Il sito compare, ma su contenuti informativi: la stessa domanda, accolta da una landing di servizio, diventa contatto.</p>
+    </div>
+
+    <h4>Cosa cerca il mercato (campione GSC + Bing)</h4>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th>Tipo</th><th>Oggi intercettata da</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">copertura social / copertura social cos'è</td><td><span class="badge badge--warn">commerciale + info</span></td><td>articoli blog (pos buone)</td></tr>
+        <tr><td class="strong">video coverage / event coverage</td><td><span class="badge badge--warn">commerciale</span></td><td>home + blog (event coverage ora pos 2)</td></tr>
+        <tr><td class="strong">produzione contenuti foto/video per evento di marketing</td><td><span class="badge badge--warn">commerciale</span></td><td>blog (pos 1 su Bing)</td></tr>
+        <tr><td class="strong">scatti professionali in tempo reale per eventi</td><td><span class="badge badge--warn">commerciale</span></td><td>blog (pos 2 su Bing)</td></tr>
+        <tr><td>live coverage significato / cos'è</td><td><span class="badge badge--ghost">informazionale</span></td><td>articoli educational</td></tr>
+        <tr><td>videomaker per eventi / progettazione video per eventi</td><td><span class="badge badge--warn">commerciale tradizionale</span></td><td>blog, in risalita (pos 17 e 27)</td></tr>
+      </tbody>
+    </table>
+    <p>Il pattern è chiaro: c'è una fascia di query a chiaro intento commerciale (chi cerca "scatti professionali in tempo reale per eventi" o "produzione contenuti foto/video per evento" sta valutando un fornitore) che oggi atterra su un articolo. Una landing servizio sullo stesso tema, con offerta e CTA, intercetterebbe quella stessa domanda con un messaggio di vendita.</p>
+
+    <h4>Copertura DataForSEO</h4>
+    <p>DataForSEO Labs non rileva ancora keyword organiche stabili per il dominio: atteso per un sito di nicchia con volumi di ricerca contenuti e un'impronta ancora prevalentemente editoriale. La fotografia affidabile resta quella di Search Console e Bing, dove la domanda di categoria è ben visibile. Sarà un indicatore da rileggere quando le landing servizio avranno accumulato posizionamento sulle query commerciali.</p>
+  </section>
+
+  <!-- ===== 06 INSIGHT ===== -->
+  <section class="sec" id="insight">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">Letture incrociate dei dati</p>
+        <h2 class="sec__title">Tre<br>insight</h2>
+      </div>
+      <p class="sec__sub">Sintesi cross-data tra Search Console, GA4 e Bing. Una sul contesto, due sull'opportunità.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il mese va letto come <span class="acc">"base organica a riposo"</span></span>
+          Con le campagne ferme, i numeri raccontano cosa fa il sito da solo: tiene il brand, mantiene il bacino di impressions, migliora qualche posizione. È un'informazione utile, non un campanello d'allarme: separa ciò che il sito produce organicamente da ciò che dipende dall'investimento. Alla riaccensione delle campagne, il confronto tornerà a includere lo strato a pagamento.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il terreno commerciale <span class="acc">si sta scaldando</span></span>
+          Che query come "event coverage" o "progettazione video per eventi" guadagnino decine di posizioni senza nuove pagine è il segnale che l'autorità editoriale inizia a riversarsi sui termini di business. È la finestra ideale per costruire le landing servizio: arriverebbero su un terreno già in movimento, non da zero, accelerando il posizionamento commerciale.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Tutto converge sull'<span class="acc">infrastruttura mancante</span></span>
+          Campagne da far atterrare, domanda commerciale da intercettare, conversioni da misurare: tutti e tre i fronti puntano allo stesso tassello mancante — le 3 landing servizio più il tracking Calendly. È l'investimento strutturale che trasforma LiveCoverage da hub editoriale a sistema di lead generation, e che dà finalmente alle campagne una destinazione che converte.
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== 07 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Aree di lavoro proposte</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">La direzione è quella di maggio, ora ancora più tempestiva visto il terreno commerciale in movimento. In ordine di priorità.</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Costruire la <span class="acc">prima landing servizio</span></span>
+          <span class="recs__why">Partire dalla copertura social eventi (<code>/servizi/copertura-social-eventi/</code>), il servizio core: cosa otteni, per chi, case study con metriche, prezzi indicativi, CTA verso la prenotazione. Schema Service + FAQ. È la pagina che oggi manca per far atterrare campagne e domanda commerciale, e si appoggia su query che stanno già salendo.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Contenuto commerciale<strong>Output</strong>Pagina di conversione</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Attivare il <span class="acc">tracking Calendly → GA4</span></span>
+          <span class="recs__why">La prenotazione di una call via Calendly è l'azione di conversione di LiveCoverage. Attivare l'integrazione nativa e ricondurla allo schema lead dell'ecosistema rende misurabile il ritorno. È il prerequisito per valutare, alla riaccensione delle campagne, quanto ogni euro investito porta in prenotazioni reali.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Tracking<strong>Output</strong>Prenotazioni misurate</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Far atterrare le <span class="acc">campagne sulle landing</span></span>
+          <span class="recs__why">Quando le campagne riprendono, indirizzarle sulle landing servizio invece che sulla home o sull'editoriale dà a chi clicca un'offerta chiara e un'azione da compiere. Con il tracking attivo, si chiude il cerchio: spesa → atterraggio → prenotazione, tutto leggibile.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Funnel<strong>Output</strong>ROI campagne leggibile</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Completare le <span class="acc">altre due landing</span></span>
+          <span class="recs__why">Regia editoriale live (premium) e live content per fiere (verticale) completano l'offerta commerciale. Ognuna intercetta un intent e un budget diversi, ampliando la superficie di conversione. Da costruire dopo aver validato la prima sul campo.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Contenuto<strong>Output</strong>Offerta a 3 tier</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Calibrare gli <span class="acc">snippet editoriali</span></span>
+          <span class="recs__why">Diversi articoli sono posizionati ma con CTR basso. Con i dati GSC accumulati c'è materiale per iterare title e meta description sulle query reali, recuperando click già a portata di mano sulle pagine che hanno già buona posizione.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>On-page<strong>Output</strong>CTR editoriale su</div>
+      </li>
+    </ul>
+
+    <h3>Roadmap <span class="acc">indicativa</span></h3>
+    <ol class="phases">
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Motore commerciale</span>
+        <span class="phases__body">Prima landing servizio (copertura social) + tracking Calendly→GA4. Dare al sito una pagina che converte e una conversione che si misura.</span>
+        <span class="phases__when">Priorità</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Riaccensione misurata</span>
+        <span class="phases__body">Campagne indirizzate sulle landing, con il tracking attivo per leggere il ritorno reale in prenotazioni.</span>
+        <span class="phases__when">A seguire</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Espansione offerta</span>
+        <span class="phases__body">Le altre due landing, la spinta della pillar guida e la calibrazione degli snippet editoriali.</span>
+        <span class="phases__when">Continuativo</span>
+      </li>
+    </ol>
+
+    <div class="pull">La base organica regge e le query salgono · la crescita arriva con <span class="acc">le landing servizio e il tracking</span> · è la finestra giusta per costruirle.</div>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>Search Console <code>https://livecoverage.it/</code>, confronto 28gg vs 28gg. Google Analytics 4 property <code>488332330</code> (sessioni per canale, eventi). DataForSEO Labs IT. Bing Webmaster query.</p>
+    </div>
+    <div>
+      <h5>Stato</h5>
+      <p>Campagne a pagamento non attive nel periodo: i numeri riflettono la sola base organica. Brand in pos 1. Query commerciali in risalita organica. Sito ancora 100% editoriale: landing servizio e tracking Calendly da costruire.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>3 landing servizio (copertura social, regia live, live fiere) · tracking Calendly→GA4 · campagne verso le landing · calibrazione snippet editoriali.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">LiveCoverage · Check performance · 16 giugno 2026 · documento riservato al team Amedani Studio</p>
+
+</div>
+
+</body>
+</html>

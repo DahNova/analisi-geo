@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudioUp — Check performance · 16 giugno 2026</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Update mensile di studioup.it al 16 giugno 2026. La pulizia tecnica (aexteta deindicizzato, sitemap consolidata) ha ridotto il rumore su Search Console. Il cluster commerciale web agency Milano resta da presidiare. Confronto 28gg vs 28gg su GSC, GA4, DataForSEO e Bing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: 24px; }
+  body { margin: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --ink: #000000;
+    --ink-2: #1A1A1A;
+    --ink-3: #555555;
+    --ink-4: #888888;
+    --grid: #E5E5E5;
+    --grid-strong: #B8B8B8;
+    --accent: #1E4D8F;
+    --accent-soft: #DCE7F2;
+    --ok: #15803D;
+    --ok-soft: #DCFCE7;
+    --warn: #B45309;
+    --warn-soft: #FEF3C7;
+
+    --f-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', monospace;
+  }
+
+  body { background: var(--bg); color: var(--ink); font-family: var(--f-sans); font-size: 14.5px; line-height: 1.55; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; font-feature-settings: "ss01" on, "cv11" on, "tnum" on; }
+  ::selection { background: var(--ink); color: var(--bg); }
+
+  .wrap { max-width: 1340px; margin: 0 auto; padding: 0 48px; border-left: 1px solid var(--ink); border-right: 1px solid var(--ink); }
+
+  .topbar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 18px 0; border-bottom: 2px solid var(--ink); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; }
+  .topbar__brand { font-family: var(--f-sans); font-weight: 900; font-size: 15px; letter-spacing: -0.01em; text-transform: uppercase; }
+  .topbar__brand a { color: var(--ink-3); text-decoration: none; }
+  .topbar__brand a:hover { color: var(--accent); }
+  .topbar__brand .sep { color: var(--ink-3); margin: 0 8px; }
+  .topbar__brand span { color: var(--accent); }
+  .topbar__meta { text-align: center; color: var(--ink-3); text-transform: uppercase; }
+  .topbar__nav { text-align: right; color: var(--ink-3); }
+  .topbar__nav a { color: var(--ink-3); text-decoration: none; margin-left: 14px; text-transform: uppercase; }
+  .topbar__nav a:hover { color: var(--accent); }
+
+  .hero { padding: 72px 0 56px; border-bottom: 1px solid var(--ink); display: grid; grid-template-columns: 4fr 3fr; gap: 64px; align-items: end; }
+  .hero__kicker { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; font-weight: 600; }
+  .hero__kicker::before { content: "→ "; }
+  .hero h1 { font-family: var(--f-sans); font-weight: 900; font-size: clamp(46px, 6.5vw, 84px); line-height: 0.95; letter-spacing: -0.045em; margin: 0 0 28px; text-transform: uppercase; }
+  .hero h1 .ml { color: var(--accent); }
+  .hero__lede { font-size: 17px; line-height: 1.5; max-width: 52ch; color: var(--ink-2); font-weight: 400; }
+  .hero__lede strong { font-weight: 600; }
+  .hero__aside { border-left: 1px solid var(--ink); padding-left: 32px; font-family: var(--f-mono); font-size: 12px; line-height: 1.7; color: var(--ink-3); }
+  .hero__aside dt { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 14px; font-size: 10.5px; }
+  .hero__aside dt:first-child { margin-top: 0; }
+  .hero__aside dd { margin: 4px 0 0; }
+
+  .statgrid { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 2px solid var(--ink); }
+  .statgrid__cell { padding: 36px 28px 32px; border-right: 1px solid var(--ink); position: relative; }
+  .statgrid__cell:last-child { border-right: 0; }
+  .statgrid__cell--accent { background: var(--accent); color: var(--bg); }
+  .statgrid__cell--ink { background: var(--ink); color: var(--bg); }
+  .statgrid__cell--ok { background: var(--ok); color: var(--bg); }
+  .statgrid__num { font-family: var(--f-sans); font-weight: 800; font-size: clamp(34px, 4.6vw, 56px); line-height: 1; letter-spacing: -0.035em; display: block; margin-bottom: 14px; font-feature-settings: "tnum" on; }
+  .statgrid__lbl { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; line-height: 1.4; opacity: 0.78; }
+  .statgrid__delta { display: block; margin-top: 12px; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.04em; font-weight: 600; }
+
+  .sec { padding: 76px 0 70px; border-bottom: 1px solid var(--ink); }
+  .sec:last-child { border-bottom: 2px solid var(--ink); }
+  .sec__head { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 32px; align-items: baseline; margin-bottom: 48px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
+  .sec__num { font-family: var(--f-sans); font-weight: 900; font-size: 60px; line-height: 0.85; letter-spacing: -0.04em; color: var(--accent); margin: 0; }
+  .sec__title { font-family: var(--f-sans); font-weight: 800; font-size: clamp(28px, 3.5vw, 40px); line-height: 1; letter-spacing: -0.025em; margin: 0; text-transform: uppercase; }
+  .sec__sub { font-size: 15px; line-height: 1.5; color: var(--ink-3); margin: 0; max-width: 54ch; }
+  .sec__kicker { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; font-weight: 600; }
+
+  p { margin: 0 0 14px; max-width: 75ch; }
+  h3 { font-family: var(--f-sans); font-weight: 700; font-size: 21px; line-height: 1.15; letter-spacing: -0.015em; margin: 44px 0 18px; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--ink); display: inline-block; padding-right: 18px; }
+  h3 .acc { color: var(--accent); }
+  h4 { font-family: var(--f-mono); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin: 28px 0 12px; }
+
+  .strip { margin: 28px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); }
+  .strip__row { display: grid; grid-template-columns: 280px 1fr 280px; align-items: baseline; padding: 18px 0; border-bottom: 1px solid var(--grid); gap: 24px; }
+  .strip__row:last-child { border-bottom: 0; }
+  .strip__lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); font-weight: 500; }
+  .strip__val { font-family: var(--f-sans); font-weight: 800; font-size: 24px; letter-spacing: -0.02em; color: var(--ink); font-feature-settings: "tnum" on; }
+  .strip__val .acc { color: var(--accent); }
+  .strip__val .good { color: var(--ok); }
+  .strip__note { font-family: var(--f-sans); font-size: 13px; color: var(--ink-3); line-height: 1.45; }
+  .strip__note--ok { color: var(--ok); font-weight: 500; }
+  .strip__note--bad { color: var(--accent); font-weight: 500; }
+  .strip__note--warn { color: var(--warn); font-weight: 500; }
+
+  table.tbl { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 13.5px; }
+  .tbl thead th { text-align: left; font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); padding: 12px 14px 12px 0; border-bottom: 2px solid var(--ink); font-weight: 600; }
+  .tbl tbody td { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--grid); vertical-align: top; line-height: 1.45; }
+  .tbl tbody tr:hover { background: #FAFAFA; }
+  .tbl .num { font-family: var(--f-mono); font-size: 12px; color: var(--ink-2); text-align: right; font-feature-settings: "tnum" on; }
+  .tbl .strong { font-weight: 700; }
+  .tbl .acc { color: var(--accent); font-weight: 600; }
+  .tbl .ok { color: var(--ok); font-weight: 600; }
+  .tbl .bad { color: var(--accent); font-weight: 600; }
+  .tbl .warn { color: var(--warn); font-weight: 600; }
+  .tbl tbody tr.tot td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding-top: 14px; padding-bottom: 14px; background: #FAFAFA; }
+  .tbl code { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
+
+  .badge { display: inline-block; padding: 3px 9px; font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; white-space: nowrap; font-weight: 600; border: 1px solid currentColor; }
+  .badge--bad { color: var(--accent); background: var(--accent-soft); border-color: var(--accent); }
+  .badge--ok { color: var(--ok); background: var(--ok-soft); border-color: var(--ok); }
+  .badge--warn { color: var(--warn); background: var(--warn-soft); border-color: var(--warn); }
+  .badge--ink { color: var(--bg); background: var(--ink); border-color: var(--ink); }
+  .badge--ghost { color: var(--ink-3); background: transparent; border-color: var(--grid-strong); }
+
+  .blocks { display: grid; grid-template-columns: repeat(3, 1fr); border: 2px solid var(--ink); margin: 32px 0; }
+  .blocks__cell { padding: 28px 24px; border-right: 1px solid var(--ink); border-bottom: 1px solid var(--ink); position: relative; min-height: 240px; }
+  .blocks__cell:nth-child(3n) { border-right: 0; }
+  .blocks__cell:nth-last-child(-n+3) { border-bottom: 0; }
+  .blocks__cell--accent { background: var(--accent); color: var(--bg); }
+  .blocks__cell--ink { background: var(--ink); color: var(--bg); }
+  .blocks__cell--ok { background: var(--ok); color: var(--bg); }
+  .blocks__num { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.65; font-weight: 600; }
+  .blocks__url { font-family: var(--f-mono); font-size: 10.5px; word-break: break-all; opacity: 0.7; margin-top: 6px; }
+  .blocks__name { font-family: var(--f-sans); font-weight: 800; font-size: 20px; line-height: 1.05; letter-spacing: -0.025em; margin: 16px 0 14px; text-transform: uppercase; }
+  .blocks__stats { font-family: var(--f-mono); font-size: 11.5px; line-height: 1.65; margin: 0 0 18px; padding: 0; list-style: none; opacity: 0.85; }
+  .blocks__stats li { display: grid; grid-template-columns: 110px 1fr; gap: 8px; }
+  .blocks__stats li span:first-child { opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; font-size: 10px; }
+  .blocks__stats li strong { font-weight: 600; }
+  .blocks__take { padding-top: 14px; border-top: 1px solid currentColor; font-size: 13px; line-height: 1.45; }
+  .blocks__take strong { font-weight: 700; }
+  .blocks__badges { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
+  .blocks__cell--accent .badge, .blocks__cell--ink .badge, .blocks__cell--ok .badge { background: rgba(255,255,255,0.1); color: var(--bg); border-color: rgba(255,255,255,0.4); }
+
+  .pull { font-family: var(--f-sans); font-weight: 800; font-size: clamp(22px, 2.8vw, 30px); line-height: 1.2; margin: 48px 0; padding: 32px 36px; border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink); color: var(--ink); max-width: 64ch; letter-spacing: -0.02em; text-transform: uppercase; background: #FAFAFA; }
+  .pull .acc { color: var(--accent); }
+
+  .chart { margin: 32px 0; }
+  .chart__title { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; font-weight: 600; padding-bottom: 8px; border-bottom: 1px solid var(--ink); }
+  .chart__row { display: grid; grid-template-columns: 130px 1fr 80px; align-items: center; gap: 14px; padding: 4px 0; font-family: var(--f-mono); font-size: 11.5px; }
+  .chart__day { color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; }
+  .chart__bar { background: var(--grid); height: 22px; position: relative; }
+  .chart__bar span { display: block; height: 100%; background: var(--ink); }
+  .chart__bar.is-mute span { background: var(--ink-3); }
+  .chart__bar.is-acc span { background: var(--accent); }
+  .chart__bar.is-ok span { background: var(--ok); }
+  .chart__val { font-weight: 600; text-align: right; color: var(--ink); font-feature-settings: "tnum" on; }
+
+  .chan { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 16px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--grid); font-family: var(--f-mono); font-size: 12px; }
+  .chan:last-child { border-bottom: 0; }
+  .chan__name { color: var(--ink); font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; font-size: 11px; }
+  .chan__track { background: var(--grid); height: 18px; position: relative; }
+  .chan__track span { display: block; height: 100%; }
+  .chan__track .p1 { background: var(--grid-strong); }
+  .chan__track .p2 { background: var(--accent); }
+  .chan__v { text-align: right; }
+  .chan__v b { color: var(--ink); }
+
+  .insights { counter-reset: ins; list-style: none; padding: 0; margin: 32px 0 0; }
+  .insights li { counter-increment: ins; display: grid; grid-template-columns: 80px 1fr; gap: 28px; padding: 28px 0; border-bottom: 1px solid var(--grid); }
+  .insights li:last-child { border-bottom: 2px solid var(--ink); }
+  .insights__num { font-family: var(--f-sans); font-weight: 900; font-size: 44px; line-height: 0.85; color: var(--accent); letter-spacing: -0.04em; }
+  .insights__num::before { content: counter(ins, decimal-leading-zero); }
+  .insights__body { font-size: 14.5px; line-height: 1.55; max-width: 84ch; }
+  .insights__title { display: block; font-family: var(--f-sans); font-weight: 700; font-size: 18px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 8px; text-transform: uppercase; }
+  .insights__title .acc { color: var(--accent); }
+
+  .recs { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: r; border-top: 2px solid var(--ink); }
+  .recs li { counter-increment: r; display: grid; grid-template-columns: 60px 1fr 200px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .recs li:last-child { border-bottom: 2px solid var(--ink); }
+  .recs__n { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 700; padding-top: 4px; }
+  .recs__n::before { content: "OP." counter(r, decimal-leading-zero); }
+  .recs__body { max-width: 78ch; }
+  .recs__t { font-family: var(--f-sans); font-weight: 700; font-size: 17px; line-height: 1.25; letter-spacing: -0.01em; margin-bottom: 6px; text-transform: uppercase; display: block; }
+  .recs__t .acc { color: var(--accent); }
+  .recs__why { font-size: 13.5px; color: var(--ink-3); line-height: 1.55; display: block; }
+  .recs__meta { font-family: var(--f-mono); font-size: 10.5px; color: var(--ink-3); text-align: right; line-height: 1.5; letter-spacing: 0.04em; padding-top: 6px; }
+  .recs__meta strong { display: block; color: var(--ink); text-transform: uppercase; font-size: 10px; letter-spacing: 0.06em; font-weight: 700; margin-bottom: 3px; }
+
+  .phases { list-style: none; padding: 0; margin: 32px 0 0; counter-reset: ph; border-top: 2px solid var(--ink); }
+  .phases li { counter-increment: ph; display: grid; grid-template-columns: 70px 240px 1fr 160px; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--grid); align-items: start; }
+  .phases li:last-child { border-bottom: 2px solid var(--ink); }
+  .phases__num { font-family: var(--f-sans); font-weight: 900; font-size: 28px; line-height: 1; color: var(--accent); letter-spacing: -0.03em; }
+  .phases__num::before { content: counter(ph, decimal-leading-zero); }
+  .phases__name { font-family: var(--f-sans); font-weight: 700; font-size: 16px; line-height: 1.2; text-transform: uppercase; letter-spacing: -0.01em; }
+  .phases__body { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); max-width: 64ch; }
+  .phases__when { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.04em; text-transform: uppercase; font-weight: 500; text-align: right; }
+
+  .crit { border: 2px solid var(--ok); background: var(--ok-soft); padding: 32px 36px; margin: 36px 0; }
+  .crit h3 { border: 0; margin: 0 0 14px; padding: 0; display: block; color: var(--ok); font-size: 22px; }
+  .crit p { color: var(--ink-2); max-width: 78ch; }
+  .crit code { font-family: var(--f-mono); font-size: 12px; background: rgba(255,255,255,0.6); padding: 2px 6px; word-break: break-all; }
+  .crit--open { border-color: var(--warn); background: var(--warn-soft); }
+  .crit--open h3 { color: var(--warn); }
+
+  .colophon { padding: 56px 0 80px; border-top: 2px solid var(--ink); display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+  .colophon h5 { font-family: var(--f-mono); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+  .colophon p { font-size: 13px; color: var(--ink-2); line-height: 1.5; max-width: 40ch; }
+  .colophon code { font-family: var(--f-mono); font-size: 11px; color: var(--ink); background: var(--grid); padding: 1px 5px; }
+
+  @media (max-width: 980px) {
+    .wrap { padding: 0 20px; border: 0; }
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 48px 0 36px; }
+    .hero__aside { border-left: 0; border-top: 1px solid var(--ink); padding: 24px 0 0; }
+    .statgrid { grid-template-columns: 1fr 1fr; }
+    .statgrid__cell { border-bottom: 1px solid var(--ink); }
+    .statgrid__cell:nth-child(2n) { border-right: 0; }
+    .sec__head { grid-template-columns: 1fr; gap: 16px; }
+    .sec__num { font-size: 48px; }
+    .blocks { grid-template-columns: 1fr; }
+    .blocks__cell { border-right: 0; }
+    .strip__row, .recs li, .insights li, .phases li, .chan { grid-template-columns: 1fr; gap: 8px; padding: 14px 0; }
+    .insights__num { font-size: 28px; }
+    .colophon { grid-template-columns: 1fr; }
+    .chart__row { grid-template-columns: 100px 1fr 60px; }
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 10.5pt; }
+    .wrap { max-width: none; padding: 0; border: 0; }
+    .topbar { display: none; }
+    .hero { padding: 16px 0; }
+    .sec { padding: 16px 0; page-break-inside: avoid; break-inside: avoid-page; }
+    .blocks, .insights li, .recs li, .phases li { break-inside: avoid; }
+    .statgrid__cell--accent, .statgrid__cell--ink, .statgrid__cell--ok, .blocks__cell--accent, .blocks__cell--ink, .blocks__cell--ok { background: white !important; color: black !important; border: 1px solid black; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="topbar__brand"><a href="../">Analisi</a><span class="sep">/</span><a href="./" style="color:var(--ink);">StudioUp</a><span class="sep">/</span><span>CHECK PERFORMANCE</span></div>
+    <div class="topbar__meta">Update 16.06.2026 · pulizia tecnica confermata · direzione web agency</div>
+    <div class="topbar__nav">
+      <a href="#sintesi">01</a><a href="#trend">02</a><a href="#pulizia">03</a><a href="#ga4">04</a><a href="#pagine">05</a><a href="#kw">06</a><a href="#insight">07</a><a href="#proposta">08</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div>
+      <p class="hero__kicker">Performance check · 16 giugno 2026 · update mensile</p>
+      <h1>La pulizia<br><span class="ml">paga</span>.<br>Ora il cluster<br>web agency.</h1>
+      <p class="hero__lede">Il punto verificato nella sessione del 12 giugno con Stefano Marchesi trova conferma nei dati: <strong>il rumore su Search Console è nettamente diminuito</strong>. Il sottodominio compromesso <code>aexteta</code> non è più tenuto da Google, le sitemap sono state consolidate in un unico file pulito, e i click residui sul vecchio <code>www</code> continuano a calare — segnali discordanti in via di assorbimento. Sul piano della visibilità il mese è di assestamento (–29% di click, in linea con il calo fisiologico estivo e con la minore spinta a pagamento), ma la lettura strategica resta quella del check precedente: <strong>il footprint di keyword si allarga su contenuti informazionali e progetti, mentre il cluster commerciale "web agency Milano" — la direzione di crescita scelta — resta da presidiare in posizioni profonde.</strong></p>
+    </div>
+    <dl class="hero__aside">
+      <dt>Finestra analisi</dt>
+      <dd>P1: 19.05.2026 → 15.06.2026 (28gg)<br>P2: 21.04.2026 → 18.05.2026 (28gg)</dd>
+      <dt>Asset analizzati</dt>
+      <dd>GSC sc-domain:studioup.it<br>GA4 property 349329764<br>DataForSEO Labs · IT (19 keyword)<br>Bing Webmaster · query + pagine<br>URL Inspection · aexteta + EN<br>Sitemap check</dd>
+      <dt>Movimenti del mese</dt>
+      <dd><span class="badge badge--ok">aexteta deindicizzato</span> <span class="badge badge--ok">sitemap pulita</span> <span class="badge badge--warn">cluster Milano profondo</span></dd>
+      <dt>Aree di lavoro principali</dt>
+      <dd>Presidio cluster web agency Milano · consolidamento brand nudo/www · chiusura 404 versione EN · tracking lead alla riattivazione delle form.</dd>
+    </dl>
+  </header>
+
+  <!-- ===== STAT GRID ===== -->
+  <div class="statgrid">
+    <div class="statgrid__cell statgrid__cell--ok">
+      <span class="statgrid__num">Deindex.</span>
+      <span class="statgrid__lbl">aexteta.studioup.it</span>
+      <span class="statgrid__delta">era "Crawled — not indexed" il 19.05</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--ink">
+      <span class="statgrid__num">1 · 256</span>
+      <span class="statgrid__lbl">Sitemap valide · URL · 0 errori</span>
+      <span class="statgrid__delta">consolidata · obsolete rimosse</span>
+    </div>
+    <div class="statgrid__cell">
+      <span class="statgrid__num">85</span>
+      <span class="statgrid__lbl">Click GSC · 28gg</span>
+      <span class="statgrid__delta" style="color:var(--warn)">−29% · 12.960 impression</span>
+    </div>
+    <div class="statgrid__cell statgrid__cell--accent">
+      <span class="statgrid__num">pos 37–68</span>
+      <span class="statgrid__lbl">Cluster commerciale "web agency Milano"</span>
+      <span class="statgrid__delta">da presidiare · direzione di crescita</span>
+    </div>
+  </div>
+
+  <!-- ===== 01 SINTESI ===== -->
+  <section class="sec" id="sintesi">
+    <div class="sec__head">
+      <p class="sec__num">01</p>
+      <div>
+        <p class="sec__kicker">La storia in cinque punti</p>
+        <h2 class="sec__title">Sintesi<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Il mese conferma sul piano dei dati la sensazione emersa nella call del 12 giugno: la pulizia tecnica ha ridotto il rumore che inquinava i segnali di Search Console. La leva di crescita resta quella indicata a maggio — recuperare il presidio sul cluster "web agency", oggi posizionato in profondità nonostante un bacino di impressions significativo.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il rumore su Search Console <span class="acc">è diminuito</span></span>
+          La verifica del 12 giugno trova riscontro nei dati. Il sottodominio compromesso <code>aexteta.studioup.it</code> risulta ora <strong>"URL is unknown to Google"</strong> — un mese fa era ancora tenuto come "Crawled — currently not indexed". Significa che Google ha smesso di considerarlo: i segnali discordanti che generava sono in via di esaurimento. In parallelo, le sitemap sono state consolidate in <strong>un unico file</strong> (<code>sitemap-0.xml</code>, 256 URL, 0 errori), eliminando le sitemap obsolete che restavano in coda.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il brand <span class="acc">si sta consolidando</span> tra dominio nudo e www</span>
+          Il brand resta riconosciuto: <code>studioup</code> è in posizione 2,4 e su Bing "studio up" è in cima alla SERP con un CTR del ~10%. La query esatta <code>studio up</code> mostra volatilità in questa finestra (posizione media più bassa) perché la SERP è ancora in assestamento tra <code>studioup.it</code> e il vecchio <code>www.studioup.it</code>. È un movimento atteso e in via di risoluzione: i click sul <code>www</code> legacy continuano a calare (19 → 15), segno che il consolidamento canonico procede nella direzione giusta.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il footprint cresce, ma su <span class="acc">terreni informazionali</span></span>
+          DataForSEO rileva 19 keyword posizionate, di cui 13 nuove rispetto al periodo precedente. La crescita c'è, ma si concentra su query informazionali e nomi di progetto: il blog intercetta termini come "cosa è un blog" o ricerche sull'età di Mark Zuckerberg, e i case study (formula luci, undamento, frescofrigo) raccolgono le loro query di nicchia. <strong>È visibilità reale ma a basso intento commerciale</strong>: utile come autorità di dominio, non come generatore di lead.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il cluster <span class="acc">"web agency Milano"</span> resta profondo</span>
+          Le keyword commerciali che rappresentano la direzione di crescita restano lontane dalla prima pagina: <code>agenzia web milano</code> in posizione 68, <code>digital agency milano</code> 65, <code>studio creativo milano</code> 48, <code>ux design agency</code> 37. Su Search Console lo stesso quadro: il cluster Milano accumula impressions (es. <code>agenzia branding milano</code> 72 impressions in pos 44) senza convertire. È lo spazio dove un lavoro mirato — on-page + autorità — può spostare l'ago, in coerenza con il recupero del posizionamento storico da web agency.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il tracking lead è <span class="acc">pronto ma in attesa</span> delle form</span>
+          GA4 registra il traffico per canale ma non eventi di contatto, perché al momento le form non sono presenti sul front del sito. Non è un dato mancante da recuperare: è una scelta in corso lato sviluppo. Quando le form torneranno online, l'impianto di tracking dell'ecosistema (evento <code>generate_lead</code> con i listener Elementor nativi) si aggancia in autonomia. Nel frattempo i click su contatti mail/telefono restano la via di conversione misurabile da abilitare.
+        </div>
+      </li>
+    </ol>
+
+    <div class="pull">Tecnica più pulita di un mese fa · la prossima leva è <span class="acc">commerciale</span>: portare il cluster web agency Milano dalla pos 40–68 verso la prima pagina.</div>
+  </section>
+
+  <!-- ===== 02 TREND ===== -->
+  <section class="sec" id="trend">
+    <div class="sec__head">
+      <p class="sec__num">02</p>
+      <div>
+        <p class="sec__kicker">GSC · 28gg vs 28gg precedenti</p>
+        <h2 class="sec__title">Trend<br>ricerca</h2>
+      </div>
+      <p class="sec__sub">Trend di assestamento estivo. I click calano del 29% e la posizione media arretra, ma il movimento è in larga parte spiegato dalla volatilità del brand nudo/www in consolidamento e dall'aumento di impressions su query commerciali e informazionali in posizioni profonde, che abbassano la media.</p>
+    </div>
+
+    <div class="strip">
+      <div class="strip__row">
+        <span class="strip__lbl">Click totali 28gg</span>
+        <span class="strip__val">85 <span class="acc">(−29%)</span></span>
+        <span class="strip__note strip__note--warn">Da ~120. Assestamento estivo + brand in consolidamento.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Impressions totali 28gg</span>
+        <span class="strip__val">12.960</span>
+        <span class="strip__note">Bacino stabile e alto: la visibilità c'è.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">CTR medio</span>
+        <span class="strip__val">0,66%</span>
+        <span class="strip__note strip__note--warn">Da 1,04%. 99% di impressions in pos profonda non clicca.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Posizione media</span>
+        <span class="strip__val">19,6</span>
+        <span class="strip__note strip__note--warn">Diluita dal cluster Milano e dalla coda informazionale.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Brand "studio up"</span>
+        <span class="strip__val">15 click · pos 20,2</span>
+        <span class="strip__note strip__note--warn">Volatile per consolidamento nudo/www. "studioup" pos 2,4.</span>
+      </div>
+      <div class="strip__row">
+        <span class="strip__lbl">Click vecchio www legacy</span>
+        <span class="strip__val good">15 (era 19)</span>
+        <span class="strip__note strip__note--ok">In calo: il consolidamento canonico procede.</span>
+      </div>
+    </div>
+
+    <h3>Compare query <span class="acc">28gg vs 28gg</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query</th><th class="num">P2 click</th><th class="num">P1 click</th><th class="num">Δ</th><th class="num">P1 pos</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">studio up</td><td class="num">26</td><td class="num">15</td><td class="num bad">−11</td><td class="num">20,2</td><td>Brand volatile per consolidamento nudo/www.</td></tr>
+        <tr><td>studioup</td><td class="num">2</td><td class="num">4</td><td class="num ok">+2</td><td class="num ok">2,4</td><td>Variante brand saldissima in pos 2.</td></tr>
+        <tr><td>framour</td><td class="num">0</td><td class="num">3</td><td class="num ok">+3</td><td class="num ok">2,2</td><td>Progetto/cliente, pos 2.</td></tr>
+        <tr><td>alessio lanna</td><td class="num">6</td><td class="num">3</td><td class="num warn">−3</td><td class="num">8,4</td><td>Founder Sentcell · posizione migliorata (era 15,7).</td></tr>
+        <tr><td>agenzia web brescia</td><td class="num">0</td><td class="num">1</td><td class="num ok">+1</td><td class="num">12,5</td><td>Eco del posizionamento storico web agency.</td></tr>
+        <tr><td>agenzia branding milano</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">44,1</td><td>72 impressions, 0 click: cluster Milano profondo.</td></tr>
+        <tr><td>web design milan</td><td class="num">0</td><td class="num">1</td><td class="num ok">+1</td><td class="num">36,0</td><td>Commerciale estero, posizione lontana.</td></tr>
+        <tr class="tot"><td>Totale click</td><td class="num">~120</td><td class="num">85</td><td class="num warn">−29%</td><td class="num">19,6</td><td>Assestamento, base impressions intatta.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Click giornalieri · <span class="acc">ultimi 14 giorni</span></h3>
+    <div class="chart">
+      <div class="chart__title">Click giornalieri · 02.06 → 15.06</div>
+      <div class="chart__row"><span class="chart__day">02 giu · MAR</span><div class="chart__bar is-acc"><span style="width:56%"></span></div><span class="chart__val">5</span></div>
+      <div class="chart__row"><span class="chart__day">03 giu · MER</span><div class="chart__bar is-acc"><span style="width:44%"></span></div><span class="chart__val">4</span></div>
+      <div class="chart__row"><span class="chart__day">04 giu · GIO</span><div class="chart__bar is-acc"><span style="width:44%"></span></div><span class="chart__val">4</span></div>
+      <div class="chart__row"><span class="chart__day">05 giu · VEN</span><div class="chart__bar is-mute"><span style="width:11%"></span></div><span class="chart__val">1</span></div>
+      <div class="chart__row"><span class="chart__day">06 giu · SAB</span><div class="chart__bar is-mute"><span style="width:0%"></span></div><span class="chart__val">0</span></div>
+      <div class="chart__row"><span class="chart__day">07 giu · DOM</span><div class="chart__bar is-mute"><span style="width:11%"></span></div><span class="chart__val">1</span></div>
+      <div class="chart__row"><span class="chart__day">08 giu · LUN</span><div class="chart__bar is-mute"><span style="width:22%"></span></div><span class="chart__val">2</span></div>
+      <div class="chart__row"><span class="chart__day">09 giu · MAR</span><div class="chart__bar is-acc"><span style="width:56%"></span></div><span class="chart__val">5</span></div>
+      <div class="chart__row"><span class="chart__day">10 giu · MER</span><div class="chart__bar is-mute"><span style="width:22%"></span></div><span class="chart__val">2</span></div>
+      <div class="chart__row"><span class="chart__day">11 giu · GIO</span><div class="chart__bar is-acc"><span style="width:56%"></span></div><span class="chart__val">5</span></div>
+      <div class="chart__row"><span class="chart__day">12 giu · VEN</span><div class="chart__bar is-ok"><span style="width:100%"></span></div><span class="chart__val">9</span></div>
+      <div class="chart__row"><span class="chart__day">13 giu · SAB</span><div class="chart__bar is-mute"><span style="width:11%"></span></div><span class="chart__val">1</span></div>
+      <div class="chart__row"><span class="chart__day">14 giu · DOM</span><div class="chart__bar is-mute"><span style="width:0%"></span></div><span class="chart__val">0</span></div>
+      <div class="chart__row"><span class="chart__day">15 giu · LUN</span><div class="chart__bar is-acc"><span style="width:67%"></span></div><span class="chart__val">6</span></div>
+    </div>
+  </section>
+
+  <!-- ===== 03 PULIZIA ===== -->
+  <section class="sec" id="pulizia">
+    <div class="sec__head">
+      <p class="sec__num">03</p>
+      <div>
+        <p class="sec__kicker">Il caso aexteta + sitemap, un mese dopo</p>
+        <h2 class="sec__title">Pulizia<br>confermata</h2>
+      </div>
+      <p class="sec__sub">Il check del 19 maggio aveva isolato due residui che generavano segnali discordanti: il sottodominio compromesso <code>aexteta</code>, tenuto da Google come "crawled — not indexed", e le sitemap obsolete in coda. Un mese dopo, la verifica diretta conferma che entrambi i fronti si sono mossi nella direzione giusta.</p>
+    </div>
+
+    <div class="crit">
+      <h3>✓ aexteta non più tenuto da Google</h3>
+      <p>URL Inspection su <code>aexteta.studioup.it</code> restituisce oggi lo stato <strong>"URL is unknown to Google"</strong>, ultimo crawl "Never". Un mese fa lo stesso sottodominio era ancora "Crawled — currently not indexed" con ultimo crawl a dicembre 2025. Il cambio di stato significa che il segnale è uscito dall'index attivo di Google: il rumore generato dal sottodominio compromesso si sta esaurendo, come osservato nella sessione del 12 giugno.</p>
+    </div>
+
+    <div class="crit">
+      <h3>✓ Sitemap consolidata</h3>
+      <p>Search Console riporta ora <strong>una sola sitemap valida</strong>: <code>sitemap-0.xml</code>, 256 URL, ultima lettura 9 giugno, <strong>0 errori</strong>. Le sitemap obsolete che restavano in coda — segnalate a maggio — non compaiono più. Un unico file pulito facilita la lettura del sito da parte di Google e rimuove un'altra fonte di segnali ambigui.</p>
+    </div>
+
+    <div class="crit crit--open">
+      <h3>Resta aperto · pagina EN indicizzata → 404</h3>
+      <p>La URL <code>/en/services/web-design-en/</code> continua a restituire <strong>404</strong> pur risultando ancora nell'index storico (ultimo crawl 18 aprile). È il caso già segnalato: chi atterra da quella SERP trova una pagina di errore. La via di chiusura resta un redirect 301 verso <code>/en/services/web-design/</code> o la normalizzazione del trailing slash sulle pagine EN. Insieme, è utile decidere quali pagine inglesi allineare alla versione italiana in base al mercato estero che si vuole presidiare.</p>
+    </div>
+  </section>
+
+  <!-- ===== 04 GA4 ===== -->
+  <section class="sec" id="ga4">
+    <div class="sec__head">
+      <p class="sec__num">04</p>
+      <div>
+        <p class="sec__kicker">GA4 · sessioni per canale</p>
+        <h2 class="sec__title">Traffico per<br>canale</h2>
+      </div>
+      <p class="sec__sub">Le sessioni calano (-29%) in linea con i click di ricerca, ma il segnale di qualità sull'organico migliora. Il canale lead non è ancora popolato perché le form non sono sul front: il dato di conversione è in attesa della loro riattivazione, non perso.</p>
+    </div>
+
+    <h3>Sessioni per canale · <span class="acc">P2 → P1</span></h3>
+    <div style="margin: 24px 0; border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); padding: 8px 0;">
+      <div class="chan"><span class="chan__name">Direct</span><div class="chan__track"><span class="p2" style="width:75%"></span></div><span class="chan__v"><b>102 → 76</b></span></div>
+      <div class="chan"><span class="chan__name">Organic Search</span><div class="chan__track"><span class="p2" style="width:56%"></span></div><span class="chan__v"><b>79 → 57</b> · durata 154s → 218s</span></div>
+      <div class="chan"><span class="chan__name">Referral</span><div class="chan__track"><span class="p2" style="width:47%"></span></div><span class="chan__v"><b>72 → 48</b></span></div>
+      <div class="chan"><span class="chan__name">Paid Social</span><div class="chan__track"><span class="p2" style="width:19%"></span></div><span class="chan__v"><b>28 → 19</b> · durata media 4s</span></div>
+      <div class="chan"><span class="chan__name">Organic Social</span><div class="chan__track"><span class="p2" style="width:9%"></span></div><span class="chan__v"><b>16 → 9</b></span></div>
+      <div class="chan"><span class="chan__name">AI Assistant</span><div class="chan__track"><span class="p2" style="width:2%"></span></div><span class="chan__v"><b>0 → 2</b> · nuovo canale</span></div>
+      <div class="chan"><span class="chan__name">Totale sessioni</span><div class="chan__track"><span class="p1" style="width:71%"></span></div><span class="chan__v"><b>306 → 218</b> (−29%)</span></div>
+    </div>
+
+    <p>Tre letture. Primo: la <strong>qualità dell'organico migliora</strong> — meno sessioni ma durata media da 154 a 218 secondi (+41%), lo stesso pattern visto sulle altre property dell'ecosistema. Secondo: il <strong>Paid Social</strong> resta un canale di volume a permanenza quasi nulla (4 secondi medi), coerente con un obiettivo di traffico. Terzo, segnale di contesto 2026: compare un canale <strong>AI Assistant</strong> con 2 sessioni — sono i primi atterraggi da assistenti di ricerca conversazionali (tipo ChatGPT/Perplexity). Volume minimo oggi, ma è il tipo di canale che vale la pena iniziare a monitorare.</p>
+
+    <div class="crit crit--open">
+      <h3>Tracking lead · in attesa delle form</h3>
+      <p>Nel periodo GA4 non registra eventi <code>generate_lead</code>: sul front del sito non ci sono attualmente form di contatto. Non è un gap di configurazione ma una scelta in corso lato sviluppo. Quando le form torneranno online, il tracking si aggancia tramite i listener Elementor nativi senza bisogno di codice custom, come previsto dall'impianto standardizzato dell'ecosistema. Nel frattempo i click su email e telefono dalla pagina contatti sono la conversione misurabile da attivare per non lasciare scoperto il ritorno.</p>
+    </div>
+  </section>
+
+  <!-- ===== 05 PAGINE ===== -->
+  <section class="sec" id="pagine">
+    <div class="sec__head">
+      <p class="sec__num">05</p>
+      <div>
+        <p class="sec__kicker">Top pagine GSC · 28gg</p>
+        <h2 class="sec__title">Le pagine<br>che lavorano</h2>
+      </div>
+      <p class="sec__sub">Il modello regge: home + progetti singoli + versione EN. I case study continuano a fare da mini-landing per le query persona/azienda correlate. Le pagine servizio, dove vive il cluster commerciale, restano il fronte da rinforzare.</p>
+    </div>
+
+    <div class="blocks">
+      <div class="blocks__cell blocks__cell--ink">
+        <div class="blocks__num">01 — Pillar</div>
+        <div class="blocks__url">/</div>
+        <h3 class="blocks__name">Home<br>studioup.it</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>31 (−34%)</strong></li>
+          <li><span>Pos media</span><strong>29,5</strong></li>
+          <li><span>Top query</span><strong>studio up</strong></li>
+          <li><span>Stato</span><strong>brand in consolidamento</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Driver brand. La posizione media risente del bilanciamento nudo/www ancora in corso: si stabilizza con il consolidamento canonico.</p>
+          <div class="blocks__badges"><span class="badge">brand</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">02 — Pillar legacy</div>
+        <div class="blocks__url">www.studioup.it/</div>
+        <h3 class="blocks__name">Home www<br>(redirect)</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>15 (−21%)</strong></li>
+          <li><span>Pos media</span><strong>11,0</strong></li>
+          <li><span>Top query</span><strong>web agency milano</strong></li>
+          <li><span>Trend</span><strong>in calo · atteso</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Click "ricordo Google" pre-canonical. Il calo (19→15) è il segno che il consolidamento procede. Si esauriranno.</p>
+          <div class="blocks__badges"><span class="badge badge--ghost">storico</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">03 — Project case</div>
+        <div class="blocks__url">/progetto/sentcell/</div>
+        <h3 class="blocks__name">Progetto<br>Sentcell</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>4</strong></li>
+          <li><span>Pos media</span><strong>6,7</strong></li>
+          <li><span>Top query</span><strong>alessio lanna (pos 8,4)</strong></li>
+          <li><span>Modello</span><strong>progetto = landing persona</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Conferma il modello: il nome del founder cliente (Alessio Lanna) porta traffico al case. Posizione in miglioramento.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">leverage</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">04 — Project case</div>
+        <div class="blocks__url">/progetto/framour/ + /en/</div>
+        <h3 class="blocks__name">Progetto<br>Framour</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>4 +2 (EN)</strong></li>
+          <li><span>Pos media</span><strong>2,2 (query)</strong></li>
+          <li><span>Top query</span><strong>framour</strong></li>
+          <li><span>Trend</span><strong>nuovo in top</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Nuovo caso che entra tra i top, con la versione EN che intercetta traffico estero. Modello case study che funziona.</p>
+          <div class="blocks__badges"><span class="badge badge--ok">in crescita</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell blocks__cell--accent">
+        <div class="blocks__num">05 — Servizio</div>
+        <div class="blocks__url">/servizi/web-design/</div>
+        <h3 class="blocks__name">Servizio<br>web design</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>1</strong></li>
+          <li><span>Pos media</span><strong>60,8</strong></li>
+          <li><span>Top query</span><strong>web design milano</strong></li>
+          <li><span>Bacino</span><strong>cluster commerciale</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> La pagina del cluster commerciale resta molto profonda. È il fronte su cui concentrare on-page + autorità per recuperare il presidio web agency.</p>
+          <div class="blocks__badges"><span class="badge">DA PRESIDIARE</span></div>
+        </div>
+      </div>
+      <div class="blocks__cell">
+        <div class="blocks__num">06 — Blog</div>
+        <div class="blocks__url">/blog/*</div>
+        <h3 class="blocks__name">Blog<br>(informazionale)</h3>
+        <ul class="blocks__stats">
+          <li><span>Click 28gg</span><strong>sparsi</strong></li>
+          <li><span>Pos media</span><strong>varia</strong></li>
+          <li><span>Top query</span><strong>cosa è un blog · zuckerberg</strong></li>
+          <li><span>Ruolo</span><strong>autorità di dominio</strong></li>
+        </ul>
+        <div class="blocks__take">
+          <p><strong>Stato.</strong> Il blog raccoglie le 13 keyword nuove ma a basso intento. Buono per autorità, da legare meglio alle pagine servizio con link interno tematico.</p>
+          <div class="blocks__badges"><span class="badge badge--ghost">informazionale</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 06 KEYWORD ===== -->
+  <section class="sec" id="kw">
+    <div class="sec__head">
+      <p class="sec__num">06</p>
+      <div>
+        <p class="sec__kicker">DataForSEO + Bing · cluster commerciale</p>
+        <h2 class="sec__title">Le query<br>che contano</h2>
+      </div>
+      <p class="sec__sub">La fotografia DataForSEO conferma la tesi strategica: il dominio ha autorità e footprint, ma il valore commerciale — il cluster web agency / design Milano — vive in posizioni che non portano click. È lì che si gioca il recupero del posizionamento storico.</p>
+    </div>
+
+    <h3>Cluster commerciale Milano · <span class="acc">DataForSEO</span></h3>
+    <table class="tbl">
+      <thead>
+        <tr><th>Keyword</th><th class="num">Volume/mese</th><th class="num">Posizione</th><th>Lettura</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="strong">ux design agency</td><td class="num">70</td><td class="num warn">37</td><td>La più vicina del cluster, ma ancora a 4ª pagina.</td></tr>
+        <tr><td class="strong">studio creativo milano</td><td class="num">90</td><td class="num bad">48</td><td>Intent creativo geo, profondo.</td></tr>
+        <tr><td class="strong">studi creativi milano</td><td class="num">90</td><td class="num bad">50</td><td>Variante plurale, stesso fronte.</td></tr>
+        <tr><td class="strong">digital agency milano</td><td class="num">110</td><td class="num bad">65</td><td>Commerciale puro, lontano.</td></tr>
+        <tr><td class="strong">agenzia web milano</td><td class="num">210</td><td class="num bad">68</td><td>Il volume più alto del cluster, posizione più profonda.</td></tr>
+        <tr><td>agenzia branding milano (GSC)</td><td class="num">—</td><td class="num bad">44</td><td>72 impressions, 0 click: bacino non convertito.</td></tr>
+      </tbody>
+    </table>
+    <p>Il pattern è coerente: più alto è il volume commerciale, più profonda è la posizione. Sono esattamente le query su cui StudioUp era forte prima del rifacimento. Portarle dalla 4ª–7ª pagina alla prima richiede un lavoro mirato sulle pagine servizio (on-page, struttura, autorità via link), nella direzione del recupero del presidio web agency già indicata.</p>
+
+    <h4>Footprint informazionale · spillover</h4>
+    <p>Tra le keyword nuove rilevate, diverse arrivano dal blog su query informazionali a basso intento — ad esempio una pagina che intercetta ricerche sull'età di Mark Zuckerberg, o "cosa è un blog". È visibilità che costruisce autorità di dominio ma non genera contatti: utile come base, da connettere meglio alle pagine commerciali con un link interno tematico.</p>
+
+    <h4>Bing · canale secondario reale</h4>
+    <p>Su Bing StudioUp raccoglie circa <strong>52 click</strong> nel periodo (su ~2.650 impressions), un volume non trascurabile rispetto agli 85 di Google. Il traffico è brand e progetti: "studio up" e le sue varianti in testa, più i case study (formula luci, sensity ai). Bing conferma che il riconoscimento del brand è solido — il canale rende bene proprio dove la query è il nome.</p>
+  </section>
+
+  <!-- ===== 07 INSIGHT ===== -->
+  <section class="sec" id="insight">
+    <div class="sec__head">
+      <p class="sec__num">07</p>
+      <div>
+        <p class="sec__kicker">Letture incrociate dei dati</p>
+        <h2 class="sec__title">Quattro<br>insight</h2>
+      </div>
+      <p class="sec__sub">Sintesi cross-data tra Search Console, GA4, DataForSEO, Bing e le verifiche tecniche. Due sul fronte pulizia/brand, due sul fronte commerciale.</p>
+    </div>
+
+    <ol class="insights">
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">La pulizia ha tolto <span class="acc">rumore, non valore</span></span>
+          aexteta deindicizzato, sitemap consolidata, www legacy in calo: i tre movimenti vanno nella stessa direzione, ripulire i segnali che Google riceve. Il calo di click del mese non è una conseguenza della pulizia ma dell'assestamento stagionale e del consolidamento brand. La base di impressions (quasi 13.000) resta intatta: la visibilità c'è, va convertita.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il brand non è in calo, <span class="acc">è in transizione</span></span>
+          La posizione bassa di "studio up" in questa finestra convive con "studioup" in pos 2,4 e con un brand fortissimo su Bing. Il segnale non è una perdita di brand ma la fase finale del consolidamento canonico tra dominio nudo e www — confermata dal calo dei click legacy. È il tipo di volatilità che si chiude da sé una volta che Google sceglie l'URL unica.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il footprint cresce ma <span class="acc">non dove serve</span></span>
+          13 keyword nuove sono una buona notizia per l'autorità del dominio, ma sono quasi tutte informazionali o legate a progetti. Il cluster che genererebbe lead — web agency / design Milano — non si è mosso e resta in pos 37–68. La crescita di superficie va indirizzata: il blog deve diventare un alimentatore di autorità verso le pagine commerciali, non un'isola informazionale.
+        </div>
+      </li>
+      <li>
+        <div class="insights__num"></div>
+        <div class="insights__body">
+          <span class="insights__title">Il prossimo passo è <span class="acc">commerciale e misurabile</span></span>
+          Con la tecnica più pulita, la leva torna a essere quella indicata a maggio: presidiare il cluster web agency Milano. E con la riattivazione delle form più i click mail/telefono, sarà finalmente possibile misurare quanti di quei contatti diventano lead. I due fronti — visibilità commerciale e tracking — sono ciò che trasforma StudioUp da "sito in salute tecnica" a "sito che porta richieste misurabili".
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ===== 08 PROPOSTA ===== -->
+  <section class="sec" id="proposta">
+    <div class="sec__head">
+      <p class="sec__num">08</p>
+      <div>
+        <p class="sec__kicker">Aree di lavoro proposte</p>
+        <h2 class="sec__title">Proposta<br>operativa</h2>
+      </div>
+      <p class="sec__sub">Chiusa la fase di pulizia, le aree del mese si spostano sul presidio commerciale e sul completamento dei segnali residui. In ordine di priorità strategica.</p>
+    </div>
+
+    <ul class="recs">
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Presidiare il <span class="acc">cluster web agency Milano</span></span>
+          <span class="recs__why">È la direzione di crescita. Le pagine servizio (web-design, web-development) vivono in pos 37–68 su query con volume reale. Il lavoro: rafforzamento on-page mirato sull'intent commerciale geo-localizzato, struttura della pagina e autorità (link interni tematici dal blog, segnali esterni). Obiettivo: spostare almeno una keyword del cluster dalla 4ª–7ª pagina verso la prima.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>On-page + autorità<strong>Output</strong>Cluster in risalita</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Connettere il <span class="acc">blog alle pagine commerciali</span></span>
+          <span class="recs__why">Le 13 keyword nuove sono autorità informazionale oggi isolata. Un sistema di link interni tematici che porti dal contenuto editoriale verso le pagine servizio trasforma quella superficie in spinta verso il cluster commerciale, invece di lasciarla come traffico fine a sé stesso.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Internal linking<strong>Output</strong>Autorità incanalata</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Chiudere il <span class="acc">404 della versione EN</span></span>
+          <span class="recs__why">La URL <code>/en/services/web-design-en/</code> resta indicizzata ma in 404. Un redirect 301 verso la pagina EN corretta (o la normalizzazione del trailing slash) evita che chi clicca dalla SERP atterri su un errore. Insieme, decidere quali pagine inglesi vale la pena allineare alla versione italiana in base al mercato estero da presidiare.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Tecnico<strong>Output</strong>Zero 404 indicizzati</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Abilitare la <span class="acc">misura dei contatti</span></span>
+          <span class="recs__why">In attesa del ritorno delle form sul front, i click su email e telefono dalla pagina contatti sono la conversione già misurabile: attivarne il tracking dà un primo dato di ritorno. Quando le form torneranno, l'aggancio Elementor nativo completa il quadro lead senza interventi custom.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Tracking<strong>Output</strong>Primi lead misurati</div>
+      </li>
+      <li>
+        <span class="recs__n"></span>
+        <div class="recs__body">
+          <span class="recs__t">Lasciar <span class="acc">chiudere il consolidamento brand</span></span>
+          <span class="recs__why">La volatilità di "studio up" e i click residui sul www legacy si risolvono con il completamento del consolidamento canonico, già in corso. Non serve un intervento aggiuntivo: i redirect 301 sono attivi e i dati mostrano la transizione in atto. Da monitorare, non da forzare.</span>
+        </div>
+        <div class="recs__meta"><strong>Tipo</strong>Monitoraggio<strong>Output</strong>Brand su URL unica</div>
+      </li>
+    </ul>
+
+    <h3>Roadmap <span class="acc">indicativa</span></h3>
+    <ol class="phases">
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Presidio commerciale</span>
+        <span class="phases__body">Lavoro on-page e di autorità sulle pagine servizio del cluster web agency Milano, con il blog a fare da alimentatore tematico.</span>
+        <span class="phases__when">Priorità</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Chiusura residui</span>
+        <span class="phases__body">Redirect del 404 EN, monitoraggio del consolidamento brand, abilitazione tracking click mail/telefono.</span>
+        <span class="phases__when">In parallelo</span>
+      </li>
+      <li>
+        <span class="phases__num"></span>
+        <span class="phases__name">Misura lead</span>
+        <span class="phases__body">Alla riattivazione delle form, aggancio del tracking lead nativo e lettura del ritorno per canale e per pagina.</span>
+        <span class="phases__when">A seguire</span>
+      </li>
+    </ol>
+
+    <div class="pull">Tecnica pulita, brand in consolidamento · ora la partita è <span class="acc">portare il cluster Milano in prima pagina</span>.</div>
+  </section>
+
+  <div class="colophon">
+    <div>
+      <h5>Metodologia</h5>
+      <p>Search Console <code>sc-domain:studioup.it</code>, confronto 28gg vs 28gg. Google Analytics 4 property <code>349329764</code> (sessioni per canale). DataForSEO Labs IT (19 keyword posizionate). Bing Webmaster query + pagine. URL Inspection su aexteta e pagina EN. Verifica sitemap.</p>
+    </div>
+    <div>
+      <h5>Stato</h5>
+      <p>Pulizia tecnica confermata: aexteta deindicizzato, sitemap consolidata (256 URL, 0 errori). Brand in consolidamento nudo/www. Cluster commerciale Milano in pos 37–68. Tracking lead in attesa della riattivazione form.</p>
+    </div>
+    <div>
+      <h5>Aree di lavoro principali</h5>
+      <p>Presidio cluster web agency Milano · connessione blog→pagine commerciali · chiusura 404 EN · abilitazione tracking contatti · monitoraggio consolidamento brand.</p>
+    </div>
+  </div>
+
+  <p style="font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); padding: 0 0 32px; letter-spacing: 0.04em;">StudioUp · Check performance · 16 giugno 2026 · documento riservato al team Amedani Studio</p>
+
+</div>
+
+</body>
+</html>

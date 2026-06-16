@@ -650,6 +650,26 @@
 
     <h4>Pattern emerso</h4>
     <p>Brescia resta il territorio presidiabile a costo zero — il dominio raccoglie impressions su ogni declinazione "X brescia" senza una pagina dedicata. La comparsa di Mantova è il primo segnale che la domanda esiste anche nelle città del briefing geo. <strong>Quando si attiveranno le pagine geo, lo spazio è da occupare: niente da spostare, solo da presidiare.</strong></p>
+
+    <h4>Ipotesi di lettura · perché le subservice non convertono le impressions</h4>
+    <p>Una lettura incrociata query × pagina (finestra a 60 giorni, per avere abbastanza query reali) aiuta a capire <em>perché</em> pagine come agenzia-grafica e agenzia-comunicazione accumulano impressions senza click — e suggerisce cosa varrebbe la pena testare. È un'ipotesi di lavoro, non una conclusione.</p>
+    <p><strong>Primo fatto: il bacino di impressions delle subservice è in larga parte brand.</strong> Su <code>/agenzia-comunicazione/</code>, delle ~566 impressions di dettaglio circa 540 arrivano da query sul nome (<code>amedani studio</code> 421, <code>amedani</code> 83, <code>amedani studio brescia</code> 35); le query commerciali vere — <code>agenzia creativa brescia</code> (pos 24,9), <code>studio comunicazione brescia</code> (pos 44) — valgono poche decine di impressions e stanno molto più indietro. Stessa dinamica su <code>/servizi/agenzia-grafica/</code>: ~81 delle ~94 impressions sono brand, mentre il commerciale (<code>immagine coordinata aziendale brescia</code> pos 38, <code>agenzia adattamenti grafici</code> pos 28) è in fondo. Significa che la "posizione media buona" (5–7) è in parte gonfiata dalle query brand, dove la pagina compare come risultato secondario ma il click se lo prende home o contatti — non un problema di snippet, ma di intento.</p>
+    <p><strong>Secondo fatto: sui termini commerciali Brescia, il "competitor" interno è spesso la home.</strong> Sempre dalla lettura query × pagina, ecco chi Google sceglie oggi per i termini di valore:</p>
+    <table class="tbl">
+      <thead>
+        <tr><th>Query commerciale</th><th>Pagina servita oggi</th><th class="num">Pos</th><th>Altre pagine in lizza</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>studio grafico brescia</td><td class="strong">Home</td><td class="num">18,8</td><td>/servizi/agenzia-grafica/ (pos 64)</td></tr>
+        <tr><td>agenzia grafica brescia</td><td class="strong">Home</td><td class="num">16,0</td><td>—</td></tr>
+        <tr><td>studi grafici brescia</td><td class="strong">Home</td><td class="num">21,6</td><td>—</td></tr>
+        <tr><td>brand identity brescia</td><td class="strong">Home</td><td class="num">17,8</td><td>portfolio (83) · /agenzia-branding/ (80)</td></tr>
+        <tr><td>agenzia di comunicazione brescia</td><td class="strong">Home</td><td class="num">61,0</td><td>—</td></tr>
+        <tr><td>agenzia creativa brescia</td><td class="strong">/agenzia-comunicazione/</td><td class="num">24,9</td><td>—</td></tr>
+        <tr><td>studio comunicazione brescia</td><td class="strong">/agenzia-comunicazione/</td><td class="num">44,0</td><td>—</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Da qui un'idea, da soppesare prima di mettere mano ai title.</strong> Sul cluster <em>grafica</em> la home presidia già tutti i termini "grafico/grafica Brescia", e li tiene meglio (pos 16–21) di quanto la subservice tenga lo stesso termine (pos 64); per di più il branding è già conteso da tre URL. Iterare il title di <code>/servizi/agenzia-grafica/</code> sullo stesso termine geo-testa rischierebbe quindi di metterla in competizione con la home, più che di sbloccarla. Una direzione alternativa potrebbe essere differenziare per intento — lasciare alla home il termine geo generico e specializzare la subservice sul deliverable che già tocca in via esclusiva (immagine coordinata, comunicazione visiva). Per <code>/agenzia-comunicazione/</code> il quadro è diverso e più semplice: il cluster "creativa / comunicazione Brescia" è servito <em>solo</em> da quella pagina, quindi lì un'iterazione del title sulle query effettive non incontrerebbe concorrenza interna. Resta, appunto, un'ipotesi: il passo sensato sarebbe verificarla pagina per pagina prima di toccare i title.</p>
   </section>
 
   <!-- ===== 07 INSIGHT ===== -->
